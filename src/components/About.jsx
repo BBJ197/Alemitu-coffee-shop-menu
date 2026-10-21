@@ -1,4 +1,4 @@
-import aboutImg from "../assets/images/About-us.png";
+import aboutImg from "../assets/images/About-us.webp";
 
 const socials = ["fa-facebook", "fa-instagram", "fa-x-twitter"];
 

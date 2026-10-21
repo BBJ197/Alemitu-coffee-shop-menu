@@ -1,15 +1,15 @@
-import hotBeverages from "./assets/images/hot-beveragrs.png";
-import coldBeverages from "./assets/images/cold-beveragrs.png";
-import refreshment from "./assets/images/refreshment.png";
-import fastingFoods from "./assets/images/fasting-foods.png";
-import nonFastingFoods from "./assets/images/non-fasting-foods.png";
-import dessert from "./assets/images/dessert.png";
+import hotBeverages from "./assets/images/hot-beveragrs.webp";
+import coldBeverages from "./assets/images/cold-beveragrs.webp";
+import refreshment from "./assets/images/refreshment.webp";
+import fastingFoods from "./assets/images/fasting-foods.webp";
+import nonFastingFoods from "./assets/images/non-fasting-foods.webp";
+import dessert from "./assets/images/dessert.webp";
 
 import user1 from "./assets/images/User-1.jpeg";
 import user2 from "./assets/images/user-2.jpg";
 import user3 from "./assets/images/user-3.jpeg";
 import user4 from "./assets/images/user-4.jpg";
-import user5 from "./assets/images/user-5.png";
+import user5 from "./assets/images/user-5.webp";
 
 export const menuItems = [
   {
