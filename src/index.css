@@ -379,7 +379,7 @@ header .nav-bar {
   align-items: center;
 }
 
-.contact-section .contact-info-list .contact-info i {
+.contact-section .contact-info-list .contact-info .icon {
   font-size: var(--font-size-m);
 }
 
@@ -613,4 +613,12 @@ header .nav-bar {
     flex-direction: column;
     gap: 20px;
   }
+}
+
+/* inline svg icons (replace the Font Awesome webfont) */
+.icon {
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
+  vertical-align: -0.125em;
 }
