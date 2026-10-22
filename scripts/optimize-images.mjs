@@ -21,5 +21,7 @@ for (const [file, width] of jobs) {
     .resize({ width, withoutEnlargement: true })
     .webp({ quality: 78 })
     .toFile(out);
-  console.log(`${file}: ${Math.round(statSync(src).size / 1024)} KB -> ${Math.round(statSync(out).size / 1024)} KB`);
+  console.log(
+    `${file}: ${Math.round(statSync(src).size / 1024)} KB -> ${Math.round(statSync(out).size / 1024)} KB`,
+  );
 }
