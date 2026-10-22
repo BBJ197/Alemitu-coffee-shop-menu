@@ -11,16 +11,16 @@ const links = [
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
-  const menuRef = useRef(null);
-  const openBtnRef = useRef(null);
+  const menuRef = useRef<HTMLUListElement>(null);
+  const openBtnRef = useRef<HTMLButtonElement>(null);
 
   // close menu when clicking outside
   useEffect(() => {
-    const handleClick = (e) => {
+    const handleClick = (e: MouseEvent) => {
       if (
         menuRef.current &&
-        !menuRef.current.contains(e.target) &&
-        !openBtnRef.current.contains(e.target)
+        !menuRef.current.contains(e.target as Node) &&
+        !openBtnRef.current?.contains(e.target as Node)
       ) {
         setOpen(false);
       }

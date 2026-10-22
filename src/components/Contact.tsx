@@ -1,13 +1,13 @@
-import { useState } from "react";
+import { useState, type ChangeEvent, type FormEvent } from "react";
 import { contactInfo } from "../data";
 
 export default function Contact() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
 
-  const handleChange = (e) =>
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
     setForm({ ...form, [e.target.name]: e.target.value });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("Form submitted:", form); // connect to a backend/email service later
     setForm({ name: "", email: "", message: "" });
