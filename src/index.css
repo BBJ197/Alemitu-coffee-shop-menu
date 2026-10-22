@@ -1,7 +1,5 @@
-@import url("https://fonts.googleapis.com/css2?family=Miniver&family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap");
-
 * {
-  font-family: poppins, sans-serif;
+  font-family: "Poppins", system-ui, sans-serif;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -162,7 +160,7 @@ header .nav-bar {
 .hero-section .hero-details .title {
   font-size: var(--font-size-xxl);
   color: var(--secondary-color);
-  font-family: "Miniver", sans-serif;
+  font-family: "Miniver", Georgia, serif;
 }
 
 .hero-section .hero-details .subtitle {
