@@ -1,5 +1,6 @@
 import { useState, type ChangeEvent, type FormEvent } from "react";
 import { contactInfo } from "../data";
+import Icon from "./Icon";
 
 export default function Contact() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
@@ -21,7 +22,7 @@ export default function Contact() {
         <ul className="contact-info-list">
           {contactInfo.map((info) => (
             <li className="contact-info" key={info.id}>
-              <i className={info.icon}></i>
+              <Icon icon={info.icon} />
               <p>{info.text}</p>
             </li>
           ))}

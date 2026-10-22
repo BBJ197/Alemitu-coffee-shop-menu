@@ -1,6 +1,6 @@
 import aboutImg from "../assets/images/About-us.webp";
-
-const socials = ["fa-facebook", "fa-instagram", "fa-x-twitter"];
+import Icon from "./Icon";
+import { socialLinks } from "../data";
 
 export default function About() {
   return (
@@ -19,9 +19,14 @@ export default function About() {
             enjoy their time in comfort.
           </p>
           <div className="social-link-list">
-            {socials.map((icon) => (
-              <a href="#" className="social-link" key={icon}>
-                <i className={`fa-brands ${icon}`}></i>
+            {socialLinks.map((s) => (
+              <a
+                href={s.href}
+                className="social-link"
+                aria-label={s.label}
+                key={s.id}
+              >
+                <Icon icon={s.icon} />
               </a>
             ))}
           </div>

@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef } from "react";
+import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
 import logo from "../assets/images/Alemiti-Coffee-Emblem.png";
+import Icon from "./Icon";
 
 const links = [
   { label: "Home", href: "#" },
@@ -17,10 +19,11 @@ export default function Navbar() {
   // close menu when clicking outside
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
+      const target = e.target as Node;
       if (
         menuRef.current &&
-        !menuRef.current.contains(e.target as Node) &&
-        !openBtnRef.current?.contains(e.target as Node)
+        !menuRef.current.contains(target) &&
+        !openBtnRef.current?.contains(target)
       ) {
         setOpen(false);
       }
@@ -42,9 +45,12 @@ export default function Navbar() {
         <ul className={`nav-menu ${open ? "active" : ""}`} ref={menuRef}>
           <button
             id="menu-close-button"
-            className="fas fa-times"
+            type="button"
+            aria-label="Close menu"
             onClick={() => setOpen(false)}
-          ></button>
+          >
+            <Icon icon={faXmark} />
+          </button>
 
           {links.map((link) => (
             <li className="nav-item" key={link.label}>
@@ -61,10 +67,13 @@ export default function Navbar() {
 
         <button
           id="menu-open-button"
-          className="fas fa-bars"
+          type="button"
+          aria-label="Open menu"
           ref={openBtnRef}
           onClick={() => setOpen(true)}
-        ></button>
+        >
+          <Icon icon={faBars} />
+        </button>
       </nav>
     </header>
   );

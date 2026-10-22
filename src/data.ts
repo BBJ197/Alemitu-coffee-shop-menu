@@ -1,3 +1,14 @@
+import {
+  faLocationCrosshairs,
+  faPhone,
+  faGlobe,
+} from "@fortawesome/free-solid-svg-icons";
+import { faEnvelope, faClock } from "@fortawesome/free-regular-svg-icons";
+import {
+  faFacebook,
+  faInstagram,
+  faXTwitter,
+} from "@fortawesome/free-brands-svg-icons";
 import hotBeverages from "./assets/images/hot-beveragrs.webp";
 import coldBeverages from "./assets/images/cold-beveragrs.webp";
 import refreshment from "./assets/images/refreshment.webp";
@@ -89,16 +100,22 @@ export const testimonials = [
 export const contactInfo = [
   {
     id: 1,
-    icon: "fa-solid fa-location-crosshairs",
+    icon: faLocationCrosshairs,
     text: "Jambo Building, Addisu Gebeya, Addis Ababa, Ethiopia, Ground Floor, No. 013",
   },
-  { id: 2, icon: "fa-regular fa-envelope", text: "info@coffeeshopwebsite.com" },
-  { id: 3, icon: "fa-solid fa-phone", text: "(251) 985-414412" },
+  { id: 2, icon: faEnvelope, text: "info@coffeeshopwebsite.com" },
+  { id: 3, icon: faPhone, text: "(251) 985-414412" },
   {
     id: 4,
-    icon: "fa-regular fa-clock",
+    icon: faClock,
     text: "Tuesday - Sunday: 9:00 AM - 5:00 PM",
   },
-  { id: 5, icon: "fa-regular fa-clock", text: "Monday: Closed" },
-  { id: 6, icon: "fa-solid fa-globe", text: "www.alemitucoffee.com" },
+  { id: 5, icon: faClock, text: "Monday: Closed" },
+  { id: 6, icon: faGlobe, text: "www.alemitucoffee.com" },
+];
+
+export const socialLinks = [
+  { id: "facebook", label: "Facebook", icon: faFacebook, href: "#" },
+  { id: "instagram", label: "Instagram", icon: faInstagram, href: "#" },
+  { id: "x", label: "X (Twitter)", icon: faXTwitter, href: "#" },
 ];
