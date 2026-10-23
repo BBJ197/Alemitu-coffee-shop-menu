@@ -13,9 +13,9 @@ describe("Contact form", () => {
     const log = vi.spyOn(console, "log").mockImplementation(() => {});
     render(<Contact />);
 
-    const name = screen.getByPlaceholderText("Your name");
-    const email = screen.getByPlaceholderText("Your Email");
-    const message = screen.getByPlaceholderText("Your message");
+    const name = screen.getByLabelText("Your name");
+    const email = screen.getByLabelText("Your email");
+    const message = screen.getByLabelText("Your message");
 
     await user.type(name, "Abel");
     await user.type(email, "abel@example.com");
