@@ -188,7 +188,7 @@ header .nav-bar {
   background-color: var(--secondary-color);
   font-weight: var(--font-weight-medium);
   border: 2px solid transparent;
-  transition: 0.3s ease m;
+  transition: 0.3s ease;
 }
 
 .hero-section .hero-details .button:hover,
