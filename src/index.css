@@ -188,7 +188,7 @@ header .nav-bar {
   background-color: var(--secondary-color);
   font-weight: var(--font-weight-medium);
   border: 2px solid transparent;
-  transition: 0.3s ease m;
+  transition: 0.3s ease;
 }
 
 .hero-section .hero-details .button:hover,
@@ -621,4 +621,63 @@ header .nav-bar {
   height: 1em;
   flex-shrink: 0;
   vertical-align: -0.125em;
+}
+
+/* accessibility */
+:focus-visible {
+  outline: 3px solid var(--secondary-color);
+  outline-offset: 3px;
+}
+
+.contact-section .contact-form .form-input:focus-visible {
+  outline: 3px solid var(--secondary-color);
+  outline-offset: 2px;
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  padding: 10px 18px;
+  background: var(--secondary-color);
+  color: var(--dark-color);
+  border-radius: var(--border-radius-s);
+}
+
+.skip-link:focus {
+  left: 10px;
+  top: 10px;
+}
+
+/* close button lives inside a list item (valid markup) */
+.nav-bar .nav-close-item {
+  display: none;
+}
+
+@media screen and (max-width: 900px) {
+  .nav-bar .nav-close-item {
+    display: block;
+    position: absolute;
+    right: 30px;
+    top: 30px;
+  }
+
+  .nav-bar #menu-close-button {
+    position: static;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
 }

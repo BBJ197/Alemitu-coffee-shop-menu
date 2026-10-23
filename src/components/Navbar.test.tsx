@@ -11,10 +11,10 @@ describe("Navbar", () => {
 
     expect(menu).not.toHaveClass("active");
 
-    await user.click(container.querySelector("#menu-open-button")!);
+    await user.click(screen.getByRole("button", { name: "Open menu" }));
     expect(menu).toHaveClass("active");
 
-    await user.click(container.querySelector("#menu-close-button")!);
+    await user.click(screen.getByRole("button", { name: "Close menu" }));
     expect(menu).not.toHaveClass("active");
   });
 
@@ -23,10 +23,23 @@ describe("Navbar", () => {
     const { container } = render(<Navbar />);
     const menu = container.querySelector(".nav-menu");
 
-    await user.click(container.querySelector("#menu-open-button")!);
+    await user.click(screen.getByRole("button", { name: "Open menu" }));
     expect(menu).toHaveClass("active");
 
     await user.click(screen.getByRole("link", { name: "Menu" }));
     expect(menu).not.toHaveClass("active");
+  });
+
+  it("keeps the close button inside a list item", () => {
+    render(<Navbar />);
+    const closeButton = screen.getByRole("button", { name: "Close menu" });
+
+    expect(closeButton.parentElement?.tagName).toBe("LI");
+  });
+
+  it("does not use a heading for the brand name", () => {
+    render(<Navbar />);
+
+    expect(screen.queryByRole("heading")).toBeNull();
   });
 });

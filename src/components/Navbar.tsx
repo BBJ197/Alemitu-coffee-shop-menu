@@ -7,7 +7,6 @@ const links = [
   { label: "Home", href: "#" },
   { label: "About", href: "#about" },
   { label: "Menu", href: "#menu" },
-  { label: "Testimonials", href: "#testimonials" },
   { label: "Contact", href: "#contact" },
 ];
 
@@ -36,21 +35,23 @@ export default function Navbar() {
     <header>
       <nav className="nav-bar section-content">
         <a href="#" className="nv-logo">
-          <h1 className="nav-text">
-            <img src={logo} alt="logo" />
+          <span className="nav-text">
+            <img src={logo} alt="" />
             Alemitu
-          </h1>
+          </span>
         </a>
 
         <ul className={`nav-menu ${open ? "active" : ""}`} ref={menuRef}>
-          <button
-            id="menu-close-button"
-            type="button"
-            aria-label="Close menu"
-            onClick={() => setOpen(false)}
-          >
-            <Icon icon={faXmark} />
-          </button>
+          <li className="nav-close-item">
+            <button
+              id="menu-close-button"
+              type="button"
+              aria-label="Close menu"
+              onClick={() => setOpen(false)}
+            >
+              <Icon icon={faXmark} />
+            </button>
+          </li>
 
           {links.map((link) => (
             <li className="nav-item" key={link.label}>
