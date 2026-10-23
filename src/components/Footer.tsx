@@ -1,5 +1,6 @@
 import Icon from "./Icon";
 import { socialLinks } from "../data";
+const currentYear = new Date().getFullYear();
 
 export default function Footer() {
   const links = socialLinks.filter((s) => s.href);
@@ -8,7 +9,7 @@ export default function Footer() {
     <footer className="footer-section">
       <div className="section-content">
         <p className="copyright-text">
-          &copy; {new Date().getFullYear()} Alemitu Coffee. All rights reserved.
+          &copy; {currentYear} Alemitu Coffee. All rights reserved.
         </p>
 
         <div className="social-link-list">
