@@ -8,7 +8,7 @@ export default function Menu() {
         <ul className="menu-list">
           {menuItems.map((item) => (
             <li className="menu-item" key={item.id}>
-              <img src={item.image} alt={item.name} className="menu-image" />
+              <img src={item.image} alt="" className="menu-image" />
               <h3 className="name">{item.name}</h3>
               <p className="text">{item.text}</p>
             </li>
