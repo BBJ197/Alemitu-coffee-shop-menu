@@ -33,6 +33,8 @@ export default function Contact() {
             type="text"
             name="name"
             placeholder="Your name"
+            aria-label="Your name"
+            autoComplete="name"
             className="form-input"
             value={form.name}
             onChange={handleChange}
@@ -42,6 +44,8 @@ export default function Contact() {
             type="email"
             name="email"
             placeholder="Your Email"
+            aria-label="Your email"
+            autoComplete="email"
             className="form-input"
             value={form.email}
             onChange={handleChange}
@@ -50,6 +54,7 @@ export default function Contact() {
           <textarea
             name="message"
             placeholder="Your message"
+            aria-label="Your message"
             className="form-input"
             value={form.message}
             onChange={handleChange}
