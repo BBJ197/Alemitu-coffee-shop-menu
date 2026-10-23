@@ -23,7 +23,7 @@ export default function Testimonials() {
         >
           {testimonials.map((t) => (
             <SwiperSlide className="testimonial" key={t.id}>
-              <img src={t.image} alt={t.name} className="user-image" />
+              <img src={t.image} alt="" className="user-image" />
               <h3 className="name">{t.name}</h3>
               <i className="feedback">"{t.feedback}"</i>
             </SwiperSlide>
