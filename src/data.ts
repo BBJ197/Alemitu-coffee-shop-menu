@@ -3,7 +3,7 @@ import {
   faPhone,
   faGlobe,
 } from "@fortawesome/free-solid-svg-icons";
-import { faEnvelope, faClock } from "@fortawesome/free-regular-svg-icons";
+import { faClock } from "@fortawesome/free-regular-svg-icons";
 import {
   faFacebook,
   faInstagram,
@@ -103,7 +103,6 @@ export const contactInfo = [
     icon: faLocationCrosshairs,
     text: "Jambo Building, Addisu Gebeya, Addis Ababa, Ethiopia, Ground Floor, No. 013",
   },
-  { id: 2, icon: faEnvelope, text: "info@coffeeshopwebsite.com" },
   { id: 3, icon: faPhone, text: "(251) 985-414412" },
   {
     id: 4,
@@ -115,7 +114,7 @@ export const contactInfo = [
 ];
 
 export const socialLinks = [
-  { id: "facebook", label: "Facebook", icon: faFacebook, href: "#" },
-  { id: "instagram", label: "Instagram", icon: faInstagram, href: "#" },
-  { id: "x", label: "X (Twitter)", icon: faXTwitter, href: "#" },
+  { id: "facebook", label: "Facebook", icon: faFacebook, href: "" },
+  { id: "instagram", label: "Instagram", icon: faInstagram, href: "" },
+  { id: "x", label: "X (Twitter)", icon: faXTwitter, href: "" },
 ];
