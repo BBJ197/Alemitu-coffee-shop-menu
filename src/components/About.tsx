@@ -16,23 +16,25 @@ export default function About() {
         <div className="about-ditails">
           <h2 className="section-title">About Us</h2>
           <p className="text">
-            At Coffee House in Berndorf, Germany, we pride ourselves on being a
-            go-to destination for coffee lovers and conversation seekers alike.
-            We're dedicated to providing an exceptional coffee experience in a
-            cozy and inviting atmosphere, where guests can relax, unwind, and
-            enjoy their time in comfort.
+            Alemitu Coffee is a coffee house in the heart of Addis Ababa, at the
+            Jambo Building in Addisu Gebeya. We serve Ethiopian coffee, fasting
+            and non-fasting dishes, cold drinks, refreshments and desserts in a
+            warm, welcoming space where you can relax, catch up and enjoy every
+            cup.
           </p>
           <div className="social-link-list">
-            {socialLinks.map((s) => (
-              <a
-                href={s.href}
-                className="social-link"
-                aria-label={s.label}
-                key={s.id}
-              >
-                <Icon icon={s.icon} />
-              </a>
-            ))}
+            {socialLinks
+              .filter((s) => s.href)
+              .map((s) => (
+                <a
+                  href={s.href}
+                  className="social-link"
+                  aria-label={s.label}
+                  key={s.id}
+                >
+                  <Icon icon={s.icon} />
+                </a>
+              ))}
           </div>
         </div>
       </div>
