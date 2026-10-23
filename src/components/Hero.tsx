@@ -15,7 +15,7 @@ export default function Hero() {
           </p>
           <div className="buttons">
             <a href="#menu" className="button order-now">
-              Order Now
+              View Menu
             </a>
             <a href="#contact" className="button contact-us">
               Contact Us
