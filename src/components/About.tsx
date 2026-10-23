@@ -7,7 +7,11 @@ export default function About() {
     <section className="about-section" id="about">
       <div className="section-content">
         <div className="about-image-wrapper">
-          <img src={aboutImg} alt="About" className="about-image" />
+          <img
+            src={aboutImg}
+            alt="A woman in traditional white Ethiopian dress with red embroidery roasting coffee over a charcoal stove during a coffee ceremony"
+            className="about-image"
+          />
         </div>
         <div className="about-ditails">
           <h2 className="section-title">About Us</h2>
