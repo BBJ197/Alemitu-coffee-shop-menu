@@ -681,3 +681,79 @@ header .nav-bar {
     animation-iteration-count: 1 !important;
   }
 }
+
+/* Menu page (M3.2): neutral placeholder styling, refined in a later step */
+.menu-page {
+  max-width: 48rem;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 3rem;
+}
+
+.menu-page-header h1 {
+  margin: 0.5rem 0 1.5rem;
+}
+
+.menu-list {
+  list-style: none;
+  margin: 0 0 2rem;
+  padding: 0;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.menu-card {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 0.75rem;
+}
+
+.menu-card h3,
+.menu-card p {
+  margin: 0;
+}
+
+.menu-card.is-unavailable {
+  opacity: 0.55;
+}
+
+.menu-unavailable {
+  font-weight: 600;
+}
+
+.menu-price {
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.menu-skeleton {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.menu-skeleton-card {
+  height: 4.5rem;
+  border-radius: 0.75rem;
+  background: rgba(0, 0, 0, 0.08);
+  animation: menu-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes menu-pulse {
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .menu-skeleton-card {
+    animation: none;
+  }
+}
+
+.menu-error {
+  padding: 1rem;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 0.75rem;
+}
