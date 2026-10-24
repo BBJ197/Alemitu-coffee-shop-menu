@@ -21,6 +21,7 @@
     "@fortawesome/free-brands-svg-icons": "^7.3.1",
     "@fortawesome/free-regular-svg-icons": "^7.3.1",
     "@fortawesome/free-solid-svg-icons": "^7.3.1",
+    "@tanstack/react-query": "^5.104.5",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
     "swiper": "^14.3.0"
