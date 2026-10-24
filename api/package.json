@@ -7,7 +7,9 @@
     "migrate": "node --env-file=.env scripts/migrate.mjs",
     "dev": "node --env-file=.env --import tsx src/server.ts",
     "test": "vitest run",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "seed": "node --env-file=.env scripts/seed-dev.mjs seed",
+    "unseed": "node --env-file=.env scripts/seed-dev.mjs unseed"
   },
   "dependencies": {
     "@hono/node-server": "^2.1.5",
