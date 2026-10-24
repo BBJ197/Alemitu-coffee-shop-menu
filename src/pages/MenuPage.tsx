@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+﻿import { Link } from "react-router-dom";
 import { useMenu } from "../api/useMenu";
 import { formatEtb } from "../lib/format";
 
@@ -17,10 +17,10 @@ export default function MenuPage() {
 
   return (
     <main id="main" className="menu-page">
-      <header className="menu-page-header">
+      <div className="menu-page-header">
         <Link to="/">Back to home</Link>
         <h1>Menu</h1>
-      </header>
+      </div>
 
       {isPending && <Skeleton />}
 
