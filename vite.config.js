@@ -1,5 +1,5 @@
 import react from "@vitejs/plugin-react";
-import { defineConfig } from "vitest/config";
+import { configDefaults, defineConfig } from "vitest/config";
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -8,5 +8,7 @@ export default defineConfig({
     environment: "jsdom",
     setupFiles: "./src/test/setup.ts",
     css: false,
+    // The API has its own dependencies and its own CI job.
+    exclude: [...configDefaults.exclude, "api/**"],
   },
 });
