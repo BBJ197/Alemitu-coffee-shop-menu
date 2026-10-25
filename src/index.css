@@ -768,3 +768,15 @@ header .nav-bar {
   color: inherit;
   text-decoration: underline;
 }
+
+/* Language toggle (M3.4) */
+.menu-lang {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+:lang(am) {
+  font-family:
+    "Poppins", "Nirmala UI", "Noto Sans Ethiopic", "Abyssinica SIL", sans-serif;
+}
