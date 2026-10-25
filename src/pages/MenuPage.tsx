@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import type { Menu, MenuItem } from "../api/menu";
 import { useMenu } from "../api/useMenu";
 import {
   emptyFilters,
@@ -8,7 +9,7 @@ import {
   type MenuFilters,
 } from "../lib/filterMenu";
 import { formatEtb } from "../lib/format";
-import { pickOptional, pickText } from "../lib/language";
+import { pickOptional, pickText, type Lang } from "../lib/language";
 import { useLanguage } from "../lib/useLanguage";
 
 function Skeleton() {
@@ -21,6 +22,42 @@ function Skeleton() {
   );
 }
 
+function ItemCard({
+  item,
+  menu,
+  lang,
+}: {
+  item: MenuItem;
+  menu: Menu;
+  lang: Lang;
+}) {
+  const description = pickOptional(
+    item.descriptionEn,
+    item.descriptionAm,
+    lang,
+  );
+  const badges = menu.tags.filter((tag) => item.tagIds.includes(tag.id));
+  return (
+    <li className={item.isAvailable ? "menu-card" : "menu-card is-unavailable"}>
+      <div>
+        <h3>{pickText(item.nameEn, item.nameAm, lang)}</h3>
+        {description && <p className="menu-card-desc">{description}</p>}
+        {badges.length > 0 && (
+          <ul className="menu-badges">
+            {badges.map((tag) => (
+              <li key={tag.id} className="menu-badge">
+                {pickText(tag.nameEn, tag.nameAm, lang)}
+              </li>
+            ))}
+          </ul>
+        )}
+        {!item.isAvailable && <p className="menu-unavailable">Unavailable</p>}
+      </div>
+      <p className="menu-price">{formatEtb(item.priceEtb)}</p>
+    </li>
+  );
+}
+
 export default function MenuPage() {
   const { data, isPending, isError, refetch, isFetching } = useMenu();
   const [filters, setFilters] = useState<MenuFilters>(emptyFilters);
@@ -28,6 +65,9 @@ export default function MenuPage() {
 
   const visible = data ? filterItems(data, filters) : [];
   const active = hasActiveFilters(filters);
+  const popular = active
+    ? []
+    : visible.filter((item) => item.isFeatured && item.isAvailable);
 
   const toggleTag = (slug: string) =>
     setFilters((f) => ({
@@ -170,46 +210,36 @@ export default function MenuPage() {
             </p>
           )}
 
+          {popular.length > 0 && (
+            <section aria-labelledby="popular-heading" className="menu-popular">
+              <h2 id="popular-heading">Popular</h2>
+              <ul className="menu-list">
+                {popular.map((item) => (
+                  <ItemCard key={item.id} item={item} menu={data} lang={lang} />
+                ))}
+              </ul>
+            </section>
+          )}
+
           {data.categories.map((category) => {
             const items = visible.filter(
               (item) => item.categoryId === category.id,
             );
             if (items.length === 0) return null;
-            const categoryName = pickText(
-              category.nameEn,
-              category.nameAm,
-              lang,
-            );
             return (
               <section key={category.id} aria-labelledby={`cat-${category.id}`}>
-                <h2 id={`cat-${category.id}`}>{categoryName}</h2>
+                <h2 id={`cat-${category.id}`}>
+                  {pickText(category.nameEn, category.nameAm, lang)}
+                </h2>
                 <ul className="menu-list">
-                  {items.map((item) => {
-                    const description = pickOptional(
-                      item.descriptionEn,
-                      item.descriptionAm,
-                      lang,
-                    );
-                    return (
-                      <li
-                        key={item.id}
-                        className={
-                          item.isAvailable
-                            ? "menu-card"
-                            : "menu-card is-unavailable"
-                        }
-                      >
-                        <div>
-                          <h3>{pickText(item.nameEn, item.nameAm, lang)}</h3>
-                          {description && <p>{description}</p>}
-                          {!item.isAvailable && (
-                            <p className="menu-unavailable">Unavailable</p>
-                          )}
-                        </div>
-                        <p className="menu-price">{formatEtb(item.priceEtb)}</p>
-                      </li>
-                    );
-                  })}
+                  {items.map((item) => (
+                    <ItemCard
+                      key={item.id}
+                      item={item}
+                      menu={data}
+                      lang={lang}
+                    />
+                  ))}
                 </ul>
               </section>
             );
