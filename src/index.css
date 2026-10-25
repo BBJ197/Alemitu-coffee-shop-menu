@@ -780,3 +780,87 @@ header .nav-bar {
   font-family:
     "Poppins", "Nirmala UI", "Noto Sans Ethiopic", "Abyssinica SIL", sans-serif;
 }
+
+/* Menu filters (M3.3b) */
+.menu-filters {
+  position: sticky;
+  top: 0;
+  z-index: 4;
+  padding: 0.75rem 0;
+  background: #fff;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.menu-search-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.menu-search {
+  width: 100%;
+  min-height: 44px;
+  padding: 0 1rem;
+  font: inherit;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 0.75rem;
+  box-sizing: border-box;
+}
+
+.menu-chip-row {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  overflow-x: auto;
+  padding-bottom: 0.25rem;
+}
+
+.menu-chip,
+.menu-button {
+  min-height: 44px;
+  padding: 0 1rem;
+  font: inherit;
+  white-space: nowrap;
+  cursor: pointer;
+  color: inherit;
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 999px;
+}
+
+.menu-chip[aria-pressed="true"] {
+  background: var(--primary-color);
+  color: var(--white-color);
+  border-color: var(--primary-color);
+}
+
+.menu-chip:focus-visible,
+.menu-button:focus-visible,
+.menu-search:focus-visible {
+  outline: 3px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+.menu-button:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+.menu-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.menu-summary p {
+  margin: 0;
+}
+
+.menu-empty {
+  padding: 1rem 0;
+}
