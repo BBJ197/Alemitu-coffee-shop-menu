@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import type { Menu, MenuItem } from "../api/menu";
 import { useMenu } from "../api/useMenu";
+import MenuIcon from "../components/MenuIcon";
 import {
   emptyFilters,
   filterItems,
@@ -9,6 +10,7 @@ import {
   type MenuFilters,
 } from "../lib/filterMenu";
 import { formatEtb } from "../lib/format";
+import { iconForCategory, iconForTag } from "../lib/iconNames";
 import { pickOptional, pickText, type Lang } from "../lib/language";
 import { pickPhoto } from "../lib/photos";
 import { useLanguage } from "../lib/useLanguage";
@@ -48,34 +50,42 @@ function ItemCard({
   ]
     .filter(Boolean)
     .join(" ");
+  const price = <p className="menu-price">{formatEtb(item.priceEtb)}</p>;
   return (
     <li className={classes}>
       {photo && (
-        <img
-          className="menu-card-photo"
-          src={photo}
-          alt=""
-          width="400"
-          height="250"
-          loading="lazy"
-          decoding="async"
-        />
+        <div className="menu-card-media">
+          <img
+            className="menu-card-photo"
+            src={photo}
+            alt=""
+            width="400"
+            height="250"
+            loading="lazy"
+            decoding="async"
+          />
+          {price}
+        </div>
       )}
       <div className="menu-card-body">
         <h3>{pickText(item.nameEn, item.nameAm, lang)}</h3>
         {description && <p className="menu-card-desc">{description}</p>}
         {badges.length > 0 && (
           <ul className="menu-badges">
-            {badges.map((tag) => (
-              <li key={tag.id} className="menu-badge">
-                {pickText(tag.nameEn, tag.nameAm, lang)}
-              </li>
-            ))}
+            {badges.map((tag) => {
+              const icon = iconForTag(tag.slug);
+              return (
+                <li key={tag.id} className="menu-badge">
+                  {icon && <MenuIcon name={icon} size={14} />}
+                  {pickText(tag.nameEn, tag.nameAm, lang)}
+                </li>
+              );
+            })}
           </ul>
         )}
         {!item.isAvailable && <p className="menu-unavailable">Unavailable</p>}
+        {!photo && price}
       </div>
-      <p className="menu-price">{formatEtb(item.priceEtb)}</p>
     </li>
   );
 }
@@ -90,6 +100,7 @@ export default function MenuPage() {
   const popular = active
     ? []
     : visible.filter((item) => item.isFeatured && item.isAvailable);
+  const banner = pickPhoto(0);
 
   const toggleTag = (slug: string) =>
     setFilters((f) => ({
@@ -101,38 +112,65 @@ export default function MenuPage() {
 
   return (
     <main id="main" className="menu-page">
-      <div className="menu-page-header">
-        <div className="menu-page-header-inner">
-          <h1>Menu</h1>
-          <div className="menu-page-header-actions">
-            <Link to="/" aria-label="Back to home">
-              Home
+      <div className="menu-topbar">
+        <div className="menu-topbar-inner">
+          <Link to="/" className="menu-brand" aria-label="Alemitu Coffee home">
+            <MenuIcon name="cup" size={30} />
+            <span>Alemitu Coffee</span>
+          </Link>
+          <nav className="menu-topnav" aria-label="Main">
+            <Link to="/menu" aria-current="page">
+              Menu
             </Link>
-            <div className="menu-lang" role="group" aria-label="Language">
-              <button
-                type="button"
-                className="menu-chip"
-                lang="en"
-                aria-label="English"
-                aria-pressed={lang === "en"}
-                onClick={() => setLang("en")}
-              >
-                EN
-              </button>
-              <button
-                type="button"
-                className="menu-chip"
-                lang="am"
-                aria-label="Amharic"
-                aria-pressed={lang === "am"}
-                onClick={() => setLang("am")}
-              >
-                {"\u12A0\u121B"}
-              </button>
-            </div>
+            <a href="/#about">About</a>
+            <a href="/#contact">Contact</a>
+          </nav>
+          <div className="menu-lang" role="group" aria-label="Language">
+            <button
+              type="button"
+              className="menu-chip"
+              lang="en"
+              aria-label="English"
+              aria-pressed={lang === "en"}
+              onClick={() => setLang("en")}
+            >
+              EN
+            </button>
+            <button
+              type="button"
+              className="menu-chip"
+              lang="am"
+              aria-label="Amharic"
+              aria-pressed={lang === "am"}
+              onClick={() => setLang("am")}
+            >
+              {"\u12A0\u121B"}
+            </button>
           </div>
         </div>
       </div>
+
+      <section className="menu-banner" aria-labelledby="menu-title">
+        <div className="menu-banner-text">
+          <p className="menu-eyebrow">
+            Traditional taste &bull; Freshly brewed
+          </p>
+          <h1 id="menu-title">Our Menu</h1>
+          <p className="menu-banner-sub">
+            Authentic Ethiopian flavors, crafted with love.
+          </p>
+        </div>
+        {banner && (
+          <img
+            className="menu-banner-img"
+            src={banner}
+            alt=""
+            width="800"
+            height="300"
+            decoding="async"
+          />
+        )}
+      </section>
 
       {isPending && <Skeleton />}
 
@@ -160,35 +198,54 @@ export default function MenuPage() {
       {data && data.items.length > 0 && (
         <>
           <div className="menu-filters">
-            <label htmlFor="menu-search" className="menu-search-label">
-              Search the menu
-            </label>
-            <input
-              id="menu-search"
-              type="search"
-              className="menu-search"
-              placeholder="Search by name, description or category"
-              value={filters.query}
-              onChange={(e) =>
-                setFilters((f) => ({ ...f, query: e.target.value }))
-              }
-            />
+            <div className="menu-search-wrap">
+              <span className="menu-search-icon">
+                <MenuIcon name="search" size={20} />
+              </span>
+              <label htmlFor="menu-search" className="menu-search-label">
+                Search the menu
+              </label>
+              <input
+                id="menu-search"
+                type="search"
+                className="menu-search"
+                placeholder="Search by name, description or category"
+                value={filters.query}
+                onChange={(e) =>
+                  setFilters((f) => ({ ...f, query: e.target.value }))
+                }
+              />
+            </div>
             <div
               className="menu-chip-row"
               role="group"
               aria-label="Dietary and temperature filters"
             >
-              {data.tags.map((tag) => (
-                <button
-                  key={tag.id}
-                  type="button"
-                  className="menu-chip"
-                  aria-pressed={filters.tagSlugs.includes(tag.slug)}
-                  onClick={() => toggleTag(tag.slug)}
-                >
-                  {pickText(tag.nameEn, tag.nameAm, lang)}
-                </button>
-              ))}
+              <button
+                type="button"
+                className="menu-chip"
+                aria-label="All dietary options"
+                aria-pressed={filters.tagSlugs.length === 0}
+                onClick={() => setFilters((f) => ({ ...f, tagSlugs: [] }))}
+              >
+                <MenuIcon name="grid" size={16} />
+                All
+              </button>
+              {data.tags.map((tag) => {
+                const icon = iconForTag(tag.slug);
+                return (
+                  <button
+                    key={tag.id}
+                    type="button"
+                    className="menu-chip"
+                    aria-pressed={filters.tagSlugs.includes(tag.slug)}
+                    onClick={() => toggleTag(tag.slug)}
+                  >
+                    {icon && <MenuIcon name={icon} size={16} />}
+                    {pickText(tag.nameEn, tag.nameAm, lang)}
+                  </button>
+                );
+              })}
             </div>
           </div>
 
@@ -200,6 +257,7 @@ export default function MenuPage() {
                 aria-pressed={filters.categoryId === null}
                 onClick={() => setFilters((f) => ({ ...f, categoryId: null }))}
               >
+                <MenuIcon name="grid" size={16} />
                 All
               </button>
               {data.categories.map((category) => (
@@ -212,6 +270,7 @@ export default function MenuPage() {
                     setFilters((f) => ({ ...f, categoryId: category.id }))
                   }
                 >
+                  <MenuIcon name={iconForCategory(category.nameEn)} size={16} />
                   {pickText(category.nameEn, category.nameAm, lang)}
                 </button>
               ))}
@@ -241,7 +300,13 @@ export default function MenuPage() {
 
           {popular.length > 0 && (
             <section aria-labelledby="popular-heading" className="menu-popular">
-              <h2 id="popular-heading">Popular</h2>
+              <div className="menu-section-head">
+                <MenuIcon name="star" size={28} />
+                <div>
+                  <h2 id="popular-heading">Popular</h2>
+                  <p className="menu-section-sub">Our most loved items</p>
+                </div>
+              </div>
               <ul className="menu-list">
                 {popular.map((item) => (
                   <ItemCard key={item.id} item={item} menu={data} lang={lang} />
@@ -257,9 +322,12 @@ export default function MenuPage() {
             if (items.length === 0) return null;
             return (
               <section key={category.id} aria-labelledby={`cat-${category.id}`}>
-                <h2 id={`cat-${category.id}`}>
-                  {pickText(category.nameEn, category.nameAm, lang)}
-                </h2>
+                <div className="menu-section-head">
+                  <MenuIcon name={iconForCategory(category.nameEn)} size={28} />
+                  <h2 id={`cat-${category.id}`}>
+                    {pickText(category.nameEn, category.nameAm, lang)}
+                  </h2>
+                </div>
                 <ul className="menu-list">
                   {items.map((item) => (
                     <ItemCard
