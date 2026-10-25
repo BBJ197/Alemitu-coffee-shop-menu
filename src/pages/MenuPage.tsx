@@ -10,6 +10,7 @@ import {
 } from "../lib/filterMenu";
 import { formatEtb } from "../lib/format";
 import { pickOptional, pickText, type Lang } from "../lib/language";
+import { pickPhoto } from "../lib/photos";
 import { useLanguage } from "../lib/useLanguage";
 
 function Skeleton() {
@@ -37,9 +38,30 @@ function ItemCard({
     lang,
   );
   const badges = menu.tags.filter((tag) => item.tagIds.includes(tag.id));
+  const photo = pickPhoto(
+    menu.categories.findIndex((c) => c.id === item.categoryId),
+  );
+  const classes = [
+    "menu-card",
+    item.isAvailable ? "" : "is-unavailable",
+    photo ? "" : "no-photo",
+  ]
+    .filter(Boolean)
+    .join(" ");
   return (
-    <li className={item.isAvailable ? "menu-card" : "menu-card is-unavailable"}>
-      <div>
+    <li className={classes}>
+      {photo && (
+        <img
+          className="menu-card-photo"
+          src={photo}
+          alt=""
+          width="400"
+          height="250"
+          loading="lazy"
+          decoding="async"
+        />
+      )}
+      <div className="menu-card-body">
         <h3>{pickText(item.nameEn, item.nameAm, lang)}</h3>
         {description && <p className="menu-card-desc">{description}</p>}
         {badges.length > 0 && (
@@ -80,29 +102,35 @@ export default function MenuPage() {
   return (
     <main id="main" className="menu-page">
       <div className="menu-page-header">
-        <Link to="/">Back to home</Link>
-        <h1>Menu</h1>
-        <div className="menu-lang" role="group" aria-label="Language">
-          <button
-            type="button"
-            className="menu-chip"
-            lang="en"
-            aria-label="English"
-            aria-pressed={lang === "en"}
-            onClick={() => setLang("en")}
-          >
-            EN
-          </button>
-          <button
-            type="button"
-            className="menu-chip"
-            lang="am"
-            aria-label="Amharic"
-            aria-pressed={lang === "am"}
-            onClick={() => setLang("am")}
-          >
-            {"\u12A0\u121B"}
-          </button>
+        <div className="menu-page-header-inner">
+          <h1>Menu</h1>
+          <div className="menu-page-header-actions">
+            <Link to="/" aria-label="Back to home">
+              Home
+            </Link>
+            <div className="menu-lang" role="group" aria-label="Language">
+              <button
+                type="button"
+                className="menu-chip"
+                lang="en"
+                aria-label="English"
+                aria-pressed={lang === "en"}
+                onClick={() => setLang("en")}
+              >
+                EN
+              </button>
+              <button
+                type="button"
+                className="menu-chip"
+                lang="am"
+                aria-label="Amharic"
+                aria-pressed={lang === "am"}
+                onClick={() => setLang("am")}
+              >
+                {"\u12A0\u121B"}
+              </button>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -145,7 +173,26 @@ export default function MenuPage() {
                 setFilters((f) => ({ ...f, query: e.target.value }))
               }
             />
+            <div
+              className="menu-chip-row"
+              role="group"
+              aria-label="Dietary and temperature filters"
+            >
+              {data.tags.map((tag) => (
+                <button
+                  key={tag.id}
+                  type="button"
+                  className="menu-chip"
+                  aria-pressed={filters.tagSlugs.includes(tag.slug)}
+                  onClick={() => toggleTag(tag.slug)}
+                >
+                  {pickText(tag.nameEn, tag.nameAm, lang)}
+                </button>
+              ))}
+            </div>
+          </div>
 
+          <div className="menu-category-bar">
             <div className="menu-chip-row" role="group" aria-label="Categories">
               <button
                 type="button"
@@ -166,24 +213,6 @@ export default function MenuPage() {
                   }
                 >
                   {pickText(category.nameEn, category.nameAm, lang)}
-                </button>
-              ))}
-            </div>
-
-            <div
-              className="menu-chip-row"
-              role="group"
-              aria-label="Dietary and temperature filters"
-            >
-              {data.tags.map((tag) => (
-                <button
-                  key={tag.id}
-                  type="button"
-                  className="menu-chip"
-                  aria-pressed={filters.tagSlugs.includes(tag.slug)}
-                  onClick={() => toggleTag(tag.slug)}
-                >
-                  {pickText(tag.nameEn, tag.nameAm, lang)}
                 </button>
               ))}
             </div>
