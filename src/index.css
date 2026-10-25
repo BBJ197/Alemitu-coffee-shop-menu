@@ -999,3 +999,53 @@ header .nav-bar {
     transform: none;
   }
 }
+
+/* Menu layout (M3.5b): full-width bands, content at 80% width */
+.menu-page {
+  --menu-gutter: max(1rem, calc((100% - min(80%, 72rem)) / 2));
+  max-width: none;
+  margin: 0;
+  padding: 0 0 3rem;
+}
+
+@media (max-width: 640px) {
+  .menu-page {
+    --menu-gutter: 1rem;
+  }
+}
+
+.menu-page-header {
+  margin: 0 0 1rem;
+  padding: 1.5rem var(--menu-gutter) 1.25rem;
+  border-radius: 0;
+}
+
+.menu-page-header h1 {
+  font-size: 2.75rem;
+  line-height: 1.1;
+}
+
+.menu-filters {
+  padding: 0.75rem var(--menu-gutter);
+}
+
+.menu-chip {
+  flex-shrink: 0;
+}
+
+.menu-chip-row {
+  scrollbar-width: thin;
+}
+
+.menu-page > section,
+.menu-summary,
+.menu-empty,
+.menu-error,
+.menu-skeleton,
+.menu-page > p {
+  margin-inline: var(--menu-gutter);
+}
+
+.menu-list {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
+}
