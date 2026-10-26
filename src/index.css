@@ -1487,3 +1487,14 @@ header .nav-bar {
     padding: 1rem 1.25rem;
   }
 }
+
+/* Menu banner fix (M3.5e): full-bleed banner, text clear of the photo */
+.menu-page > section.menu-banner {
+  margin-inline: 0;
+}
+
+@media (min-width: 640px) {
+  .menu-banner-text {
+    max-width: min(32rem, 50%);
+  }
+}
