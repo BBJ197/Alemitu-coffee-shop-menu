@@ -1,13 +1,42 @@
 import { Hono } from "hono";
 import { cors } from "hono/cors";
+import {
+  LoginLimiter,
+  SESSION_COOKIE,
+  clearSessionCookie,
+  createSession,
+  endSession,
+  getCookie,
+  requireAdmin,
+  setSessionCookie,
+} from "./auth";
 import type { Db } from "./db";
+import { hashPassword, verifyPassword } from "./password";
 
 type Row = Record<string, unknown>;
 
-export function createApp(db: Db, opts: { corsOrigin: string }) {
-  const app = new Hono();
+const sqlText = (value: string) => `'${value.replace(/'/g, "''")}'`;
 
-  app.use("/api/*", cors({ origin: opts.corsOrigin, allowMethods: ["GET"] }));
+export interface AppOptions {
+  corsOrigin: string;
+  secureCookies?: boolean;
+  limiter?: LoginLimiter;
+}
+
+export function createApp(db: Db, opts: AppOptions) {
+  const app = new Hono();
+  const limiter = opts.limiter ?? new LoginLimiter();
+  const secure = opts.secureCookies ?? false;
+  let dummyHash: Promise<string> | undefined;
+
+  app.use(
+    "/api/*",
+    cors({
+      origin: opts.corsOrigin,
+      credentials: true,
+      allowMethods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+    }),
+  );
 
   app.get("/api/health", (c) => c.json({ ok: true }));
 
@@ -73,8 +102,60 @@ export function createApp(db: Db, opts: { corsOrigin: string }) {
     });
   });
 
-  // Placeholder until real login (M4): every admin request is rejected.
-  app.all("/api/admin/*", (c) => c.json({ error: "unauthorized" }, 401));
+  app.post("/api/admin/login", async (c) => {
+    const origin = c.req.header("origin");
+    if (origin && origin !== opts.corsOrigin)
+      return c.json({ error: "forbidden" }, 403);
+
+    const body = (await c.req.json().catch(() => null)) as {
+      email?: unknown;
+      password?: unknown;
+    } | null;
+    const email =
+      typeof body?.email === "string" ? body.email.trim().toLowerCase() : "";
+    const password = typeof body?.password === "string" ? body.password : "";
+    if (!email || !password || email.length > 254 || password.length > 200) {
+      return c.json({ error: "invalid_credentials" }, 401);
+    }
+
+    const ip =
+      c.req.header("x-forwarded-for")?.split(",")[0]?.trim() ?? "local";
+    const key = `${ip}|${email}`;
+    if (limiter.isBlocked(key))
+      return c.json({ error: "too_many_attempts" }, 429);
+
+    const result = await db.query(
+      `select id, password_hash from admins where email = ${sqlText(email)}`,
+    );
+    const admin = result.rows[0];
+    dummyHash ??= hashPassword("dummy-password-for-timing");
+    const ok = await verifyPassword(
+      password,
+      admin ? (admin.password_hash as string) : await dummyHash,
+    );
+
+    if (!admin || !ok) {
+      limiter.recordFailure(key);
+      return c.json({ error: "invalid_credentials" }, 401);
+    }
+
+    limiter.reset(key);
+    setSessionCookie(c, await createSession(db, admin.id as string), secure);
+    return c.json({ email });
+  });
+
+  app.post("/api/admin/logout", async (c) => {
+    await endSession(db, getCookie(c, SESSION_COOKIE));
+    clearSessionCookie(c);
+    return c.json({ ok: true });
+  });
+
+  // Everything else under /api/admin needs a valid session. Write routes arrive in M5.
+  app.use("/api/admin/*", requireAdmin(db));
+
+  app.get("/api/admin/me", (c) =>
+    c.json({ email: (c.get("admin" as never) as { email: string }).email }),
+  );
 
   app.notFound((c) => c.json({ error: "not_found" }, 404));
   app.onError((err, c) => {
