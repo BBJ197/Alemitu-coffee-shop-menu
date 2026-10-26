@@ -21,7 +21,7 @@ describe("App routes", () => {
       </MemoryRouter>,
     );
     expect(
-      screen.getByRole("heading", { level: 1, name: "Menu" }),
+      screen.getByRole("heading", { level: 1, name: "Our Menu" }),
     ).toBeTruthy();
   });
 });
