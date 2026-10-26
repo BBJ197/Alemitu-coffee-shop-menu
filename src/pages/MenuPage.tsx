@@ -224,12 +224,12 @@ export default function MenuPage() {
               <button
                 type="button"
                 className="menu-chip"
-                aria-label="All dietary options"
+                aria-label="Any diet"
                 aria-pressed={filters.tagSlugs.length === 0}
                 onClick={() => setFilters((f) => ({ ...f, tagSlugs: [] }))}
               >
                 <MenuIcon name="grid" size={16} />
-                All
+                Any diet
               </button>
               {data.tags.map((tag) => {
                 const icon = iconForTag(tag.slug);
