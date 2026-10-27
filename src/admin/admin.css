@@ -1,0 +1,145 @@
+/* Admin-only styles. Imported by AdminRoutes, so they load with the lazy admin chunk. */
+.admin-auth {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: 1.5rem 1rem;
+  background: var(--light-pink-color, #faf4f5);
+}
+
+.admin-card {
+  width: 100%;
+  max-width: 24rem;
+  display: grid;
+  gap: 1rem;
+  padding: 2rem 1.5rem;
+  background: #fff;
+  border: 1px solid var(--medium-gray-color, #ccc);
+  border-radius: var(--border-radius-s, 8px);
+}
+
+.admin-card h1,
+.admin-main h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: var(--primary-color, #3b141c);
+}
+
+.admin-card p {
+  margin: 0;
+  color: #5b4a4e;
+}
+
+.admin-field {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.admin-field label {
+  font-weight: var(--font-weight-medium, 500);
+}
+
+.admin-field input {
+  font: inherit;
+  padding: 0.7rem 0.8rem;
+  color: var(--dark-color, #252525);
+  background: #fff;
+  border: 1px solid #8a7b7f;
+  border-radius: 6px;
+}
+
+.admin-button {
+  font: inherit;
+  font-weight: var(--font-weight-semibold, 600);
+  padding: 0.75rem 1rem;
+  color: #fff;
+  background: var(--primary-color, #3b141c);
+  border: 1px solid var(--primary-color, #3b141c);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.admin-button:disabled {
+  opacity: 0.65;
+  cursor: progress;
+}
+
+.admin-button--quiet {
+  padding: 0.45rem 0.8rem;
+  color: var(--primary-color, #3b141c);
+  background: transparent;
+}
+
+.admin-link {
+  color: var(--primary-color, #3b141c);
+  text-decoration: underline;
+}
+
+.admin-field input:focus-visible,
+.admin-button:focus-visible,
+.admin-link:focus-visible,
+.admin-brand:focus-visible {
+  outline: 3px solid var(--primary-color, #3b141c);
+  outline-offset: 2px;
+}
+
+.admin-error {
+  margin: 0;
+  padding: 0.65rem 0.8rem;
+  color: #7a1712;
+  background: #fdecea;
+  border-left: 4px solid #b3261e;
+  border-radius: 4px;
+}
+
+.admin-error--bar {
+  margin: 0.75rem 1rem 0;
+}
+
+.admin-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1rem;
+  padding: 0.75rem 1rem;
+  color: #fff;
+  background: var(--primary-color, #3b141c);
+}
+
+.admin-brand {
+  color: #fff;
+  font-weight: var(--font-weight-semibold, 600);
+  text-decoration: none;
+}
+
+.admin-user {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.admin-email {
+  font-size: var(--font-size-s, 0.9rem);
+  overflow-wrap: anywhere;
+}
+
+.admin-header .admin-button--quiet {
+  color: #fff;
+  border-color: #fff;
+}
+
+.admin-header :focus-visible {
+  outline-color: #fff;
+}
+
+.admin-main {
+  max-width: 60rem;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 3rem;
+}
+
+.admin-main p {
+  max-width: 60ch;
+}
