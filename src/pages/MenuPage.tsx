@@ -12,6 +12,7 @@ import {
 import { formatEtb } from "../lib/format";
 import { iconForCategory, iconForTag } from "../lib/iconNames";
 import { pickOptional, pickText, type Lang } from "../lib/language";
+import { photoUrl } from "../lib/photoUrl";
 import { pickPhoto } from "../lib/photos";
 import { useLanguage } from "../lib/useLanguage";
 
@@ -40,9 +41,10 @@ function ItemCard({
     lang,
   );
   const badges = menu.tags.filter((tag) => item.tagIds.includes(tag.id));
-  const photo = pickPhoto(
-    menu.categories.findIndex((c) => c.id === item.categoryId),
-  );
+  // The admin's uploaded photo when there is one, else the bundled test photo.
+  const photo =
+    photoUrl(item.imagePath) ??
+    pickPhoto(menu.categories.findIndex((c) => c.id === item.categoryId));
   const classes = [
     "menu-card",
     item.isAvailable ? "" : "is-unavailable",
