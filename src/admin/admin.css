@@ -391,3 +391,16 @@
   max-width: 28rem;
   margin: 1rem 0;
 }
+
+.admin-photo-preview {
+  display: block;
+  max-width: 10rem;
+  height: auto;
+  object-fit: cover;
+  border: 1px solid var(--medium-gray-color, #ccc);
+  border-radius: 6px;
+}
+
+.admin-field input[type="file"] {
+  padding: 0.5rem;
+}
