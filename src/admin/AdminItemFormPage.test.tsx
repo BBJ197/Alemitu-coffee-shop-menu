@@ -91,7 +91,9 @@ describe("add and edit item form", () => {
     await user.click(await screen.findByRole("button", { name: "Add item" }));
     expect(await screen.findByText("Name is required")).toBeInTheDocument();
     expect(screen.getByText("Price is required")).toBeInTheDocument();
-    expect(screen.getByText("Choose a category")).toBeInTheDocument();
+    expect(
+      screen.getByText("Choose a category", { selector: "p" }),
+    ).toBeInTheDocument();
     expect(screen.getByRole("alert")).toHaveTextContent(
       "Fix the highlighted fields",
     );
