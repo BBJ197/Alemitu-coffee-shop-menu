@@ -13,6 +13,7 @@ import {
 import type { Db } from "./db";
 import { adminCategories } from "./adminCategories";
 import { adminItems } from "./adminItems";
+import { adminTags } from "./adminTags";
 import { changePassword } from "./changePassword";
 import { hashPassword, verifyPassword } from "./password";
 
@@ -166,6 +167,7 @@ export function createApp(db: Db, opts: AppOptions) {
 
   app.route("/api/admin/categories", adminCategories(db, opts.corsOrigin));
   app.route("/api/admin/items", adminItems(db, opts.corsOrigin));
+  app.route("/api/admin/tags", adminTags(db, opts.corsOrigin));
 
   app.notFound((c) => c.json({ error: "not_found" }, 404));
   app.onError((err, c) => {
