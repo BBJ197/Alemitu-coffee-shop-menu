@@ -1,4 +1,10 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useEffect } from "react";
+import {
+  useMutation,
+  useQuery,
+  useQueryClient,
+  type QueryClient,
+} from "@tanstack/react-query";
 import {
   AdminApiError,
   changePassword,
@@ -9,6 +15,19 @@ import {
 } from "./api";
 
 export const sessionQueryKey = ["admin", "session"] as const;
+
+/** A 401 from any admin call means the session ended: send the admin back to sign-in. */
+export function expireIfUnauthorized(queryClient: QueryClient, error: unknown) {
+  if (error instanceof AdminApiError && error.status === 401)
+    queryClient.setQueryData(sessionQueryKey, null);
+}
+
+export function useExpireOnUnauthorized(error: unknown) {
+  const queryClient = useQueryClient();
+  useEffect(() => {
+    expireIfUnauthorized(queryClient, error);
+  }, [queryClient, error]);
+}
 
 export function useAdminSession() {
   return useQuery({
@@ -36,6 +55,11 @@ export function useLogout() {
     mutationFn: logout,
     onSuccess: () => {
       queryClient.setQueryData(sessionQueryKey, null);
+      // Drop cached admin data (items, categories) along with the session.
+      queryClient.removeQueries({
+        predicate: (q) =>
+          q.queryKey[0] === "admin" && q.queryKey[1] !== "session",
+      });
     },
   });
 }
@@ -45,10 +69,6 @@ export function useChangePassword() {
   return useMutation({
     mutationFn: (values: { currentPassword: string; newPassword: string }) =>
       changePassword(values.currentPassword, values.newPassword),
-    onError: (error) => {
-      // The session ran out: send the admin back to the sign-in page.
-      if (error instanceof AdminApiError && error.status === 401)
-        queryClient.setQueryData(sessionQueryKey, null);
-    },
+    onError: (error) => expireIfUnauthorized(queryClient, error),
   });
 }
