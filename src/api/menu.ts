@@ -1,3 +1,5 @@
+import { API_BASE } from "./base";
+
 export interface MenuCategory {
   id: string;
   nameEn: string;
@@ -44,10 +46,6 @@ export class ApiError extends Error {
     this.status = status;
   }
 }
-
-const API_BASE =
-  import.meta.env.VITE_API_URL ||
-  (import.meta.env.DEV ? "http://localhost:3001" : "");
 
 export async function fetchMenu(signal?: AbortSignal): Promise<Menu> {
   const res = await fetch(`${API_BASE}/api/menu`, { signal });
