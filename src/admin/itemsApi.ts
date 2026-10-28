@@ -11,6 +11,7 @@ export interface AdminCategory {
   nameAm: string | null;
   sortOrder: number;
   isVisible: boolean;
+  itemCount?: number;
 }
 
 /** What the create and update routes accept. */
@@ -29,7 +30,10 @@ export interface ItemPayload {
   tagIds: string[];
 }
 
-async function call(path: string, init: RequestInit = {}): Promise<Response> {
+export async function call(
+  path: string,
+  init: RequestInit = {},
+): Promise<Response> {
   const res = await fetch(`${API_BASE}/api/admin${path}`, {
     credentials: "include",
     ...init,
