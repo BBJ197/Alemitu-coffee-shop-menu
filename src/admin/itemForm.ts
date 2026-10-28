@@ -15,7 +15,7 @@ export interface ItemFormValues {
   availableFrom: string;
   availableTo: string;
   tagIds: string[];
-  /** Not editable yet: carried through so saving never removes a photo. */
+  /** Path of the uploaded photo, or null. Set by the photo field. */
   imagePath: string | null;
 }
 

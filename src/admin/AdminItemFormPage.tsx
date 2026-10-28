@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import type { MenuTag } from "../api/menu";
 import { useMenu } from "../api/useMenu";
 import { useExpireOnUnauthorized } from "./hooks";
+import PhotoField from "./PhotoField";
 import {
   emptyItemForm,
   fromItem,
@@ -165,6 +166,12 @@ function ItemForm(props: {
           {...aria("item-price", errors.price)}
         />
       </Field>
+
+      <PhotoField
+        path={values.imagePath}
+        itemName={values.nameEn}
+        onChange={(path) => set("imagePath", path)}
+      />
 
       <fieldset className="admin-fieldset">
         <legend>Serving hours</legend>
