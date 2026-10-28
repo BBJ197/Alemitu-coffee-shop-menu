@@ -32,7 +32,7 @@ async function withApi(fn: (ctx: Ctx) => Promise<void>) {
     );
     const token = await createSession(txDb, admin.rows[0].id as string);
     const app = createApp(txDb, { corsOrigin: ORIGIN });
-    const send: Ctx["send"] = (method, path, body) =>
+    const send: Ctx["send"] = async (method, path, body) =>
       app.request(`/api/admin/items${path}`, {
         method,
         headers: {
