@@ -2,6 +2,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import "./admin.css";
 import AdminHome from "./AdminHome";
 import AdminLayout from "./AdminLayout";
+import AdminItemsPage from "./AdminItemsPage";
 import AdminLoginPage from "./AdminLoginPage";
 import AdminSettingsPage from "./AdminSettingsPage";
 import RequireAdmin from "./RequireAdmin";
@@ -14,6 +15,7 @@ export default function AdminRoutes() {
       <Route element={<RequireAdmin />}>
         <Route element={<AdminLayout />}>
           <Route index element={<AdminHome />} />
+          <Route path="items" element={<AdminItemsPage />} />
           <Route path="settings" element={<AdminSettingsPage />} />
         </Route>
       </Route>
