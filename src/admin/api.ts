@@ -8,21 +8,34 @@ export class AdminApiError extends Error {
   readonly status: number;
   /** Machine-readable code from the API, for example "invalid_credentials". */
   readonly code: string | null;
-  constructor(status: number, code: string | null) {
+  /** Per-field messages when the API answers "validation_failed". */
+  readonly fields: Record<string, string[]>;
+  constructor(
+    status: number,
+    code: string | null,
+    fields: Record<string, string[]> = {},
+  ) {
     super(`Admin request failed with status ${status}`);
     this.name = "AdminApiError";
     this.status = status;
     this.code = code;
+    this.fields = fields;
   }
 }
 
 export async function errorFrom(res: Response): Promise<AdminApiError> {
   const body = (await res.json().catch(() => null)) as {
     error?: unknown;
+    fields?: unknown;
   } | null;
+  const fields =
+    body && typeof body.fields === "object" && body.fields !== null
+      ? (body.fields as Record<string, string[]>)
+      : {};
   return new AdminApiError(
     res.status,
     typeof body?.error === "string" ? body.error : null,
+    fields,
   );
 }
 

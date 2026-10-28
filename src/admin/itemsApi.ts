@@ -13,6 +13,22 @@ export interface AdminCategory {
   isVisible: boolean;
 }
 
+/** What the create and update routes accept. */
+export interface ItemPayload {
+  categoryId: string;
+  nameEn: string;
+  nameAm: string;
+  descriptionEn: string;
+  descriptionAm: string;
+  priceEtb: number;
+  imagePath: string | null;
+  isAvailable: boolean;
+  isFeatured: boolean;
+  availableFrom: string | null;
+  availableTo: string | null;
+  tagIds: string[];
+}
+
 async function call(path: string, init: RequestInit = {}): Promise<Response> {
   const res = await fetch(`${API_BASE}/api/admin${path}`, {
     credentials: "include",
@@ -35,6 +51,25 @@ export async function fetchAdminCategories(
   return (await (
     await call("/categories", { signal })
   ).json()) as AdminCategory[];
+}
+
+export async function createItem(payload: ItemPayload): Promise<AdminItem> {
+  const res = await call("/items", {
+    method: "POST",
+    body: JSON.stringify(payload),
+  });
+  return (await res.json()) as AdminItem;
+}
+
+export async function updateItem(
+  id: string,
+  payload: ItemPayload,
+): Promise<AdminItem> {
+  const res = await call(`/items/${id}`, {
+    method: "PUT",
+    body: JSON.stringify(payload),
+  });
+  return (await res.json()) as AdminItem;
 }
 
 export async function setItemAvailability(

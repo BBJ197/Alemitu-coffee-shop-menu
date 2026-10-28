@@ -196,3 +196,65 @@ describe("admin items page", () => {
     ).toBeInTheDocument();
   });
 });
+
+describe("admin items filters and links", () => {
+  beforeEach(() => {
+    vi.resetAllMocks();
+    vi.mocked(api.fetchSession).mockResolvedValue({ email: "abebe@admin.com" });
+    vi.mocked(itemsApi.fetchAdminItems).mockResolvedValue([macchiato, iced]);
+    vi.mocked(itemsApi.fetchAdminCategories).mockResolvedValue(categories);
+  });
+
+  it("searches by name and shows how many match", async () => {
+    const user = userEvent.setup();
+    renderItems();
+    await user.type(await screen.findByLabelText("Search items"), "iced");
+    expect(screen.getByText("Iced coffee")).toBeInTheDocument();
+    expect(screen.queryByText("Macchiato")).toBeNull();
+    expect(screen.getByText("Showing 1 of 2 items.")).toBeInTheDocument();
+  });
+
+  it("searches by category name", async () => {
+    const user = userEvent.setup();
+    renderItems();
+    await user.type(await screen.findByLabelText("Search items"), "hot");
+    expect(screen.getByText("Macchiato")).toBeInTheDocument();
+    expect(screen.queryByText("Iced coffee")).toBeNull();
+  });
+
+  it("filters by status", async () => {
+    const user = userEvent.setup();
+    renderItems();
+    await user.selectOptions(
+      await screen.findByLabelText("Show"),
+      "Only unavailable",
+    );
+    expect(screen.getByText("Iced coffee")).toBeInTheDocument();
+    expect(screen.queryByText("Macchiato")).toBeNull();
+  });
+
+  it("combines filters, shows an empty state and clears them", async () => {
+    const user = userEvent.setup();
+    renderItems();
+    await user.type(await screen.findByLabelText("Search items"), "macchiato");
+    await user.selectOptions(screen.getByLabelText("Show"), "Only unavailable");
+    expect(
+      screen.getByText("No items match your filters."),
+    ).toBeInTheDocument();
+
+    await user.click(screen.getByRole("button", { name: "Clear filters" }));
+    expect(screen.getByText("Macchiato")).toBeInTheDocument();
+    expect(screen.getByText("Iced coffee")).toBeInTheDocument();
+    expect(screen.getByLabelText("Search items")).toHaveValue("");
+  });
+
+  it("links to the add and edit forms", async () => {
+    renderItems();
+    expect(
+      await screen.findByRole("link", { name: "Add item" }),
+    ).toHaveAttribute("href", "/admin/items/new");
+    expect(
+      screen.getByRole("link", { name: "Edit: Macchiato" }),
+    ).toHaveAttribute("href", "/admin/items/i1/edit");
+  });
+});

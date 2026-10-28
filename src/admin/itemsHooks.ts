@@ -1,11 +1,14 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { expireIfUnauthorized } from "./hooks";
 import {
+  createItem,
   deleteItem,
   fetchAdminCategories,
   fetchAdminItems,
   setItemAvailability,
+  updateItem,
   type AdminItem,
+  type ItemPayload,
 } from "./itemsApi";
 
 export const itemsQueryKey = ["admin", "items"] as const;
@@ -52,6 +55,30 @@ export function useDeleteItem() {
       );
       void queryClient.invalidateQueries({ queryKey: ["menu"] });
     },
+    onError: (error) => expireIfUnauthorized(queryClient, error),
+  });
+}
+
+function refreshAfterSave(queryClient: ReturnType<typeof useQueryClient>) {
+  void queryClient.invalidateQueries({ queryKey: itemsQueryKey });
+  void queryClient.invalidateQueries({ queryKey: ["menu"] });
+}
+
+export function useCreateItem() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (payload: ItemPayload) => createItem(payload),
+    onSuccess: () => refreshAfterSave(queryClient),
+    onError: (error) => expireIfUnauthorized(queryClient, error),
+  });
+}
+
+export function useUpdateItem() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (values: { id: string; payload: ItemPayload }) =>
+      updateItem(values.id, values.payload),
+    onSuccess: () => refreshAfterSave(queryClient),
     onError: (error) => expireIfUnauthorized(queryClient, error),
   });
 }
