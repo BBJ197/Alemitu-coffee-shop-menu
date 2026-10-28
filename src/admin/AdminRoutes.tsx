@@ -1,5 +1,6 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import "./admin.css";
+import AdminCategoriesPage from "./AdminCategoriesPage";
 import AdminHome from "./AdminHome";
 import AdminLayout from "./AdminLayout";
 import AdminItemFormPage from "./AdminItemFormPage";
@@ -19,6 +20,7 @@ export default function AdminRoutes() {
           <Route path="items" element={<AdminItemsPage />} />
           <Route path="items/new" element={<AdminItemFormPage />} />
           <Route path="items/:id/edit" element={<AdminItemFormPage />} />
+          <Route path="categories" element={<AdminCategoriesPage />} />
           <Route path="settings" element={<AdminSettingsPage />} />
         </Route>
       </Route>
