@@ -11,6 +11,7 @@ import {
   setSessionCookie,
 } from "./auth";
 import type { Db } from "./db";
+import { adminItems } from "./adminItems";
 import { changePassword } from "./changePassword";
 import { hashPassword, verifyPassword } from "./password";
 
@@ -161,6 +162,8 @@ export function createApp(db: Db, opts: AppOptions) {
     "/api/admin/password",
     changePassword(db, { corsOrigin: opts.corsOrigin, limiter }),
   );
+
+  app.route("/api/admin/items", adminItems(db, opts.corsOrigin));
 
   app.notFound((c) => c.json({ error: "not_found" }, 404));
   app.onError((err, c) => {
