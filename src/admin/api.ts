@@ -60,3 +60,16 @@ export async function logout(): Promise<void> {
   });
   if (!res.ok) throw await errorFrom(res);
 }
+
+export async function changePassword(
+  currentPassword: string,
+  newPassword: string,
+): Promise<void> {
+  const res = await fetch(`${API_BASE}/api/admin/password`, {
+    method: "POST",
+    credentials: "include",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ currentPassword, newPassword }),
+  });
+  if (!res.ok) throw await errorFrom(res);
+}

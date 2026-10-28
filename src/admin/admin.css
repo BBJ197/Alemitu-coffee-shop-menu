@@ -143,3 +143,43 @@
 .admin-main p {
   max-width: 60ch;
 }
+
+.admin-form {
+  display: grid;
+  gap: 1rem;
+  max-width: 24rem;
+  margin-top: 1.25rem;
+}
+
+.admin-form [role="status"]:empty {
+  display: none;
+}
+
+.admin-success {
+  margin: 0;
+  padding: 0.65rem 0.8rem;
+  color: #14532d;
+  background: #e8f5ec;
+  border-left: 4px solid #1f7a3f;
+  border-radius: 4px;
+}
+
+.admin-nav {
+  display: flex;
+  gap: 1rem;
+}
+
+.admin-nav a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.admin-nav a[aria-current="page"] {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.admin-nav a:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 2px;
+}

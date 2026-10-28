@@ -11,6 +11,7 @@ import {
   setSessionCookie,
 } from "./auth";
 import type { Db } from "./db";
+import { changePassword } from "./changePassword";
 import { hashPassword, verifyPassword } from "./password";
 
 type Row = Record<string, unknown>;
@@ -155,6 +156,11 @@ export function createApp(db: Db, opts: AppOptions) {
 
   app.get("/api/admin/me", (c) =>
     c.json({ email: (c.get("admin" as never) as { email: string }).email }),
+  );
+
+  app.post(
+    "/api/admin/password",
+    changePassword(db, { corsOrigin: opts.corsOrigin, limiter }),
   );
 
   app.notFound((c) => c.json({ error: "not_found" }, 404));
