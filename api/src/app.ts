@@ -15,6 +15,7 @@ import { adminCategories } from "./adminCategories";
 import { adminItems } from "./adminItems";
 import { adminTags } from "./adminTags";
 import { changePassword } from "./changePassword";
+import { adminImages, publicImages } from "./images";
 import { hashPassword, verifyPassword } from "./password";
 
 type Row = Record<string, unknown>;
@@ -41,6 +42,8 @@ export function createApp(db: Db, opts: AppOptions) {
   );
 
   app.get("/api/health", (c) => c.json({ ok: true }));
+
+  app.route("/api/images", publicImages(db));
 
   app.get("/api/menu", async (c) => {
     const [cats, items, tags, links] = await Promise.all([
@@ -167,6 +170,7 @@ export function createApp(db: Db, opts: AppOptions) {
 
   app.route("/api/admin/categories", adminCategories(db, opts.corsOrigin));
   app.route("/api/admin/items", adminItems(db, opts.corsOrigin));
+  app.route("/api/admin/images", adminImages(db, opts.corsOrigin));
   app.route("/api/admin/tags", adminTags(db, opts.corsOrigin));
 
   app.notFound((c) => c.json({ error: "not_found" }, 404));
