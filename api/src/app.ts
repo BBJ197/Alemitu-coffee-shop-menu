@@ -164,7 +164,7 @@ export function createApp(db: Db, opts: AppOptions) {
     changePassword(db, { corsOrigin: opts.corsOrigin, limiter }),
   );
 
-  app.route("/api/admin/categories", adminCategories(db));
+  app.route("/api/admin/categories", adminCategories(db, opts.corsOrigin));
   app.route("/api/admin/items", adminItems(db, opts.corsOrigin));
 
   app.notFound((c) => c.json({ error: "not_found" }, 404));
