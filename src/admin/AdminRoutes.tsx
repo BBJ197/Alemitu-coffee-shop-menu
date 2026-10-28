@@ -3,6 +3,7 @@ import "./admin.css";
 import AdminHome from "./AdminHome";
 import AdminLayout from "./AdminLayout";
 import AdminLoginPage from "./AdminLoginPage";
+import AdminSettingsPage from "./AdminSettingsPage";
 import RequireAdmin from "./RequireAdmin";
 
 /** Mounted at /admin/* and loaded lazily, so none of this ships to customers. */
@@ -13,6 +14,7 @@ export default function AdminRoutes() {
       <Route element={<RequireAdmin />}>
         <Route element={<AdminLayout />}>
           <Route index element={<AdminHome />} />
+          <Route path="settings" element={<AdminSettingsPage />} />
         </Route>
       </Route>
       <Route path="*" element={<Navigate to="/admin" replace />} />
