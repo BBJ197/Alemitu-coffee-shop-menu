@@ -20,7 +20,8 @@ export async function createSession(db: Db, adminId: string): Promise<string> {
   const token = randomBytes(32).toString("base64url");
   await db.query(
     `insert into sessions (token_hash, admin_id, expires_at)
-     values ('${hashToken(token)}', '${adminId}', now() + interval '${SESSION_DAYS} days')`,
+     values ($1, $2, now() + make_interval(days => $3))`,
+    [hashToken(token), adminId, SESSION_DAYS],
   );
   return token;
 }
@@ -32,7 +33,8 @@ export async function findAdminBySession(
   if (!token) return null;
   const result = await db.query(
     `select a.id, a.email from sessions s join admins a on a.id = s.admin_id
-      where s.token_hash = '${hashToken(token)}' and s.expires_at > now()`,
+      where s.token_hash = $1 and s.expires_at > now()`,
+    [hashToken(token)],
   );
   const row = result.rows[0];
   return row ? { id: row.id as string, email: row.email as string } : null;
@@ -43,9 +45,9 @@ export async function endSession(
   token: string | undefined,
 ): Promise<void> {
   if (token)
-    await db.query(
-      `delete from sessions where token_hash = '${hashToken(token)}'`,
-    );
+    await db.query("delete from sessions where token_hash = $1", [
+      hashToken(token),
+    ]);
 }
 
 export function setSessionCookie(c: Context, token: string, secure: boolean) {

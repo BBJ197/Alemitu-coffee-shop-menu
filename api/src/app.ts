@@ -16,8 +16,6 @@ import { hashPassword, verifyPassword } from "./password";
 
 type Row = Record<string, unknown>;
 
-const sqlText = (value: string) => `'${value.replace(/'/g, "''")}'`;
-
 export interface AppOptions {
   corsOrigin: string;
   secureCookies?: boolean;
@@ -126,7 +124,8 @@ export function createApp(db: Db, opts: AppOptions) {
       return c.json({ error: "too_many_attempts" }, 429);
 
     const result = await db.query(
-      `select id, password_hash from admins where email = ${sqlText(email)}`,
+      "select id, password_hash from admins where email = $1",
+      [email],
     );
     const admin = result.rows[0];
     dummyHash ??= hashPassword("dummy-password-for-timing");

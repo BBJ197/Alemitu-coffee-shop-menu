@@ -11,26 +11,24 @@ const TOKEN_COOKIE = /alemitu_session=([^;]+)/;
 async function setup() {
   const passwordHash = await hashPassword("a-very-long-password");
   const sessions = new Map<string, string>();
-  const query = vi.fn(async (text: string) => {
+  const query = vi.fn(async (text: string, params: unknown[] = []) => {
+    const first = params[0] as string;
     if (text.includes("from admins where email")) {
-      return text.includes("'boss@example.com'")
+      return first === "boss@example.com"
         ? { rows: [{ id: "a1", password_hash: passwordHash }] }
         : { rows: [] };
     }
     if (text.startsWith("insert into sessions")) {
-      const hash = /values \('([0-9a-f]+)'/.exec(text)?.[1] ?? "";
-      sessions.set(hash, "a1");
+      sessions.set(first, "a1");
       return { rows: [] };
     }
     if (text.includes("from sessions s join admins")) {
-      const hash = /token_hash = '([0-9a-f]+)'/.exec(text)?.[1] ?? "";
-      return sessions.has(hash)
+      return sessions.has(first)
         ? { rows: [{ id: "a1", email: "boss@example.com" }] }
         : { rows: [] };
     }
     if (text.startsWith("delete from sessions")) {
-      const hash = /token_hash = '([0-9a-f]+)'/.exec(text)?.[1] ?? "";
-      sessions.delete(hash);
+      sessions.delete(first);
       return { rows: [] };
     }
     return { rows: [] };
@@ -93,6 +91,18 @@ describe("admin login", () => {
       origin: "https://evil.example",
     });
     expect(res.status).toBe(403);
+  });
+
+  it("passes the email as a parameter, never inside the SQL text", async () => {
+    const { login, query } = await setup();
+    const hostile = "x' or '1'='1";
+    const res = await login(hostile, "whatever-password");
+    expect(res.status).toBe(401);
+    const call = query.mock.calls.find(([text]) =>
+      text.includes("from admins where email"),
+    );
+    expect(call?.[0]).not.toContain(hostile);
+    expect(call?.[1]).toEqual([hostile]);
   });
 });
 

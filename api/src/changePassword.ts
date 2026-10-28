@@ -11,8 +11,6 @@ import { hashPassword, verifyPassword } from "./password";
 const MIN_LENGTH = 12;
 const MAX_LENGTH = 200;
 
-const sqlText = (value: string) => `'${value.replace(/'/g, "''")}'`;
-
 export function changePassword(
   db: Db,
   opts: { corsOrigin: string; limiter: LoginLimiter },
@@ -42,7 +40,8 @@ export function changePassword(
       return c.json({ error: "too_many_attempts" }, 429);
 
     const result = await db.query(
-      `select password_hash from admins where id = ${sqlText(admin.id)}`,
+      "select password_hash from admins where id = $1",
+      [admin.id],
     );
     const stored = result.rows[0]?.password_hash;
     if (
@@ -54,13 +53,15 @@ export function changePassword(
     }
     opts.limiter.reset(key);
 
-    await db.query(
-      `update admins set password_hash = ${sqlText(await hashPassword(next))} where id = ${sqlText(admin.id)}`,
-    );
+    await db.query("update admins set password_hash = $1 where id = $2", [
+      await hashPassword(next),
+      admin.id,
+    ]);
     // Sign out every other device; keep the one making this request.
     const keep = hashToken(getCookie(c, SESSION_COOKIE) ?? "");
     await db.query(
-      `delete from sessions where admin_id = ${sqlText(admin.id)} and token_hash <> ${sqlText(keep)}`,
+      "delete from sessions where admin_id = $1 and token_hash <> $2",
+      [admin.id, keep],
     );
     return c.json({ ok: true });
   };
