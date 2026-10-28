@@ -14,30 +14,29 @@ const TOKEN = /alemitu_session=([^;]+)/;
 async function setup() {
   const state = { hash: await hashPassword(OLD) };
   const sessions = new Set<string>();
-  const query = vi.fn(async (text: string) => {
+  const query = vi.fn(async (text: string, params: unknown[] = []) => {
+    const [first, second] = params as string[];
     if (text.includes("from admins where email"))
-      return text.includes("'boss@example.com'")
+      return first === "boss@example.com"
         ? { rows: [{ id: "a1", password_hash: state.hash }] }
         : { rows: [] };
     if (text.includes("from admins where id"))
       return { rows: [{ password_hash: state.hash }] };
     if (text.startsWith("update admins set password_hash")) {
-      state.hash = /password_hash = '([^']+)'/.exec(text)?.[1] ?? state.hash;
+      state.hash = first;
       return { rows: [] };
     }
     if (text.startsWith("insert into sessions")) {
-      sessions.add(/values \('([0-9a-f]+)'/.exec(text)?.[1] ?? "");
+      sessions.add(first);
       return { rows: [] };
     }
-    if (text.includes("from sessions s join admins")) {
-      const hash = /token_hash = '([0-9a-f]+)'/.exec(text)?.[1] ?? "";
-      return sessions.has(hash)
+    if (text.includes("from sessions s join admins"))
+      return sessions.has(first)
         ? { rows: [{ id: "a1", email: "boss@example.com" }] }
         : { rows: [] };
-    }
     if (text.startsWith("delete from sessions where admin_id")) {
-      const keep = /token_hash <> '([0-9a-f]+)'/.exec(text)?.[1] ?? "";
-      for (const h of [...sessions]) if (h !== keep) sessions.delete(h);
+      for (const hash of [...sessions])
+        if (hash !== second) sessions.delete(hash);
       return { rows: [] };
     }
     return { rows: [] };
