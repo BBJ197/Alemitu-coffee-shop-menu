@@ -1,4 +1,4 @@
-import { Link, Outlet } from "react-router-dom";
+import { Link, NavLink, Outlet } from "react-router-dom";
 import { useAdminSession, useLogout } from "./hooks";
 
 export default function AdminLayout() {
@@ -11,6 +11,12 @@ export default function AdminLayout() {
         <Link to="/admin" className="admin-brand">
           Alemitu admin
         </Link>
+        <nav className="admin-nav" aria-label="Admin">
+          <NavLink to="/admin" end>
+            Dashboard
+          </NavLink>
+          <NavLink to="/admin/settings">Account</NavLink>
+        </nav>
         <div className="admin-user">
           <span className="admin-email">{session.data?.email}</span>
           <button
