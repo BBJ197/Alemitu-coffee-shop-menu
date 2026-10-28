@@ -16,7 +16,7 @@ export class AdminApiError extends Error {
   }
 }
 
-async function errorFrom(res: Response): Promise<AdminApiError> {
+export async function errorFrom(res: Response): Promise<AdminApiError> {
   const body = (await res.json().catch(() => null)) as {
     error?: unknown;
   } | null;
