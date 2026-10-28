@@ -1,6 +1,14 @@
 import { useEffect, useRef, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { formatEtb } from "../lib/format";
 import { useExpireOnUnauthorized } from "./hooks";
+import {
+  emptyItemFilters,
+  filterAdminItems,
+  hasItemFilters,
+  type ItemFilters,
+  type StatusFilter,
+} from "./itemFilters";
 import {
   useAdminCategories,
   useAdminItems,
@@ -92,6 +100,13 @@ function ItemRow({ item }: { item: AdminItem }) {
         </div>
       ) : (
         <div className="admin-item__actions">
+          <Link
+            className="admin-button admin-button--quiet admin-button--link"
+            to={`/admin/items/${item.id}/edit`}
+            aria-label={`Edit: ${item.nameEn}`}
+          >
+            Edit
+          </Link>
           <button
             type="button"
             className="admin-button admin-button--quiet"
@@ -121,6 +136,8 @@ function ItemRow({ item }: { item: AdminItem }) {
 export default function AdminItemsPage() {
   const items = useAdminItems();
   const categories = useAdminCategories();
+  const location = useLocation();
+  const [filters, setFilters] = useState<ItemFilters>(emptyItemFilters);
   useExpireOnUnauthorized(items.error ?? categories.error);
 
   if (items.isPending || categories.isPending)
@@ -146,24 +163,108 @@ export default function AdminItemsPage() {
     );
   }
 
+  const saved = (location.state as { saved?: string } | null)?.saved;
+  const active = hasItemFilters(filters);
+  const visible = filterAdminItems(items.data, categories.data, filters);
   const byCategory = new Map<string, AdminItem[]>();
-  for (const item of items.data) {
+  for (const item of visible) {
     const list = byCategory.get(item.categoryId) ?? [];
     list.push(item);
     byCategory.set(item.categoryId, list);
   }
+  const total = items.data.length;
 
   return (
     <>
-      <h1>Menu items</h1>
-      {items.data.length === 0 ? (
+      <div className="admin-page-head">
+        <h1>Menu items</h1>
+        <Link className="admin-button admin-button--link" to="/admin/items/new">
+          Add item
+        </Link>
+      </div>
+
+      {saved && (
+        <p role="status" className="admin-success">
+          {`Saved "${saved}".`}
+        </p>
+      )}
+
+      {total === 0 ? (
         <p>There are no menu items yet.</p>
       ) : (
-        <p>Customers see changes within about 30 seconds.</p>
+        <>
+          <p>Customers see changes within about 30 seconds.</p>
+          <div className="admin-filters">
+            <div className="admin-field">
+              <label htmlFor="item-search">Search items</label>
+              <input
+                id="item-search"
+                type="search"
+                placeholder="Name, description or category"
+                value={filters.query}
+                onChange={(e) =>
+                  setFilters((f) => ({ ...f, query: e.target.value }))
+                }
+              />
+            </div>
+            <div className="admin-field">
+              <label htmlFor="item-category">Category</label>
+              <select
+                id="item-category"
+                value={filters.categoryId}
+                onChange={(e) =>
+                  setFilters((f) => ({ ...f, categoryId: e.target.value }))
+                }
+              >
+                <option value="">All categories</option>
+                {categories.data.map((c) => (
+                  <option key={c.id} value={c.id}>
+                    {c.nameEn}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="admin-field">
+              <label htmlFor="item-status">Show</label>
+              <select
+                id="item-status"
+                value={filters.status}
+                onChange={(e) =>
+                  setFilters((f) => ({
+                    ...f,
+                    status: e.target.value as StatusFilter,
+                  }))
+                }
+              >
+                <option value="all">All items</option>
+                <option value="available">Only available</option>
+                <option value="unavailable">Only unavailable</option>
+                <option value="popular">Only popular</option>
+              </select>
+            </div>
+            {active && (
+              <button
+                type="button"
+                className="admin-button admin-button--quiet"
+                onClick={() => setFilters(emptyItemFilters)}
+              >
+                Clear filters
+              </button>
+            )}
+          </div>
+          <p role="status">
+            {active
+              ? `Showing ${visible.length} of ${total} items.`
+              : `${total} ${total === 1 ? "item" : "items"}.`}
+          </p>
+          {visible.length === 0 && <p>No items match your filters.</p>}
+        </>
       )}
-      {items.data.length > 0 &&
+
+      {total > 0 &&
         categories.data.map((category) => {
           const list = byCategory.get(category.id) ?? [];
+          if (active && list.length === 0) return null;
           return (
             <section key={category.id} aria-labelledby={`cat-${category.id}`}>
               <h2 id={`cat-${category.id}`} className="admin-section-title">
