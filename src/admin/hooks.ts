@@ -1,5 +1,12 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { fetchSession, login, logout, type AdminSession } from "./api";
+import {
+  AdminApiError,
+  changePassword,
+  fetchSession,
+  login,
+  logout,
+  type AdminSession,
+} from "./api";
 
 export const sessionQueryKey = ["admin", "session"] as const;
 
@@ -29,6 +36,19 @@ export function useLogout() {
     mutationFn: logout,
     onSuccess: () => {
       queryClient.setQueryData(sessionQueryKey, null);
+    },
+  });
+}
+
+export function useChangePassword() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (values: { currentPassword: string; newPassword: string }) =>
+      changePassword(values.currentPassword, values.newPassword),
+    onError: (error) => {
+      // The session ran out: send the admin back to the sign-in page.
+      if (error instanceof AdminApiError && error.status === 401)
+        queryClient.setQueryData(sessionQueryKey, null);
     },
   });
 }
