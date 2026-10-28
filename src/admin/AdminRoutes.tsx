@@ -7,6 +7,7 @@ import AdminItemFormPage from "./AdminItemFormPage";
 import AdminItemsPage from "./AdminItemsPage";
 import AdminLoginPage from "./AdminLoginPage";
 import AdminSettingsPage from "./AdminSettingsPage";
+import AdminTagsPage from "./AdminTagsPage";
 import RequireAdmin from "./RequireAdmin";
 
 /** Mounted at /admin/* and loaded lazily, so none of this ships to customers. */
@@ -21,6 +22,7 @@ export default function AdminRoutes() {
           <Route path="items/new" element={<AdminItemFormPage />} />
           <Route path="items/:id/edit" element={<AdminItemFormPage />} />
           <Route path="categories" element={<AdminCategoriesPage />} />
+          <Route path="tags" element={<AdminTagsPage />} />
           <Route path="settings" element={<AdminSettingsPage />} />
         </Route>
       </Route>
