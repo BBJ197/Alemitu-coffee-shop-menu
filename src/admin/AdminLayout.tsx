@@ -15,6 +15,7 @@ export default function AdminLayout() {
           <NavLink to="/admin" end>
             Dashboard
           </NavLink>
+          <NavLink to="/admin/items">Items</NavLink>
           <NavLink to="/admin/settings">Account</NavLink>
         </nav>
         <div className="admin-user">
