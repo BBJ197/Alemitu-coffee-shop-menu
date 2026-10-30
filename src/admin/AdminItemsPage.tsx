@@ -17,8 +17,6 @@ import {
 } from "./itemsHooks";
 import type { AdminItem } from "./itemsApi";
 
-const hhmm = (time: string) => time.slice(0, 5);
-
 function ItemRow({ item }: { item: AdminItem }) {
   const toggle = useToggleAvailability();
   const remove = useDeleteItem();
@@ -53,11 +51,6 @@ function ItemRow({ item }: { item: AdminItem }) {
             {item.isAvailable ? "Available" : "Unavailable"}
           </span>
           {item.isFeatured && <span className="admin-chip">Popular</span>}
-          {item.availableFrom && item.availableTo && (
-            <span className="admin-chip">
-              {`Served ${hhmm(item.availableFrom)}–${hhmm(item.availableTo)}`}
-            </span>
-          )}
         </div>
         {toggle.isError && (
           <p role="alert" className="admin-error">
