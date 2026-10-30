@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { fireEvent, render, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { beforeEach, describe, expect, it, vi } from "vitest";
@@ -52,8 +52,6 @@ const macchiato = {
   imagePath: "photos/mac.webp",
   isAvailable: true,
   isFeatured: false,
-  availableFrom: "06:00:00",
-  availableTo: "11:00:00",
   tagIds: ["t1"],
 };
 
@@ -100,18 +98,6 @@ describe("add and edit item form", () => {
     expect(itemsApi.createItem).not.toHaveBeenCalled();
   });
 
-  it("needs both serving times or neither", async () => {
-    const user = userEvent.setup();
-    renderAt("/admin/items/new");
-    fireEvent.change(await screen.findByLabelText("Served from"), {
-      target: { value: "06:00" },
-    });
-    await user.click(screen.getByRole("button", { name: "Add item" }));
-    expect(
-      await screen.findByText("Set both times or neither"),
-    ).toBeInTheDocument();
-  });
-
   it("creates an item, then returns to the list with a confirmation", async () => {
     vi.mocked(itemsApi.createItem).mockResolvedValue(macchiato);
     const user = userEvent.setup();
@@ -132,8 +118,6 @@ describe("add and edit item form", () => {
       imagePath: null,
       isAvailable: true,
       isFeatured: false,
-      availableFrom: null,
-      availableTo: null,
       tagIds: ["t1"],
     });
     expect(
@@ -166,7 +150,6 @@ describe("add and edit item form", () => {
     const name = await screen.findByLabelText("Name (English)");
     expect(name).toHaveValue("Macchiato");
     expect(screen.getByLabelText("Price (ETB)")).toHaveValue("55");
-    expect(screen.getByLabelText("Served from")).toHaveValue("06:00");
     expect(screen.getByRole("checkbox", { name: "Hot" })).toBeChecked();
 
     await user.clear(name);
@@ -179,7 +162,6 @@ describe("add and edit item form", () => {
         nameEn: "Macchiato 2",
         priceEtb: 55,
         imagePath: "photos/mac.webp",
-        availableFrom: "06:00",
         tagIds: ["t1"],
       }),
     );
