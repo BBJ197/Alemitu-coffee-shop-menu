@@ -14,9 +14,7 @@ import { iconForCategory, iconForTag } from "../lib/iconNames";
 import { pickOptional, pickText, type Lang } from "../lib/language";
 import { photoUrl } from "../lib/photoUrl";
 import { pickPhoto } from "../lib/photos";
-import { formatHours, isServedNow } from "../lib/schedule";
 import { useLanguage } from "../lib/useLanguage";
-import { useNowMinutes } from "../lib/useNowMinutes";
 
 function Skeleton() {
   return (
@@ -47,11 +45,9 @@ function ItemCard({
   const photo =
     photoUrl(item.imagePath) ??
     pickPhoto(menu.categories.findIndex((c) => c.id === item.categoryId));
-  const nowMinutes = useNowMinutes();
-  const offHours = item.isAvailable && !isServedNow(item, nowMinutes);
   const classes = [
     "menu-card",
-    item.isAvailable && !offHours ? "" : "is-unavailable",
+    item.isAvailable ? "" : "is-unavailable",
     photo ? "" : "no-photo",
   ]
     .filter(Boolean)
@@ -90,12 +86,6 @@ function ItemCard({
           </ul>
         )}
         {!item.isAvailable && <p className="menu-unavailable">Unavailable</p>}
-        {offHours && (
-          <p className="menu-unavailable">
-            {lang === "am" ? "የሚቀርበው" : "Served"}{" "}
-            {formatHours(item.availableFrom, item.availableTo)}
-          </p>
-        )}
         {!photo && price}
       </div>
     </li>
@@ -106,16 +96,12 @@ export default function MenuPage() {
   const { data, isPending, isError, refetch, isFetching } = useMenu();
   const [filters, setFilters] = useState<MenuFilters>(emptyFilters);
   const { lang, setLang } = useLanguage();
-  const nowMinutes = useNowMinutes();
 
   const visible = data ? filterItems(data, filters) : [];
   const active = hasActiveFilters(filters);
   const popular = active
     ? []
-    : visible.filter(
-        (item) =>
-          item.isFeatured && item.isAvailable && isServedNow(item, nowMinutes),
-      );
+    : visible.filter((item) => item.isFeatured && item.isAvailable);
   const banner = pickPhoto(0);
 
   const toggleTag = (slug: string) =>
