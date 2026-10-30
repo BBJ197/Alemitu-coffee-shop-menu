@@ -12,8 +12,6 @@ export interface ItemFormValues {
   price: string;
   isAvailable: boolean;
   isFeatured: boolean;
-  availableFrom: string;
-  availableTo: string;
   tagIds: string[];
   /** Path of the uploaded photo, or null. Set by the photo field. */
   imagePath: string | null;
@@ -28,8 +26,6 @@ export const emptyItemForm: ItemFormValues = {
   price: "",
   isAvailable: true,
   isFeatured: false,
-  availableFrom: "",
-  availableTo: "",
   tagIds: [],
   imagePath: null,
 };
@@ -37,34 +33,27 @@ export const emptyItemForm: ItemFormValues = {
 const text = (max: number) =>
   z.string().trim().max(max, `Use ${max} characters or fewer`);
 
-export const itemFormSchema = z
-  .object({
-    categoryId: z.string().min(1, "Choose a category"),
-    nameEn: z
-      .string()
-      .trim()
-      .min(1, "Name is required")
-      .max(120, "Use 120 characters or fewer"),
-    nameAm: text(120),
-    descriptionEn: text(500),
-    descriptionAm: text(500),
-    price: z
-      .string()
-      .trim()
-      .min(1, "Price is required")
-      .refine(
-        (v) => /^\d+(\.\d{1,2})?$/.test(v),
-        "Enter a price like 55 or 55.50",
-      )
-      .refine((v) => Number(v) > 0, "Price must be greater than 0")
-      .refine((v) => Number(v) <= 100000, "Price is too high"),
-    availableFrom: z.string(),
-    availableTo: z.string(),
-  })
-  .refine((v) => (v.availableFrom === "") === (v.availableTo === ""), {
-    message: "Set both times or neither",
-    path: ["availableTo"],
-  });
+export const itemFormSchema = z.object({
+  categoryId: z.string().min(1, "Choose a category"),
+  nameEn: z
+    .string()
+    .trim()
+    .min(1, "Name is required")
+    .max(120, "Use 120 characters or fewer"),
+  nameAm: text(120),
+  descriptionEn: text(500),
+  descriptionAm: text(500),
+  price: z
+    .string()
+    .trim()
+    .min(1, "Price is required")
+    .refine(
+      (v) => /^\d+(\.\d{1,2})?$/.test(v),
+      "Enter a price like 55 or 55.50",
+    )
+    .refine((v) => Number(v) > 0, "Price must be greater than 0")
+    .refine((v) => Number(v) <= 100000, "Price is too high"),
+});
 
 /** Returns the first message per field. An empty object means the form is valid. */
 export function validateItemForm(
@@ -94,8 +83,6 @@ export function toPayload(values: ItemFormValues): ItemPayload {
     imagePath: values.imagePath,
     isAvailable: values.isAvailable,
     isFeatured: values.isFeatured,
-    availableFrom: values.availableFrom || null,
-    availableTo: values.availableTo || null,
     tagIds: values.tagIds,
   };
 }
@@ -110,8 +97,6 @@ export function fromItem(item: AdminItem): ItemFormValues {
     price: String(item.priceEtb),
     isAvailable: item.isAvailable,
     isFeatured: item.isFeatured,
-    availableFrom: item.availableFrom?.slice(0, 5) ?? "",
-    availableTo: item.availableTo?.slice(0, 5) ?? "",
     tagIds: item.tagIds,
     imagePath: item.imagePath,
   };
