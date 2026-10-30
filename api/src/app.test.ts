@@ -21,8 +21,6 @@ function fakeDb() {
             image_path: null,
             is_available: false,
             is_featured: false,
-            available_from: null,
-            available_to: null,
           },
         ],
       };
