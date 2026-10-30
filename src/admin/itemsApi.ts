@@ -11,6 +11,7 @@ export interface AdminCategory {
   nameAm: string | null;
   sortOrder: number;
   isVisible: boolean;
+  /** How many items use this category. Sent by the API; used for delete warnings. */
   itemCount?: number;
 }
 
@@ -25,8 +26,6 @@ export interface ItemPayload {
   imagePath: string | null;
   isAvailable: boolean;
   isFeatured: boolean;
-  availableFrom: string | null;
-  availableTo: string | null;
   tagIds: string[];
 }
 
