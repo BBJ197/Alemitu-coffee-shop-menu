@@ -46,15 +46,6 @@ describe("validateItemForm", () => {
     expect(errorsFor({ price: "100001" }).price).toBe("Price is too high");
   });
 
-  it("needs both serving times or neither", () => {
-    expect(errorsFor({ availableFrom: "06:00" }).availableTo).toBe(
-      "Set both times or neither",
-    );
-    expect(errorsFor({ availableFrom: "06:00", availableTo: "11:00" })).toEqual(
-      {},
-    );
-  });
-
   it("limits text length", () => {
     expect(errorsFor({ nameEn: "x".repeat(121) }).nameEn).toMatch(/120/);
     expect(errorsFor({ descriptionEn: "x".repeat(501) }).descriptionEn).toMatch(
@@ -69,8 +60,6 @@ describe("toPayload and fromItem", () => {
       toPayload({ ...valid, price: "55.5", tagIds: ["t1"] }),
     ).toMatchObject({
       priceEtb: 55.5,
-      availableFrom: null,
-      availableTo: null,
       imagePath: null,
       tagIds: ["t1"],
     });
@@ -88,14 +77,10 @@ describe("toPayload and fromItem", () => {
       imagePath: "photos/mac.webp",
       isAvailable: true,
       isFeatured: false,
-      availableFrom: "06:00:00",
-      availableTo: "11:00:00",
       tagIds: ["t1"],
     });
     expect(form).toMatchObject({
       price: "55.5",
-      availableFrom: "06:00",
-      availableTo: "11:00",
       nameAm: "",
     });
     expect(toPayload(form).imagePath).toBe("photos/mac.webp");
