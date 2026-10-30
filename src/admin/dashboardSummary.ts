@@ -5,7 +5,6 @@ export interface DashboardSummary {
   available: number;
   unavailable: number;
   popular: number;
-  scheduled: number;
   withoutPhoto: number;
   categories: number;
   hiddenCategories: number;
@@ -27,7 +26,6 @@ export function summarize(
     available: items.length - unavailableItems.length,
     unavailable: unavailableItems.length,
     popular: items.filter((i) => i.isFeatured).length,
-    scheduled: items.filter((i) => i.availableFrom || i.availableTo).length,
     withoutPhoto: items.filter((i) => !i.imagePath).length,
     categories: categories.length,
     hiddenCategories: hidden.size,
