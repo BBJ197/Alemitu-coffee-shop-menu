@@ -40,8 +40,6 @@ const macchiato = {
   imagePath: null,
   isAvailable: true,
   isFeatured: true,
-  availableFrom: null,
-  availableTo: null,
   tagIds: [],
 };
 const iced = {
@@ -52,8 +50,6 @@ const iced = {
   priceEtb: 85.5,
   isAvailable: false,
   isFeatured: false,
-  availableFrom: "06:00:00",
-  availableTo: "11:00:00",
 };
 
 function renderItems() {
@@ -79,7 +75,7 @@ describe("admin items page", () => {
     vi.mocked(itemsApi.fetchAdminCategories).mockResolvedValue(categories);
   });
 
-  it("groups items by category and shows price, status and schedule", async () => {
+  it("groups items by category and shows price and status", async () => {
     renderItems();
     expect(
       await screen.findByRole("heading", { name: /Hot drinks/ }),
@@ -94,7 +90,6 @@ describe("admin items page", () => {
     expect(screen.getByText("Available")).toBeInTheDocument();
     expect(screen.getByText("Unavailable")).toBeInTheDocument();
     expect(screen.getByText("Popular")).toBeInTheDocument();
-    expect(screen.getByText("Served 06:00–11:00")).toBeInTheDocument();
   });
 
   it("says so when there are no items", async () => {
