@@ -19,8 +19,6 @@ export interface MenuItem {
   isAvailable: boolean;
   isFeatured: boolean;
   /** "HH:MM:SS" or null */
-  availableFrom: string | null;
-  availableTo: string | null;
   tagIds: string[];
 }
 
