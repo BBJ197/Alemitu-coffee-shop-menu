@@ -15,39 +15,26 @@ const optionalText = (max: number) =>
     .nullish()
     .transform((v) => v || null);
 
-const optionalTime = z
-  .string()
-  .regex(/^([01]\d|2[0-3]):[0-5]\d(:[0-5]\d)?$/, "Use the format HH:MM")
-  .nullish()
-  .transform((v) => v ?? null);
-
-export const itemInput = z
-  .object({
-    categoryId: z.uuid(),
-    nameEn: z.string().trim().min(1, "Name is required").max(120),
-    nameAm: optionalText(120),
-    descriptionEn: optionalText(500),
-    descriptionAm: optionalText(500),
-    priceEtb: z
-      .number()
-      .positive("Price must be greater than 0")
-      .max(100000, "Price is too high")
-      .refine(twoDecimals, "Use at most 2 decimal places"),
-    imagePath: optionalText(300),
-    isAvailable: z.boolean().default(true),
-    isFeatured: z.boolean().default(false),
-    availableFrom: optionalTime,
-    availableTo: optionalTime,
-    tagIds: z
-      .array(z.uuid())
-      .max(20)
-      .default([])
-      .transform((ids) => [...new Set(ids)]),
-  })
-  .refine((v) => (v.availableFrom === null) === (v.availableTo === null), {
-    message: "Set both times or neither",
-    path: ["availableTo"],
-  });
+export const itemInput = z.object({
+  categoryId: z.uuid(),
+  nameEn: z.string().trim().min(1, "Name is required").max(120),
+  nameAm: optionalText(120),
+  descriptionEn: optionalText(500),
+  descriptionAm: optionalText(500),
+  priceEtb: z
+    .number()
+    .positive("Price must be greater than 0")
+    .max(100000, "Price is too high")
+    .refine(twoDecimals, "Use at most 2 decimal places"),
+  imagePath: optionalText(300),
+  isAvailable: z.boolean().default(true),
+  isFeatured: z.boolean().default(false),
+  tagIds: z
+    .array(z.uuid())
+    .max(20)
+    .default([])
+    .transform((ids) => [...new Set(ids)]),
+});
 
 type ItemInput = z.output<typeof itemInput>;
 
@@ -55,34 +42,34 @@ const availabilityInput = z.object({ isAvailable: z.boolean() });
 const isId = (value: string) => z.uuid().safeParse(value).success;
 
 const ITEM_SELECT = `select i.id, i.category_id, i.name_en, i.name_am, i.description_en, i.description_am,
-       i.price_etb, i.image_path, i.is_available, i.is_featured, i.available_from, i.available_to,
+       i.price_etb, i.image_path, i.is_available, i.is_featured,
        coalesce(array_agg(it.tag_id) filter (where it.tag_id is not null), '{}') as tag_ids
   from items i left join item_tags it on it.item_id = i.id`;
 
 // One statement each, so an item and its tags are saved together or not at all.
 const CREATE_SQL = `with new_item as (
   insert into items (category_id, name_en, name_am, description_en, description_am,
-                     price_etb, image_path, is_available, is_featured, available_from, available_to)
-  values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
+                     price_etb, image_path, is_available, is_featured)
+  values ($1, $2, $3, $4, $5, $6, $7, $8, $9)
   returning id
 ), new_tags as (
   insert into item_tags (item_id, tag_id)
-  select new_item.id, t from new_item, unnest($12::uuid[]) as t
+  select new_item.id, t from new_item, unnest($10::uuid[]) as t
 )
 select id from new_item`;
 
 const UPDATE_SQL = `with upd as (
   update items set category_id = $2, name_en = $3, name_am = $4, description_en = $5,
          description_am = $6, price_etb = $7, image_path = $8, is_available = $9,
-         is_featured = $10, available_from = $11, available_to = $12
+         is_featured = $10
    where id = $1
   returning id
 ), removed as (
   delete from item_tags
-   where item_id in (select id from upd) and tag_id <> all($13::uuid[])
+   where item_id in (select id from upd) and tag_id <> all($11::uuid[])
 ), added as (
   insert into item_tags (item_id, tag_id)
-  select upd.id, t from upd, unnest($13::uuid[]) as t
+  select upd.id, t from upd, unnest($11::uuid[]) as t
   on conflict do nothing
 )
 select id from upd`;
@@ -98,8 +85,6 @@ const toItem = (r: Row) => ({
   imagePath: r.image_path,
   isAvailable: r.is_available,
   isFeatured: r.is_featured,
-  availableFrom: r.available_from,
-  availableTo: r.available_to,
   tagIds: (r.tag_ids as string[] | null) ?? [],
 });
 
@@ -113,8 +98,6 @@ const itemParams = (v: ItemInput): unknown[] => [
   v.imagePath,
   v.isAvailable,
   v.isFeatured,
-  v.availableFrom,
-  v.availableTo,
 ];
 
 async function getItem(db: Db, id: string) {
