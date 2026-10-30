@@ -52,7 +52,7 @@ export function createApp(db: Db, opts: AppOptions) {
       ),
       db.query(
         `select i.id, i.category_id, i.name_en, i.name_am, i.description_en, i.description_am,
-                i.price_etb, i.image_path, i.is_available, i.is_featured, i.available_from, i.available_to
+                i.price_etb, i.image_path, i.is_available, i.is_featured
            from items i join categories c on c.id = i.category_id
           where c.is_visible order by i.name_en`,
       ),
@@ -93,8 +93,6 @@ export function createApp(db: Db, opts: AppOptions) {
         imagePath: r.image_path,
         isAvailable: r.is_available,
         isFeatured: r.is_featured,
-        availableFrom: r.available_from,
-        availableTo: r.available_to,
         tagIds: tagIdsByItem.get(r.id as string) ?? [],
       })),
       tags: tags.rows.map((r: Row) => ({
