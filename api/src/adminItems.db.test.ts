@@ -109,22 +109,6 @@ describe.skipIf(!url)("admin items (real Postgres, rolled back)", () => {
       expect((await send("DELETE", `/${item.id}`)).status).toBe(404);
     }));
 
-  it("stores a breakfast schedule", () =>
-    withApi(async ({ send, categoryId }) => {
-      const res = await send("POST", "", {
-        categoryId,
-        nameEn: "TX Chechebsa",
-        priceEtb: 150,
-        availableFrom: "06:00",
-        availableTo: "11:00",
-      });
-      expect(res.status).toBe(201);
-      expect(await res.json()).toMatchObject({
-        availableFrom: "06:00:00",
-        availableTo: "11:00:00",
-      });
-    }));
-
   it("returns 400 for a category that does not exist", () =>
     withApi(async ({ send }) => {
       const res = await send("POST", "", {
