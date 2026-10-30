@@ -42,8 +42,6 @@ const macchiato = {
   imagePath: "/api/images/old1",
   isAvailable: true,
   isFeatured: false,
-  availableFrom: null,
-  availableTo: null,
   tagIds: [],
 };
 

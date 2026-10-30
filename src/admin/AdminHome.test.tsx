@@ -36,8 +36,6 @@ const item = (id: string, over: Partial<itemsApi.AdminItem> = {}) => ({
   imagePath: "/api/images/x",
   isAvailable: true,
   isFeatured: false,
-  availableFrom: null,
-  availableTo: null,
   tagIds: [],
   ...over,
 });

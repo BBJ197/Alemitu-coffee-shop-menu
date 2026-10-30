@@ -24,8 +24,6 @@ const item = (
   imagePath: null,
   isAvailable: true,
   isFeatured: false,
-  availableFrom: null,
-  availableTo: null,
   tagIds,
 });
 
