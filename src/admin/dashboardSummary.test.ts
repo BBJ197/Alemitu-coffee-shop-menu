@@ -21,8 +21,6 @@ const item = (id: string, over: Partial<AdminItem> = {}): AdminItem => ({
   imagePath: "/api/images/x",
   isAvailable: true,
   isFeatured: false,
-  availableFrom: null,
-  availableTo: null,
   tagIds: [],
   ...over,
 });
@@ -34,7 +32,6 @@ describe("summarize", () => {
       available: 0,
       unavailable: 0,
       popular: 0,
-      scheduled: 0,
       withoutPhoto: 0,
       categories: 0,
       hiddenCategories: 0,
@@ -43,21 +40,18 @@ describe("summarize", () => {
     });
   });
 
-  it("counts availability, popular, schedules and missing photos", () => {
+  it("counts availability, popular and missing photos", () => {
     const items = [
       item("a"),
       item("b", { isAvailable: false }),
       item("c", { isFeatured: true, imagePath: null }),
-      item("d", { availableFrom: "06:00", availableTo: "11:00" }),
-      item("e", { availableFrom: "17:00" }),
     ];
     const s = summarize(items, [category("c1")]);
     expect(s).toMatchObject({
-      items: 5,
-      available: 4,
+      items: 3,
+      available: 2,
       unavailable: 1,
       popular: 1,
-      scheduled: 2,
       withoutPhoto: 1,
       categories: 1,
       hiddenCategories: 0,
