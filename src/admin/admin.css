@@ -404,3 +404,18 @@
 .admin-field input[type="file"] {
   padding: 0.5rem;
 }
+
+.admin-qr {
+  margin: 1rem 0;
+}
+
+.admin-qr img {
+  display: block;
+  background: #fff;
+  border: 1px solid var(--medium-gray-color, #ccc);
+  border-radius: 6px;
+}
+
+.admin-qr-address {
+  max-width: 32rem;
+}
