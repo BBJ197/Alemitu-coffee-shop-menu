@@ -5,7 +5,9 @@ import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import AdminRoutes from "./AdminRoutes";
 import * as api from "./api";
+import * as itemsApi from "./itemsApi";
 
+vi.mock("./itemsApi");
 vi.mock("./api", async (importOriginal) => ({
   ...(await importOriginal<typeof import("./api")>()),
   fetchSession: vi.fn(),
@@ -36,6 +38,9 @@ const dashboardHeading = () =>
 describe("admin routes", () => {
   beforeEach(() => {
     vi.resetAllMocks();
+    // The dashboard loads these; an empty menu keeps these tests about routing.
+    vi.mocked(itemsApi.fetchAdminItems).mockResolvedValue([]);
+    vi.mocked(itemsApi.fetchAdminCategories).mockResolvedValue([]);
   });
 
   it("sends a signed-out visitor from /admin to the login page", async () => {
