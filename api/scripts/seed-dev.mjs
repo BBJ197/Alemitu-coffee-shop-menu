@@ -78,7 +78,6 @@ const items = [
     price: 150,
     desc: "Pan-fried bread with spiced butter.",
     tags: ["non-fasting"],
-    schedule: ["06:00", "11:00"],
   },
   {
     cat: "hidden",
@@ -111,10 +110,9 @@ try {
       ids[c.key] = r.rows[0].id;
     }
     for (const i of items) {
-      const [from, to] = i.schedule ?? [null, null];
       const r = await client.query(
-        `insert into items (category_id, name_en, description_en, price_etb, is_available, is_featured, available_from, available_to)
-         values ($1, $2, $3, $4, $5, $6, $7, $8) returning id`,
+        `insert into items (category_id, name_en, description_en, price_etb, is_available, is_featured)
+         values ($1, $2, $3, $4, $5, $6) returning id`,
         [
           ids[i.cat],
           PREFIX + i.name,
@@ -122,8 +120,6 @@ try {
           i.price,
           i.available ?? true,
           i.featured ?? false,
-          from,
-          to,
         ],
       );
       await client.query(
