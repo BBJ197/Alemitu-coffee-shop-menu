@@ -173,35 +173,6 @@ function ItemForm(props: {
         onChange={(path) => set("imagePath", path)}
       />
 
-      <fieldset className="admin-fieldset">
-        <legend>Serving hours</legend>
-        <p className="admin-hint">Leave both empty for items served all day.</p>
-        <div className="admin-row">
-          <Field
-            id="item-from"
-            label="Served from"
-            error={errors.availableFrom}
-          >
-            <input
-              id="item-from"
-              type="time"
-              value={values.availableFrom}
-              onChange={(e) => set("availableFrom", e.target.value)}
-              {...aria("item-from", errors.availableFrom)}
-            />
-          </Field>
-          <Field id="item-to" label="Served until" error={errors.availableTo}>
-            <input
-              id="item-to"
-              type="time"
-              value={values.availableTo}
-              onChange={(e) => set("availableTo", e.target.value)}
-              {...aria("item-to", errors.availableTo)}
-            />
-          </Field>
-        </div>
-      </fieldset>
-
       <label className="admin-check">
         <input
           type="checkbox"
