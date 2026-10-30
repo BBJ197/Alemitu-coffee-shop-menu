@@ -18,8 +18,6 @@ const row = {
   image_path: null,
   is_available: true,
   is_featured: false,
-  available_from: null,
-  available_to: null,
   tag_ids: [],
 };
 
@@ -79,14 +77,6 @@ describe("admin items: validation", () => {
     expect(writes()).toHaveLength(0);
   });
 
-  it("rejects a half-set schedule", async () => {
-    const { send, writes } = setup();
-    const res = await send("POST", "", { ...good, availableFrom: "08:00" });
-    expect(res.status).toBe(400);
-    expect((await res.json()).fields.availableTo).toBeDefined();
-    expect(writes()).toHaveLength(0);
-  });
-
   it("rejects a price with more than 2 decimals", async () => {
     const { send } = setup();
     const res = await send("POST", "", { ...good, priceEtb: 10.001 });
@@ -110,7 +100,7 @@ describe("admin items: writes", () => {
     expect(params[1]).toBe("Macchiato");
     expect(params[2]).toBeNull();
     expect(params[5]).toBe(55);
-    expect(params[11]).toEqual([]);
+    expect(params[9]).toEqual([]);
   });
 
   it("returns 400 when the category or a tag does not exist", async () => {
