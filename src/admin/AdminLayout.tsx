@@ -18,6 +18,7 @@ export default function AdminLayout() {
           <NavLink to="/admin/items">Items</NavLink>
           <NavLink to="/admin/categories">Categories</NavLink>
           <NavLink to="/admin/tags">Tags</NavLink>
+          <NavLink to="/admin/qr">QR code</NavLink>
           <NavLink to="/admin/settings">Account</NavLink>
         </nav>
         <div className="admin-user">
