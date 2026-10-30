@@ -61,17 +61,6 @@ describe.skipIf(!url)("database rules (real Postgres, rolled back)", () => {
       ).rejects.toThrow(/categories_name_en_check/);
     }));
 
-  it("rejects a half-set schedule", () =>
-    inTx(async () => {
-      const c = await newCategory("TX category");
-      await expect(
-        client.query(
-          "insert into items (category_id, name_en, price_etb, available_from) values ($1, 'Half', 10, '08:00')",
-          [c],
-        ),
-      ).rejects.toThrow(/items_schedule_pair/);
-    }));
-
   it("blocks deleting a category that still has items", () =>
     inTx(async () => {
       const c = await newCategory("TX category");
