@@ -39,7 +39,6 @@ function Summary() {
     ["Available", s.available],
     ["Unavailable", s.unavailable],
     ["Popular", s.popular],
-    ["With a schedule", s.scheduled],
     ["Without a photo", s.withoutPhoto],
     ["Categories", s.categories],
     ["Hidden categories", s.hiddenCategories],
