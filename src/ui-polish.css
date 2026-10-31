@@ -178,60 +178,6 @@ body {
   color: rgba(255, 255, 255, 0.8);
 }
 
-.menu-section .menu-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-  gap: 1.5rem;
-}
-
-.menu-section .menu-list .menu-item {
-  display: block;
-  width: auto;
-}
-
-.menu-teaser-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 100%;
-  padding: 1.5rem 1.25rem;
-  text-align: center;
-  color: inherit;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(243, 150, 28, 0.25);
-  border-radius: 18px;
-  transition:
-    transform 0.2s ease,
-    background-color 0.2s ease;
-}
-
-.menu-teaser-card:hover {
-  background: rgba(255, 255, 255, 0.1);
-  transform: translateY(-4px);
-}
-
-.menu-section .menu-list .menu-item .menu-image {
-  width: 100%;
-  max-width: 12rem;
-  margin-bottom: 0.75rem;
-}
-
-.menu-section .menu-list .menu-item .name {
-  margin: 0.5rem 0;
-  font-size: 1.2rem;
-  color: var(--secondary-color);
-}
-
-.menu-section .menu-list .menu-item .text {
-  font-size: 0.95rem;
-  color: rgba(255, 255, 255, 0.8);
-}
-
-.menu-cta {
-  margin-top: 3rem;
-  text-align: center;
-}
-
 .menu-cta-button {
   display: inline-block;
   padding: 0.9rem 2.25rem;
