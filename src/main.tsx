@@ -15,6 +15,7 @@ import "@fontsource/noto-sans-ethiopic/ethiopic-400.css";
 import "@fontsource/noto-sans-ethiopic/ethiopic-600.css";
 import "./index.css";
 import "./ui-polish.css";
+import "./home.css";
 import App from "./App";
 
 const queryClient = new QueryClient();

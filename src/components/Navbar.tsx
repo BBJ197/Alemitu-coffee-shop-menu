@@ -1,12 +1,15 @@
 import { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
 import logo from "../assets/images/Alemiti-Coffee-Emblem.png";
 import Icon from "./Icon";
 
-const links = [
+type NavLink = { label: string; href?: string; to?: string };
+
+const links: NavLink[] = [
   { label: "Home", href: "#" },
   { label: "About", href: "#about" },
-  { label: "Menu", href: "#menu" },
+  { label: "Menu", to: "/menu" },
   { label: "Contact", href: "#contact" },
 ];
 
@@ -55,13 +58,23 @@ export default function Navbar() {
 
           {links.map((link) => (
             <li className="nav-item" key={link.label}>
-              <a
-                href={link.href}
-                className="nav-link"
-                onClick={() => setOpen(false)}
-              >
-                {link.label}
-              </a>
+              {link.to ? (
+                <Link
+                  to={link.to}
+                  className="nav-link"
+                  onClick={() => setOpen(false)}
+                >
+                  {link.label}
+                </Link>
+              ) : (
+                <a
+                  href={link.href}
+                  className="nav-link"
+                  onClick={() => setOpen(false)}
+                >
+                  {link.label}
+                </a>
+              )}
             </li>
           ))}
         </ul>

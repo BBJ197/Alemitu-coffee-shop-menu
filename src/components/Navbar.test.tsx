@@ -1,12 +1,13 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
+import { MemoryRouter } from "react-router-dom";
 import Navbar from "./Navbar";
 
 describe("Navbar", () => {
   it("opens and closes the mobile menu", async () => {
     const user = userEvent.setup();
-    const { container } = render(<Navbar />);
+    const { container } = render(<Navbar />, { wrapper: MemoryRouter });
     const menu = container.querySelector(".nav-menu");
 
     expect(menu).not.toHaveClass("active");
@@ -20,7 +21,7 @@ describe("Navbar", () => {
 
   it("closes the mobile menu after a link is clicked", async () => {
     const user = userEvent.setup();
-    const { container } = render(<Navbar />);
+    const { container } = render(<Navbar />, { wrapper: MemoryRouter });
     const menu = container.querySelector(".nav-menu");
 
     await user.click(screen.getByRole("button", { name: "Open menu" }));
@@ -31,14 +32,14 @@ describe("Navbar", () => {
   });
 
   it("keeps the close button inside a list item", () => {
-    render(<Navbar />);
+    render(<Navbar />, { wrapper: MemoryRouter });
     const closeButton = screen.getByRole("button", { name: "Close menu" });
 
     expect(closeButton.parentElement?.tagName).toBe("LI");
   });
 
   it("does not use a heading for the brand name", () => {
-    render(<Navbar />);
+    render(<Navbar />, { wrapper: MemoryRouter });
 
     expect(screen.queryByRole("heading")).toBeNull();
   });

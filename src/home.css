@@ -1,0 +1,354 @@
+/* Home page decoration and animation */
+
+/* Hero */
+.hero-section {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(
+      circle at 72% 45%,
+      rgba(243, 150, 28, 0.16),
+      transparent 55%
+    ),
+    var(--primary-color);
+}
+
+.hero-section .section-content {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-section::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  height: 16px;
+  background:
+    linear-gradient(135deg, var(--secondary-color) 25%, transparent 25%) -8px 0,
+    linear-gradient(225deg, var(--secondary-color) 25%, transparent 25%) -8px 0,
+    linear-gradient(315deg, var(--secondary-color) 25%, transparent 25%),
+    linear-gradient(45deg, var(--secondary-color) 25%, transparent 25%);
+  background-size: 16px 16px;
+}
+
+.hero-details > * {
+  animation: hero-rise 0.8s ease-out both;
+}
+
+.hero-details > :nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.hero-details > :nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.hero-details > :nth-child(4) {
+  animation-delay: 0.45s;
+}
+
+.hero-section .hero-details .button:hover {
+  transform: translateY(-3px);
+}
+
+.hero-image-wrapper {
+  position: relative;
+  animation: hero-slide 1s ease-out both;
+}
+
+.hero-glow {
+  position: absolute;
+  inset: 8% 5%;
+  background: radial-gradient(
+    circle,
+    rgba(243, 150, 28, 0.35),
+    transparent 65%
+  );
+  border-radius: 50%;
+  filter: blur(30px);
+  animation: hero-glow 5s ease-in-out infinite;
+}
+
+.hero-float {
+  position: relative;
+  animation: hero-float 6s ease-in-out infinite;
+}
+
+.hero-steam {
+  position: absolute;
+  bottom: 68%;
+  width: 34px;
+  height: 90px;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255, 255, 255, 0.35),
+    transparent 70%
+  );
+  border-radius: 50%;
+  filter: blur(8px);
+  opacity: 0;
+  animation: hero-steam 4s ease-in-out infinite;
+}
+
+.hero-steam-1 {
+  left: 47%;
+}
+
+.hero-steam-2 {
+  left: 53%;
+  animation-delay: 1.3s;
+}
+
+.hero-steam-3 {
+  left: 59%;
+  animation-delay: 2.6s;
+}
+
+.hero-beans {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.hero-bean {
+  position: absolute;
+  width: 18px;
+  height: 26px;
+  background: radial-gradient(circle at 35% 30%, #8a5a3c, #3a1d10 70%);
+  border-radius: 50%;
+  opacity: 0.55;
+  animation: hero-bean 9s ease-in-out infinite;
+}
+
+.hero-bean::after {
+  content: "";
+  position: absolute;
+  top: 12%;
+  bottom: 12%;
+  left: 50%;
+  width: 2px;
+  background: #1f0f08;
+  border-radius: 2px;
+  transform: translateX(-50%) rotate(12deg);
+}
+
+.hero-bean:nth-child(1) {
+  top: 14%;
+  left: 6%;
+  --r: 20deg;
+}
+
+.hero-bean:nth-child(2) {
+  top: 70%;
+  left: 12%;
+  --r: -35deg;
+  animation-delay: -2s;
+}
+
+.hero-bean:nth-child(3) {
+  top: 30%;
+  left: 46%;
+  --r: 60deg;
+  animation-delay: -4s;
+}
+
+.hero-bean:nth-child(4) {
+  top: 82%;
+  left: 52%;
+  --r: -10deg;
+  animation-delay: -6s;
+}
+
+.hero-bean:nth-child(5) {
+  top: 18%;
+  left: 90%;
+  --r: 45deg;
+  animation-delay: -3s;
+}
+
+.hero-bean:nth-child(6) {
+  top: 76%;
+  left: 92%;
+  --r: -50deg;
+  animation-delay: -5s;
+}
+
+@keyframes hero-rise {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes hero-slide {
+  from {
+    opacity: 0;
+    transform: translateX(48px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes hero-float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0);
+  }
+  50% {
+    transform: translateY(-14px) rotate(-1deg);
+  }
+}
+
+@keyframes hero-glow {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.08);
+  }
+}
+
+@keyframes hero-steam {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scaleX(0.8);
+  }
+  30% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-90px) scaleX(1.4);
+  }
+}
+
+@keyframes hero-bean {
+  0%,
+  100% {
+    transform: translateY(0) rotate(var(--r, 0deg));
+  }
+  50% {
+    transform: translateY(-22px) rotate(calc(var(--r, 0deg) + 25deg));
+  }
+}
+
+/* About photo */
+.about-section .about-image-wrapper .about-image {
+  outline: 2px dashed var(--secondary-color);
+  outline-offset: 12px;
+  transition:
+    outline-offset 0.4s ease,
+    transform 0.4s ease;
+}
+
+.about-section .about-image-wrapper .about-image:hover {
+  outline-offset: 18px;
+  transform: scale(1.03);
+}
+
+/* Menu band */
+.menu-section {
+  position: relative;
+  padding: 80px 0 90px;
+  overflow: hidden;
+}
+
+.menu-band {
+  max-width: 44rem;
+  text-align: center;
+}
+
+.menu-band-icon {
+  display: inline-flex;
+  color: var(--secondary-color);
+  animation: hero-float 4s ease-in-out infinite;
+}
+
+.menu-band-eyebrow {
+  margin-top: 0.75rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.menu-band .section-title {
+  padding: 0.75rem 0 0;
+}
+
+.menu-band .menu-teaser-sub {
+  margin: 1.5rem auto 2.25rem;
+}
+
+.menu-cta-button {
+  animation: cta-pulse 2.4s ease-out infinite;
+}
+
+.menu-cta-button:hover {
+  transform: translateY(-3px);
+}
+
+.menu-band-note {
+  margin-top: 1.25rem;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+@keyframes cta-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(243, 150, 28, 0.55);
+  }
+  70% {
+    box-shadow: 0 0 0 16px rgba(243, 150, 28, 0);
+  }
+}
+
+/* Scroll reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s ease;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .hero-details > *,
+  .hero-image-wrapper,
+  .hero-glow,
+  .hero-float,
+  .menu-band-icon,
+  .menu-cta-button {
+    animation: none;
+  }
+
+  .hero-steam,
+  .hero-beans {
+    display: none;
+  }
+}
