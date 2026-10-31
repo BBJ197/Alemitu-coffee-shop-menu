@@ -453,3 +453,87 @@
   margin: 0.5rem 0 1rem;
   padding-left: 1.25rem;
 }
+
+/* Admin polish */
+body:has(.admin-main) {
+  background: var(--light-pink-color, #faf4f5);
+}
+
+.admin-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  box-shadow: 0 2px 8px rgba(59, 20, 28, 0.25);
+}
+
+.admin-nav {
+  flex-wrap: wrap;
+  gap: 0.25rem 1rem;
+}
+
+.admin-nav a {
+  padding: 0.5rem 0.25rem;
+}
+
+.admin-card,
+.admin-item,
+.admin-stat {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow:
+    0 1px 2px rgba(59, 20, 28, 0.06),
+    0 4px 14px rgba(59, 20, 28, 0.05);
+}
+
+.admin-item:hover {
+  border-color: #b9a9ad;
+}
+
+.admin-stat dd {
+  color: var(--primary-color, #3b141c);
+}
+
+.admin-button {
+  min-height: 44px;
+  transition:
+    background-color 0.15s ease,
+    transform 0.1s ease;
+}
+
+.admin-button:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.admin-button:hover:not(:disabled) {
+  background: #54202b;
+}
+
+.admin-button--quiet:hover:not(:disabled) {
+  background: rgba(59, 20, 28, 0.08);
+}
+
+.admin-header .admin-button--quiet:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.admin-button--danger:hover:not(:disabled) {
+  background: #8f1e18;
+}
+
+.admin-field input:focus,
+.admin-field select:focus,
+.admin-field textarea:focus {
+  border-color: var(--primary-color, #3b141c);
+}
+
+@media (max-width: 40rem) {
+  .admin-item__actions .admin-button {
+    flex: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .admin-button {
+    transition: none;
+  }
+}

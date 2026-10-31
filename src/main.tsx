@@ -11,7 +11,10 @@ import "@fontsource/poppins/latin-500.css";
 import "@fontsource/poppins/latin-600.css";
 import "@fontsource/poppins/latin-700.css";
 import "@fontsource/miniver/latin-400.css";
+import "@fontsource/noto-sans-ethiopic/ethiopic-400.css";
+import "@fontsource/noto-sans-ethiopic/ethiopic-600.css";
 import "./index.css";
+import "./ui-polish.css";
 import App from "./App";
 
 const queryClient = new QueryClient();

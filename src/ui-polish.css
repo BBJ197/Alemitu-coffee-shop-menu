@@ -1,0 +1,161 @@
+/* UI polish: loaded after index.css, so these rules win. */
+:root {
+  --ui-ink: #2b1a1e;
+  --ui-muted: #6b5560;
+  --ui-line: rgba(59, 20, 28, 0.12);
+  --ui-radius: 14px;
+  --ui-shadow:
+    0 1px 2px rgba(59, 20, 28, 0.06), 0 6px 18px rgba(59, 20, 28, 0.06);
+  --ui-shadow-hover: 0 10px 28px rgba(59, 20, 28, 0.16);
+}
+
+* {
+  font-family: "Poppins", "Noto Sans Ethiopic", system-ui, sans-serif;
+}
+
+html {
+  scroll-padding-top: 5rem;
+}
+
+body {
+  color: var(--ui-ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+.menu-banner h1,
+.menu-section-head h2 {
+  font-family: Georgia, "Times New Roman", "Noto Sans Ethiopic", serif;
+}
+
+.menu-search {
+  min-height: 48px;
+  font-size: 1rem;
+  border: 1px solid var(--ui-line);
+}
+
+.menu-chip,
+.menu-button {
+  min-height: 44px;
+  border-radius: 999px;
+  transition:
+    background-color 0.15s ease,
+    box-shadow 0.15s ease,
+    transform 0.1s ease;
+}
+
+.menu-chip:active,
+.menu-button:active {
+  transform: scale(0.97);
+}
+
+.menu-filters .menu-chip:hover:not([aria-pressed="true"]),
+.menu-category-bar .menu-chip:hover:not([aria-pressed="true"]) {
+  background: #fff3e0;
+}
+
+.menu-filters .menu-chip[aria-pressed="true"],
+.menu-category-bar .menu-chip[aria-pressed="true"] {
+  color: var(--white-color);
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  box-shadow: none;
+}
+
+.menu-category-bar {
+  background: rgba(251, 245, 238, 0.94);
+  backdrop-filter: blur(8px);
+}
+
+.menu-category-bar .menu-chip-row {
+  padding-right: 1.5rem;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    #000 calc(100% - 24px),
+    transparent
+  );
+  mask-image: linear-gradient(to right, #000 calc(100% - 24px), transparent);
+}
+
+.menu-card {
+  border: 1px solid var(--ui-line);
+  border-radius: var(--ui-radius);
+  box-shadow: var(--ui-shadow);
+}
+
+.menu-card:hover {
+  box-shadow: var(--ui-shadow-hover);
+}
+
+.menu-card h3 {
+  font-size: 1.05rem;
+  line-height: 1.3;
+}
+
+.menu-card-desc {
+  display: -webkit-box;
+  overflow: hidden;
+  line-height: 1.5;
+  color: var(--ui-muted);
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.menu-card .menu-price {
+  padding: 0.2rem 0.65rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.menu-unavailable {
+  padding: 0.15rem 0.65rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #444;
+  background: #e6e1dc;
+  border-radius: 999px;
+}
+
+.menu-skeleton-card {
+  background: linear-gradient(90deg, #efe6dc 25%, #f8f1e8 50%, #efe6dc 75%);
+  background-size: 200% 100%;
+  border-radius: var(--ui-radius);
+  animation: ui-shimmer 1.2s linear infinite;
+}
+
+@keyframes ui-shimmer {
+  to {
+    background-position: -200% 0;
+  }
+}
+
+.menu-error {
+  display: grid;
+  gap: 0.75rem;
+  justify-items: start;
+  padding: 1rem 1.25rem;
+  color: #7a1712;
+  background: #fdecea;
+  border-left: 4px solid #b3261e;
+  border-radius: 12px;
+}
+
+.menu-empty {
+  padding: 2rem 0;
+  text-align: center;
+  color: var(--ui-muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .menu-skeleton-card {
+    animation: none;
+  }
+
+  .menu-chip,
+  .menu-button {
+    transition: none;
+  }
+}
