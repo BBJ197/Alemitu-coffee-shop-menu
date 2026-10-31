@@ -1,0 +1,356 @@
+/* Menu page: Ethiopian traditional theme. Loaded last, so it wins ties. */
+.menu-page {
+  --menu-gold: #f3961c;
+  --menu-gold-line: rgba(176, 125, 47, 0.38);
+  --menu-paper: #fffdf8;
+  --menu-serif: Georgia, "Times New Roman", "Noto Sans Ethiopic", serif;
+  background-color: #f7eddd;
+  background-image:
+    linear-gradient(
+      45deg,
+      rgba(59, 20, 28, 0.04) 25%,
+      transparent 25%,
+      transparent 75%,
+      rgba(59, 20, 28, 0.04) 75%
+    ),
+    linear-gradient(
+      45deg,
+      rgba(59, 20, 28, 0.04) 25%,
+      transparent 25%,
+      transparent 75%,
+      rgba(59, 20, 28, 0.04) 75%
+    );
+  background-size: 32px 32px;
+  background-position:
+    0 0,
+    16px 16px;
+}
+
+/* Green, yellow and red stripe under the top bar */
+.menu-topbar::after {
+  content: "";
+  display: block;
+  height: 4px;
+  background: linear-gradient(
+    90deg,
+    #078930 0 33.34%,
+    #fcdd09 33.34% 66.67%,
+    #da121a 66.67%
+  );
+}
+
+/* Banner */
+.menu-page .menu-banner {
+  min-height: 11rem;
+  padding: 2.25rem var(--menu-gutter) 4rem;
+  background:
+    radial-gradient(
+      circle at 78% 40%,
+      rgba(243, 150, 28, 0.2),
+      transparent 55%
+    ),
+    var(--primary-color);
+}
+
+.menu-page .menu-eyebrow {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.menu-page .menu-banner h1 {
+  font-family: var(--menu-serif);
+  color: var(--menu-gold);
+}
+
+.menu-page .menu-banner-sub {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* Floating filter card: search and dietary chips */
+.menu-page .menu-filters {
+  position: relative;
+  z-index: 3;
+  margin: -2rem var(--menu-gutter) 0;
+  padding: 1rem;
+  background: var(--menu-paper);
+  border: 1px solid var(--menu-gold-line);
+  border-radius: 18px;
+  box-shadow: 0 12px 32px rgba(59, 20, 28, 0.2);
+}
+
+.menu-page .menu-search {
+  padding-left: 2.9rem;
+  background: #fff;
+  border: 1px solid var(--menu-gold-line);
+  box-shadow: none;
+}
+
+.menu-page .menu-search-icon {
+  color: #b07d2f;
+}
+
+.menu-page .menu-filters .menu-chip-row {
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px dashed var(--menu-gold-line);
+}
+
+.menu-page .menu-filters .menu-chip {
+  font-weight: 500;
+  color: var(--primary-color);
+  background: #fff;
+  border: 1px solid rgba(59, 20, 28, 0.25);
+}
+
+.menu-page .menu-filters .menu-chip:hover:not([aria-pressed="true"]) {
+  background: #fff3e0;
+  border-color: var(--menu-gold);
+}
+
+.menu-page .menu-filters .menu-chip[aria-pressed="true"] {
+  color: var(--menu-gold);
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  box-shadow: none;
+}
+
+/* Sticky category tabs */
+.menu-page .menu-category-bar {
+  margin-top: 1rem;
+  padding: 0 var(--menu-gutter);
+  background: var(--primary-color);
+  backdrop-filter: none;
+  border-top: 3px solid var(--menu-gold);
+  border-bottom: 0;
+  box-shadow: 0 8px 16px -8px rgba(0, 0, 0, 0.4);
+}
+
+.menu-page .menu-category-bar .menu-chip {
+  min-height: 52px;
+  padding: 0 1rem;
+  font-weight: 500;
+  white-space: nowrap;
+  color: rgba(255, 255, 255, 0.8);
+  background: transparent;
+  border: 0;
+  border-bottom: 3px solid transparent;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.menu-page .menu-category-bar .menu-chip:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.menu-page .menu-category-bar .menu-chip[aria-pressed="true"] {
+  font-weight: 600;
+  color: var(--menu-gold);
+  background: transparent;
+  border-bottom-color: var(--menu-gold);
+  box-shadow: none;
+}
+
+/* Result count and clear button */
+.menu-page .menu-summary {
+  margin-top: 1.25rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px dashed var(--menu-gold-line);
+}
+
+.menu-page .menu-summary p {
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #7a5c4a;
+}
+
+.menu-page .menu-summary .menu-button {
+  color: var(--primary-color);
+  background: transparent;
+  border: 1px solid var(--menu-gold);
+}
+
+/* Section titles */
+.menu-page .menu-section-head {
+  margin: 2rem 0 1rem;
+}
+
+.menu-page .menu-section-head::after {
+  content: "";
+  flex: 1;
+  height: 2px;
+  background: linear-gradient(90deg, var(--menu-gold), transparent);
+}
+
+.menu-page .menu-section-head h2 {
+  font-family: var(--menu-serif);
+  font-size: 1.55rem;
+}
+
+/* Photo card grid */
+.menu-page .menu-list {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.875rem;
+}
+
+.menu-page .menu-popular .menu-list {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+@media (min-width: 640px) {
+  .menu-page .menu-list,
+  .menu-page .menu-popular .menu-list {
+    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+    gap: 1.25rem;
+  }
+}
+
+.menu-page .menu-card,
+.menu-page .menu-card.no-photo {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 0;
+  overflow: hidden;
+  background: var(--menu-paper);
+  border: 1px solid var(--menu-gold-line);
+  border-radius: 16px;
+  box-shadow: 0 2px 6px rgba(59, 20, 28, 0.08);
+}
+
+.menu-page .menu-card:hover {
+  box-shadow: 0 14px 30px rgba(59, 20, 28, 0.18);
+  transform: translateY(-4px);
+}
+
+.menu-page .menu-card.is-unavailable:hover {
+  box-shadow: 0 2px 6px rgba(59, 20, 28, 0.08);
+  transform: none;
+}
+
+.menu-page .menu-popular .menu-card {
+  border-color: var(--menu-gold);
+  box-shadow:
+    0 0 0 1px rgba(243, 150, 28, 0.45),
+    0 6px 18px rgba(59, 20, 28, 0.12);
+}
+
+.menu-page .menu-card-media,
+.menu-page .menu-popular .menu-card-media {
+  position: relative;
+  height: auto;
+  min-height: 0;
+  overflow: hidden;
+  background: #efe2cf;
+  border-bottom: 3px solid var(--menu-gold);
+  aspect-ratio: 4 / 3;
+}
+
+.menu-page .menu-card-photo,
+.menu-page .menu-popular .menu-card-media .menu-card-photo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  border-radius: 0;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.menu-page .menu-card:not(.is-unavailable):hover .menu-card-photo {
+  transform: scale(1.06);
+}
+
+/* Price pill: on the photo, or inline when there is no photo */
+.menu-page .menu-card-media .menu-price,
+.menu-page .menu-card-body .menu-price {
+  padding: 0.2rem 0.65rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--menu-gold);
+  background: var(--primary-color);
+  border: 1px solid var(--menu-gold);
+  border-radius: 999px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+}
+
+.menu-page .menu-card-media .menu-price {
+  position: absolute;
+  top: auto;
+  right: 0.5rem;
+  bottom: 0.5rem;
+  left: auto;
+  margin: 0;
+}
+
+.menu-page .menu-card-body .menu-price {
+  position: static;
+  display: inline-block;
+  margin-top: 0.5rem;
+}
+
+.menu-page .menu-card.is-unavailable .menu-price {
+  color: #fff;
+  background: #5a5a5a;
+  border-color: #999;
+}
+
+.menu-page .menu-card-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.25rem;
+  align-self: stretch;
+  padding: 0.7rem 0.8rem 0.9rem;
+}
+
+.menu-page .menu-card h3 {
+  font-family: var(--menu-serif);
+  font-size: 1rem;
+  color: var(--primary-color);
+}
+
+.menu-page .menu-unavailable {
+  align-self: flex-start;
+}
+
+@media (max-width: 639px) {
+  .menu-page .menu-card-desc {
+    -webkit-line-clamp: 2;
+  }
+
+  .menu-page .menu-badges {
+    gap: 0.25rem;
+  }
+}
+
+/* Loading skeleton matches the grid */
+.menu-page .menu-skeleton {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.875rem;
+  margin-top: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .menu-page .menu-skeleton {
+    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  }
+}
+
+.menu-page .menu-skeleton-card {
+  min-height: 15rem;
+  border-radius: 16px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .menu-page .menu-card,
+  .menu-page .menu-card-photo {
+    transition: none;
+  }
+
+  .menu-page .menu-card:hover,
+  .menu-page .menu-card:not(.is-unavailable):hover .menu-card-photo {
+    transform: none;
+  }
+}
