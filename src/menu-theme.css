@@ -1,55 +1,105 @@
-/* Menu page: Ethiopian traditional theme. Loaded last, so it wins ties. */
+/* Menu page: Ethiopian traditional cloth theme. Loaded last, so it wins ties. */
 .menu-page {
   --menu-gold: #f3961c;
   --menu-gold-line: rgba(176, 125, 47, 0.38);
   --menu-paper: #fffdf8;
   --menu-serif: Georgia, "Times New Roman", "Noto Sans Ethiopic", serif;
   background-color: #f7eddd;
-  background-image:
-    linear-gradient(
-      45deg,
-      rgba(59, 20, 28, 0.04) 25%,
-      transparent 25%,
-      transparent 75%,
-      rgba(59, 20, 28, 0.04) 75%
-    ),
-    linear-gradient(
-      45deg,
-      rgba(59, 20, 28, 0.04) 25%,
-      transparent 25%,
-      transparent 75%,
-      rgba(59, 20, 28, 0.04) 75%
-    );
-  background-size: 32px 32px;
-  background-position:
-    0 0,
-    16px 16px;
+  background-image: url("./assets/patterns/cloth.svg");
+  background-size: 72px 72px;
 }
 
-/* Green, yellow and red stripe under the top bar */
-.menu-topbar::after {
-  content: "";
-  display: block;
-  height: 4px;
-  background: linear-gradient(
-    90deg,
-    #078930 0 33.34%,
-    #fcdd09 33.34% 66.67%,
-    #da121a 66.67%
-  );
-}
-
-/* Banner */
+/* Banner: the only header, hemmed top and bottom like a shawl */
 .menu-page .menu-banner {
-  min-height: 11rem;
-  padding: 2.25rem var(--menu-gutter) 4rem;
+  position: relative;
+  min-height: 13rem;
+  padding: calc(20px + 1rem) var(--menu-gutter) calc(20px + 2rem);
   background:
     radial-gradient(
-      circle at 78% 40%,
-      rgba(243, 150, 28, 0.2),
+      circle at 78% 55%,
+      rgba(243, 150, 28, 0.22),
       transparent 55%
     ),
     var(--primary-color);
+}
+
+.menu-page .menu-banner::before,
+.menu-page .menu-banner::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  left: 0;
+  z-index: 3;
+  height: 20px;
+  background: url("./assets/patterns/tilet.svg") repeat-x left center / auto
+    20px;
+}
+
+.menu-page .menu-banner::before {
+  top: 0;
+}
+
+.menu-page .menu-banner::after {
+  bottom: 0;
+}
+
+.menu-banner-bar {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.menu-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  padding: 0 1.1rem 0 0.85rem;
+  font-weight: 500;
+  color: #fff;
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(243, 150, 28, 0.65);
+  border-radius: 999px;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.menu-back:hover {
+  color: var(--primary-color);
+  background: var(--menu-gold);
+}
+
+.menu-page .menu-banner .menu-lang {
+  display: flex;
+  gap: 0.375rem;
+  margin: 0;
+}
+
+.menu-page .menu-banner .menu-chip {
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 0.9rem;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(243, 150, 28, 0.65);
+  box-shadow: none;
+}
+
+.menu-page .menu-banner .menu-chip:hover:not([aria-pressed="true"]) {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.menu-page .menu-banner .menu-chip[aria-pressed="true"] {
+  font-weight: 600;
+  color: var(--primary-color);
+  background: var(--menu-gold);
+  border-color: var(--menu-gold);
 }
 
 .menu-page .menu-eyebrow {
@@ -58,6 +108,7 @@
 
 .menu-page .menu-banner h1 {
   font-family: var(--menu-serif);
+  font-size: clamp(2.2rem, 6vw, 3.4rem);
   color: var(--menu-gold);
 }
 
@@ -65,48 +116,120 @@
   color: rgba(255, 255, 255, 0.85);
 }
 
-/* Floating filter card: search and dietary chips */
-.menu-page .menu-filters {
+/* Search and the filters popover */
+.menu-page .menu-controls {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 1.5rem var(--menu-gutter) 0;
+}
+
+.menu-page .menu-search-wrap {
   position: relative;
-  z-index: 3;
-  margin: -2rem var(--menu-gutter) 0;
-  padding: 1rem;
-  background: var(--menu-paper);
-  border: 1px solid var(--menu-gold-line);
-  border-radius: 18px;
-  box-shadow: 0 12px 32px rgba(59, 20, 28, 0.2);
 }
 
 .menu-page .menu-search {
-  padding-left: 2.9rem;
+  width: 100%;
+  min-height: 52px;
+  padding-left: 3rem;
+  font-size: 1rem;
   background: #fff;
   border: 1px solid var(--menu-gold-line);
-  box-shadow: none;
+  border-radius: 999px;
+  box-shadow: 0 4px 14px rgba(59, 20, 28, 0.08);
 }
 
 .menu-page .menu-search-icon {
   color: #b07d2f;
 }
 
-.menu-page .menu-filters .menu-chip-row {
-  margin-top: 0.75rem;
-  padding-top: 0.75rem;
-  border-top: 1px dashed var(--menu-gold-line);
+.menu-filter-panel {
+  position: relative;
 }
 
-.menu-page .menu-filters .menu-chip {
+.menu-filter-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 52px;
+  padding: 0 1.2rem;
+  font-weight: 600;
+  color: var(--menu-gold);
+  list-style: none;
+  cursor: pointer;
+  background: var(--primary-color);
+  border-radius: 999px;
+  box-shadow: 0 4px 14px rgba(59, 20, 28, 0.25);
+  user-select: none;
+}
+
+.menu-filter-toggle::-webkit-details-marker {
+  display: none;
+}
+
+.menu-filter-toggle:focus-visible {
+  outline: 3px solid var(--menu-gold);
+  outline-offset: 3px;
+}
+
+.menu-filter-panel[open] > .menu-filter-toggle {
+  box-shadow: 0 0 0 3px var(--menu-gold);
+}
+
+.menu-filter-count {
+  display: inline-grid;
+  min-width: 1.4rem;
+  height: 1.4rem;
+  padding: 0 0.3rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  background: var(--menu-gold);
+  border-radius: 999px;
+  place-items: center;
+}
+
+.menu-filter-panel > .menu-chip-row {
+  position: absolute;
+  top: calc(100% + 0.6rem);
+  right: 0;
+  z-index: 6;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  width: min(24rem, calc(100vw - 2rem));
+  padding: 1rem;
+  overflow: visible;
+  background: var(--menu-paper);
+  border: 1px solid var(--menu-gold-line);
+  border-radius: 16px;
+  box-shadow: 0 16px 40px rgba(59, 20, 28, 0.28);
+}
+
+/* Chips: same look in the popover and the category bar */
+.menu-page .menu-filter-panel .menu-chip,
+.menu-page .menu-category-bar .menu-chip {
+  min-height: 44px;
+  padding: 0 1rem;
   font-weight: 500;
+  white-space: nowrap;
   color: var(--primary-color);
   background: #fff;
   border: 1px solid rgba(59, 20, 28, 0.25);
+  border-radius: 999px;
+  box-shadow: none;
 }
 
-.menu-page .menu-filters .menu-chip:hover:not([aria-pressed="true"]) {
+.menu-page .menu-filter-panel .menu-chip:hover:not([aria-pressed="true"]),
+.menu-page .menu-category-bar .menu-chip:hover:not([aria-pressed="true"]) {
   background: #fff3e0;
   border-color: var(--menu-gold);
 }
 
-.menu-page .menu-filters .menu-chip[aria-pressed="true"] {
+.menu-page .menu-filter-panel .menu-chip[aria-pressed="true"],
+.menu-page .menu-category-bar .menu-chip[aria-pressed="true"] {
+  font-weight: 600;
   color: var(--menu-gold);
   background: var(--primary-color);
   border-color: var(--primary-color);
@@ -115,39 +238,20 @@
 
 /* Sticky category tabs */
 .menu-page .menu-category-bar {
-  margin-top: 1rem;
-  padding: 0 var(--menu-gutter);
-  background: var(--primary-color);
-  backdrop-filter: none;
-  border-top: 3px solid var(--menu-gold);
-  border-bottom: 0;
-  box-shadow: 0 8px 16px -8px rgba(0, 0, 0, 0.4);
+  position: sticky;
+  top: 0;
+  z-index: 4;
+  margin-top: 1.25rem;
+  padding: 0.6rem var(--menu-gutter);
+  background: rgba(255, 253, 248, 0.96);
+  backdrop-filter: blur(8px);
+  border-top: 1px solid var(--menu-gold-line);
+  border-bottom: 2px solid var(--menu-gold);
+  box-shadow: 0 8px 16px -10px rgba(59, 20, 28, 0.35);
 }
 
-.menu-page .menu-category-bar .menu-chip {
-  min-height: 52px;
-  padding: 0 1rem;
-  font-weight: 500;
-  white-space: nowrap;
-  color: rgba(255, 255, 255, 0.8);
-  background: transparent;
-  border: 0;
-  border-bottom: 3px solid transparent;
-  border-radius: 0;
-  box-shadow: none;
-}
-
-.menu-page .menu-category-bar .menu-chip:hover {
-  color: #fff;
-  background: rgba(255, 255, 255, 0.08);
-}
-
-.menu-page .menu-category-bar .menu-chip[aria-pressed="true"] {
-  font-weight: 600;
-  color: var(--menu-gold);
-  background: transparent;
-  border-bottom-color: var(--menu-gold);
-  box-shadow: none;
+.menu-page .menu-category-bar .menu-chip-row {
+  padding-right: 1.5rem;
 }
 
 /* Result count and clear button */
@@ -188,13 +292,10 @@
 }
 
 /* Photo card grid */
-.menu-page .menu-list {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.875rem;
-}
-
+.menu-page .menu-list,
 .menu-page .menu-popular .menu-list {
   grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.875rem;
 }
 
 @media (min-width: 640px) {
@@ -261,7 +362,6 @@
   transform: scale(1.06);
 }
 
-/* Price pill: on the photo, or inline when there is no photo */
 .menu-page .menu-card-media .menu-price,
 .menu-page .menu-card-body .menu-price {
   padding: 0.2rem 0.65rem;
@@ -344,6 +444,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .menu-back,
   .menu-page .menu-card,
   .menu-page .menu-card-photo {
     transition: none;
