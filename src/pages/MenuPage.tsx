@@ -115,19 +115,25 @@ export default function MenuPage() {
 
   return (
     <main id="main" className="menu-page">
-      <div className="menu-topbar">
-        <div className="menu-topbar-inner">
-          <Link to="/" className="menu-brand" aria-label="Alemitu Coffee home">
-            <MenuIcon name="cup" size={30} />
-            <span>Alemitu Coffee</span>
+      <section className="menu-banner" aria-labelledby="menu-title">
+        <div className="menu-banner-bar">
+          <Link to="/" className="menu-back">
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <path d="M19 12H5M12 19l-7-7 7-7" />
+            </svg>
+            {pickText("Back to home", "ወደ መነሻ ተመለስ", lang)}
           </Link>
-          <nav className="menu-topnav" aria-label="Main">
-            <Link to="/menu" aria-current="page">
-              Menu
-            </Link>
-            <a href="/#about">About</a>
-            <a href="/#contact">Contact</a>
-          </nav>
           <div className="menu-lang" role="group" aria-label="Language">
             <button
               type="button"
@@ -151,9 +157,6 @@ export default function MenuPage() {
             </button>
           </div>
         </div>
-      </div>
-
-      <section className="menu-banner" aria-labelledby="menu-title">
         <div className="menu-banner-text">
           <p className="menu-eyebrow">
             Traditional taste &bull; Freshly brewed
@@ -200,7 +203,7 @@ export default function MenuPage() {
 
       {data && data.items.length > 0 && (
         <>
-          <div className="menu-filters">
+          <div className="menu-controls">
             <div className="menu-search-wrap">
               <span className="menu-search-icon">
                 <MenuIcon name="search" size={20} />
@@ -219,37 +222,48 @@ export default function MenuPage() {
                 }
               />
             </div>
-            <div
-              className="menu-chip-row"
-              role="group"
-              aria-label="Dietary and temperature filters"
-            >
-              <button
-                type="button"
-                className="menu-chip"
-                aria-label="Any diet"
-                aria-pressed={filters.tagSlugs.length === 0}
-                onClick={() => setFilters((f) => ({ ...f, tagSlugs: [] }))}
+            <details className="menu-filter-panel">
+              <summary className="menu-filter-toggle">
+                <MenuIcon name="grid" size={18} />
+                {pickText("Filters", "ማጣሪያ", lang)}
+                {filters.tagSlugs.length > 0 && (
+                  <span className="menu-filter-count">
+                    {filters.tagSlugs.length}
+                  </span>
+                )}
+              </summary>
+              <div
+                className="menu-chip-row"
+                role="group"
+                aria-label="Dietary and temperature filters"
               >
-                <MenuIcon name="grid" size={16} />
-                Any diet
-              </button>
-              {data.tags.map((tag) => {
-                const icon = iconForTag(tag.slug);
-                return (
-                  <button
-                    key={tag.id}
-                    type="button"
-                    className="menu-chip"
-                    aria-pressed={filters.tagSlugs.includes(tag.slug)}
-                    onClick={() => toggleTag(tag.slug)}
-                  >
-                    {icon && <MenuIcon name={icon} size={16} />}
-                    {pickText(tag.nameEn, tag.nameAm, lang)}
-                  </button>
-                );
-              })}
-            </div>
+                <button
+                  type="button"
+                  className="menu-chip"
+                  aria-label="Any diet"
+                  aria-pressed={filters.tagSlugs.length === 0}
+                  onClick={() => setFilters((f) => ({ ...f, tagSlugs: [] }))}
+                >
+                  <MenuIcon name="grid" size={16} />
+                  Any diet
+                </button>
+                {data.tags.map((tag) => {
+                  const icon = iconForTag(tag.slug);
+                  return (
+                    <button
+                      key={tag.id}
+                      type="button"
+                      className="menu-chip"
+                      aria-pressed={filters.tagSlugs.includes(tag.slug)}
+                      onClick={() => toggleTag(tag.slug)}
+                    >
+                      {icon && <MenuIcon name={icon} size={16} />}
+                      {pickText(tag.nameEn, tag.nameAm, lang)}
+                    </button>
+                  );
+                })}
+              </div>
+            </details>
           </div>
 
           <div className="menu-category-bar">
