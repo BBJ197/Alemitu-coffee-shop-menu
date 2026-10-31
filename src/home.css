@@ -427,3 +427,139 @@
     display: none;
   }
 }
+
+/* Beans falling into the cup */
+.hero-fall {
+  position: absolute;
+  top: -8%;
+  width: 1.1rem;
+  height: 1.6rem;
+  background: radial-gradient(circle at 35% 30%, #8a5a3c, #3a1d10 70%);
+  border-radius: 50%;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.45);
+  opacity: 0;
+  pointer-events: none;
+  animation: hero-fall 4.5s ease-in infinite;
+}
+
+.hero-fall::after {
+  content: "";
+  position: absolute;
+  top: 12%;
+  bottom: 12%;
+  left: 50%;
+  width: 2px;
+  background: #1f0f08;
+  border-radius: 2px;
+  transform: translateX(-50%) rotate(12deg);
+}
+
+.hero-fall-1 {
+  left: 50%;
+  --r: 200deg;
+}
+
+.hero-fall-2 {
+  left: 57%;
+  --r: -240deg;
+  animation-delay: 1.5s;
+}
+
+.hero-fall-3 {
+  left: 53%;
+  --r: 300deg;
+  animation-delay: 3s;
+}
+
+@keyframes hero-fall {
+  0% {
+    top: -8%;
+    opacity: 0;
+    transform: rotate(0) scale(1);
+  }
+  8% {
+    opacity: 1;
+  }
+  38% {
+    top: 54%;
+    opacity: 1;
+    transform: rotate(var(--r)) scale(1);
+  }
+  46%,
+  100% {
+    top: 60%;
+    opacity: 0;
+    transform: rotate(var(--r)) scale(0.6);
+  }
+}
+
+/* Rings on the coffee, timed to each landing */
+.hero-ripple {
+  position: absolute;
+  top: 54.5%;
+  left: 40%;
+  width: 28%;
+  height: 5%;
+  border: 2px solid rgba(255, 190, 110, 0.75);
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+  animation: hero-ripple 4.5s ease-out infinite;
+}
+
+.hero-ripple-2 {
+  animation-delay: 1.5s;
+}
+
+.hero-ripple-3 {
+  animation-delay: 3s;
+}
+
+@keyframes hero-ripple {
+  0%,
+  38% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  42% {
+    opacity: 0.9;
+  }
+  72%,
+  100% {
+    opacity: 0;
+    transform: scale(1.1);
+  }
+}
+
+/* The photo bumps and flashes when a bean lands (one landing every 1.5s) */
+.hero-float .hero-image {
+  transform-origin: 50% 80%;
+  animation: hero-hit 1.5s ease-out 1.7s infinite;
+}
+
+@keyframes hero-hit {
+  0% {
+    filter: brightness(1);
+    transform: scale(1);
+  }
+  8% {
+    filter: brightness(1.18);
+    transform: scale(1.015);
+  }
+  25%,
+  100% {
+    filter: brightness(1);
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-fall,
+  .hero-ripple {
+    display: none;
+  }
+
+  .hero-float .hero-image {
+    animation: none;
+  }
+}
