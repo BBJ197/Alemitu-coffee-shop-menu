@@ -4,6 +4,14 @@ import heroImg from "../assets/images/hero.webp";
 export default function Hero() {
   return (
     <section className="hero-section">
+      <div className="hero-beans" aria-hidden="true">
+        <span className="hero-bean" />
+        <span className="hero-bean" />
+        <span className="hero-bean" />
+        <span className="hero-bean" />
+        <span className="hero-bean" />
+        <span className="hero-bean" />
+      </div>
       <div className="section-content">
         <div className="hero-details">
           <h1 className="title">Best Coffee</h1>
@@ -24,11 +32,17 @@ export default function Hero() {
           </div>
         </div>
         <div className="hero-image-wrapper">
-          <img
-            src={heroImg}
-            alt="Traditional Ethiopian jebena coffee pot beside a painted cup with a splash of coffee, surrounded by coffee beans and spices"
-            className="hero-image"
-          />
+          <span className="hero-glow" aria-hidden="true" />
+          <div className="hero-float">
+            <img
+              src={heroImg}
+              alt="Traditional Ethiopian jebena coffee pot beside a painted cup with a splash of coffee, surrounded by coffee beans and spices"
+              className="hero-image"
+            />
+            <span className="hero-steam hero-steam-1" aria-hidden="true" />
+            <span className="hero-steam hero-steam-2" aria-hidden="true" />
+            <span className="hero-steam hero-steam-3" aria-hidden="true" />
+          </div>
         </div>
       </div>
     </section>
