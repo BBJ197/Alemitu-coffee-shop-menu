@@ -3,7 +3,7 @@ import { MemoryRouter } from "react-router-dom";
 import { describe, expect, it } from "vitest";
 import Menu from "./Menu";
 
-describe("Menu teaser", () => {
+describe("Menu band", () => {
   it("sends visitors to the full menu page", () => {
     render(<Menu />, { wrapper: MemoryRouter });
 
@@ -12,12 +12,9 @@ describe("Menu teaser", () => {
     ).toHaveAttribute("href", "/menu");
   });
 
-  it("links every category card to /menu", () => {
+  it("shows no category cards, only the one link", () => {
     render(<Menu />, { wrapper: MemoryRouter });
-    const toMenu = screen
-      .getAllByRole("link")
-      .filter((link) => link.getAttribute("href") === "/menu");
 
-    expect(toMenu.length).toBeGreaterThan(1);
+    expect(screen.getAllByRole("link")).toHaveLength(1);
   });
 });
