@@ -42,9 +42,6 @@ export default function Hero() {
             <span className="hero-ripple" aria-hidden="true" />
             <span className="hero-ripple hero-ripple-2" aria-hidden="true" />
             <span className="hero-ripple hero-ripple-3" aria-hidden="true" />
-            <span className="hero-fall hero-fall-1" aria-hidden="true" />
-            <span className="hero-fall hero-fall-2" aria-hidden="true" />
-            <span className="hero-fall hero-fall-3" aria-hidden="true" />
             <span className="hero-steam hero-steam-1" aria-hidden="true" />
             <span className="hero-steam hero-steam-2" aria-hidden="true" />
             <span className="hero-steam hero-steam-3" aria-hidden="true" />
