@@ -159,3 +159,137 @@ body {
     transition: none;
   }
 }
+
+/* Home menu teaser */
+.menu-section {
+  background: linear-gradient(180deg, #2a0f15, #3b141c);
+}
+
+.menu-section .section-title {
+  padding-bottom: 1.5rem;
+  color: var(--secondary-color);
+}
+
+.menu-teaser-sub {
+  max-width: 36rem;
+  margin: 0 auto 3rem;
+  padding: 0 20px;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.menu-section .menu-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 1.5rem;
+}
+
+.menu-section .menu-list .menu-item {
+  display: block;
+  width: auto;
+}
+
+.menu-teaser-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  padding: 1.5rem 1.25rem;
+  text-align: center;
+  color: inherit;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(243, 150, 28, 0.25);
+  border-radius: 18px;
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.menu-teaser-card:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-4px);
+}
+
+.menu-section .menu-list .menu-item .menu-image {
+  width: 100%;
+  max-width: 12rem;
+  margin-bottom: 0.75rem;
+}
+
+.menu-section .menu-list .menu-item .name {
+  margin: 0.5rem 0;
+  font-size: 1.2rem;
+  color: var(--secondary-color);
+}
+
+.menu-section .menu-list .menu-item .text {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.menu-cta {
+  margin-top: 3rem;
+  text-align: center;
+}
+
+.menu-cta-button {
+  display: inline-block;
+  padding: 0.9rem 2.25rem;
+  font-weight: 600;
+  color: var(--primary-color);
+  background: var(--secondary-color);
+  border-radius: 999px;
+  transition: background-color 0.2s ease;
+}
+
+.menu-cta-button:hover {
+  background: #fff;
+}
+
+/* Phone tab bar on /menu */
+.menu-tabbar {
+  display: none;
+}
+
+@media (max-width: 640px) {
+  .menu-page {
+    padding-bottom: calc(5.5rem + env(safe-area-inset-bottom, 0px));
+  }
+
+  .menu-tabbar {
+    position: fixed;
+    inset: auto 0 0 0;
+    z-index: 20;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    background: var(--primary-color);
+    box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.25);
+  }
+
+  .menu-tabbar a,
+  .menu-tabbar button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.2rem;
+    min-height: 56px;
+    padding: 0.4rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: #fff;
+    text-decoration: none;
+    background: transparent;
+    border: 0;
+  }
+
+  .menu-tabbar a:hover,
+  .menu-tabbar button:hover {
+    color: var(--secondary-color);
+  }
+
+  .menu-tabbar :focus-visible {
+    outline-offset: -3px;
+  }
+}
