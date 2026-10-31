@@ -39,9 +39,23 @@ export default function Hero() {
               alt="Traditional Ethiopian jebena coffee pot beside a painted cup with a splash of coffee, surrounded by coffee beans and spices"
               className="hero-image"
             />
+            <span className="hero-ripple" aria-hidden="true" />
+            <span className="hero-ripple hero-ripple-2" aria-hidden="true" />
+            <span className="hero-drops" aria-hidden="true">
+              <span className="hero-drop" />
+              <span className="hero-drop" />
+              <span className="hero-drop" />
+              <span className="hero-drop" />
+              <span className="hero-drop" />
+              <span className="hero-drop" />
+              <span className="hero-drop" />
+              <span className="hero-drop" />
+            </span>
             <span className="hero-steam hero-steam-1" aria-hidden="true" />
             <span className="hero-steam hero-steam-2" aria-hidden="true" />
             <span className="hero-steam hero-steam-3" aria-hidden="true" />
+            <span className="hero-steam hero-steam-4" aria-hidden="true" />
+            <span className="hero-steam hero-steam-5" aria-hidden="true" />
           </div>
         </div>
       </div>
