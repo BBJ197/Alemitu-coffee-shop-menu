@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import type { Menu, MenuItem } from "../api/menu";
 import { useMenu } from "../api/useMenu";
 import MenuIcon from "../components/MenuIcon";
+import MobileTabBar from "../components/MobileTabBar";
 import {
   emptyFilters,
   filterItems,
@@ -345,6 +346,7 @@ export default function MenuPage() {
           })}
         </>
       )}
+      <MobileTabBar lang={lang} />
     </main>
   );
 }
