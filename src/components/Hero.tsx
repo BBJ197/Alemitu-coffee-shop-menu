@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import heroImg from "../assets/images/hero.webp";
 
 export default function Hero() {
@@ -14,9 +15,9 @@ export default function Hero() {
             every cup sparks joy.
           </p>
           <div className="buttons">
-            <a href="#menu" className="button order-now">
+            <Link to="/menu" className="button order-now">
               View Menu
-            </a>
+            </Link>
             <a href="#contact" className="button contact-us">
               Contact Us
             </a>
