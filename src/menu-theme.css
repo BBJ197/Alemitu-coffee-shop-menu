@@ -4,16 +4,20 @@
   --menu-gold-line: rgba(176, 125, 47, 0.38);
   --menu-paper: #fffdf8;
   --menu-serif: Georgia, "Times New Roman", "Noto Sans Ethiopic", serif;
-  background-color: #f7eddd;
-  background-image: url("./assets/patterns/cloth.svg");
-  background-size: 72px 72px;
+  background-color: #2a0f15;
+  background-image:
+    linear-gradient(rgba(42, 15, 21, 0.38), rgba(42, 15, 21, 0.38)),
+    url("./assets/patterns/weave.svg");
+  background-size:
+    auto,
+    96px 150px;
 }
 
 /* Banner: the only header, hemmed top and bottom like a shawl */
 .menu-page .menu-banner {
   position: relative;
   min-height: 13rem;
-  padding: calc(20px + 1rem) var(--menu-gutter) calc(20px + 2rem);
+  padding: 1.25rem var(--menu-gutter) 2.5rem;
   background:
     radial-gradient(
       circle at 78% 55%,
@@ -21,26 +25,6 @@
       transparent 55%
     ),
     var(--primary-color);
-}
-
-.menu-page .menu-banner::before,
-.menu-page .menu-banner::after {
-  content: "";
-  position: absolute;
-  right: 0;
-  left: 0;
-  z-index: 3;
-  height: 20px;
-  background: url("./assets/patterns/tilet.svg") repeat-x left center / auto
-    20px;
-}
-
-.menu-page .menu-banner::before {
-  top: 0;
-}
-
-.menu-page .menu-banner::after {
-  bottom: 0;
 }
 
 .menu-banner-bar {
@@ -454,4 +438,52 @@
   .menu-page .menu-card:not(.is-unavailable):hover .menu-card-photo {
     transform: none;
   }
+}
+
+/* Dark page background: gold line under the banner, light text elsewhere */
+.menu-page .menu-banner {
+  border-bottom: 3px solid var(--menu-gold);
+}
+
+.menu-page .menu-section-head h2 {
+  color: var(--menu-gold);
+}
+
+.menu-page .menu-section-sub,
+.menu-page .menu-summary p,
+.menu-page .menu-empty,
+.menu-page > p {
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.menu-page .menu-summary {
+  border-bottom-color: rgba(243, 150, 28, 0.45);
+}
+
+.menu-page .menu-summary .menu-button {
+  color: #fff;
+}
+
+/* Dark page background: gold line under the banner, light text elsewhere */
+.menu-page .menu-banner {
+  border-bottom: 3px solid var(--menu-gold);
+}
+
+.menu-page .menu-section-head h2 {
+  color: var(--menu-gold);
+}
+
+.menu-page .menu-section-sub,
+.menu-page .menu-summary p,
+.menu-page .menu-empty,
+.menu-page > p {
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.menu-page .menu-summary {
+  border-bottom-color: rgba(243, 150, 28, 0.45);
+}
+
+.menu-page .menu-summary .menu-button {
+  color: #fff;
 }
