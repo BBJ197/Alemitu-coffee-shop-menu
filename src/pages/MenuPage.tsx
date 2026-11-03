@@ -67,7 +67,6 @@ function ItemCard({
             loading="lazy"
             decoding="async"
           />
-          {price}
         </div>
       )}
       <div className="menu-card-body">
@@ -87,7 +86,7 @@ function ItemCard({
           </ul>
         )}
         {!item.isAvailable && <p className="menu-unavailable">Unavailable</p>}
-        {!photo && price}
+        {price}
       </div>
     </li>
   );
@@ -203,97 +202,107 @@ export default function MenuPage() {
 
       {data && data.items.length > 0 && (
         <>
-          <div className="menu-controls">
-            <div className="menu-search-wrap">
-              <span className="menu-search-icon">
-                <MenuIcon name="search" size={20} />
-              </span>
-              <label htmlFor="menu-search" className="menu-search-label">
-                Search the menu
-              </label>
-              <input
-                id="menu-search"
-                type="search"
-                className="menu-search"
-                placeholder="Search by name, description or category"
-                value={filters.query}
-                onChange={(e) =>
-                  setFilters((f) => ({ ...f, query: e.target.value }))
-                }
-              />
+          <div className="menu-sticky">
+            <div className="menu-controls">
+              <div className="menu-search-wrap">
+                <span className="menu-search-icon">
+                  <MenuIcon name="search" size={20} />
+                </span>
+                <label htmlFor="menu-search" className="menu-search-label">
+                  Search the menu
+                </label>
+                <input
+                  id="menu-search"
+                  type="search"
+                  className="menu-search"
+                  placeholder="Search by name, description or category"
+                  value={filters.query}
+                  onChange={(e) =>
+                    setFilters((f) => ({ ...f, query: e.target.value }))
+                  }
+                />
+              </div>
+              <details className="menu-filter-panel">
+                <summary className="menu-filter-toggle">
+                  <MenuIcon name="grid" size={18} />
+                  {pickText("Filters", "ማጣሪያ", lang)}
+                  {filters.tagSlugs.length > 0 && (
+                    <span className="menu-filter-count">
+                      {filters.tagSlugs.length}
+                    </span>
+                  )}
+                </summary>
+                <div
+                  className="menu-chip-row"
+                  role="group"
+                  aria-label="Dietary and temperature filters"
+                >
+                  <button
+                    type="button"
+                    className="menu-chip"
+                    aria-label="Any diet"
+                    aria-pressed={filters.tagSlugs.length === 0}
+                    onClick={() => setFilters((f) => ({ ...f, tagSlugs: [] }))}
+                  >
+                    <MenuIcon name="grid" size={16} />
+                    Any diet
+                  </button>
+                  {data.tags.map((tag) => {
+                    const icon = iconForTag(tag.slug);
+                    return (
+                      <button
+                        key={tag.id}
+                        type="button"
+                        className="menu-chip"
+                        aria-pressed={filters.tagSlugs.includes(tag.slug)}
+                        onClick={() => toggleTag(tag.slug)}
+                      >
+                        {icon && <MenuIcon name={icon} size={16} />}
+                        {pickText(tag.nameEn, tag.nameAm, lang)}
+                      </button>
+                    );
+                  })}
+                </div>
+              </details>
             </div>
-            <details className="menu-filter-panel">
-              <summary className="menu-filter-toggle">
-                <MenuIcon name="grid" size={18} />
-                {pickText("Filters", "ማጣሪያ", lang)}
-                {filters.tagSlugs.length > 0 && (
-                  <span className="menu-filter-count">
-                    {filters.tagSlugs.length}
-                  </span>
-                )}
-              </summary>
+
+            <div className="menu-category-bar">
               <div
                 className="menu-chip-row"
                 role="group"
-                aria-label="Dietary and temperature filters"
+                aria-label="Categories"
               >
                 <button
                   type="button"
                   className="menu-chip"
-                  aria-label="Any diet"
-                  aria-pressed={filters.tagSlugs.length === 0}
-                  onClick={() => setFilters((f) => ({ ...f, tagSlugs: [] }))}
-                >
-                  <MenuIcon name="grid" size={16} />
-                  Any diet
-                </button>
-                {data.tags.map((tag) => {
-                  const icon = iconForTag(tag.slug);
-                  return (
-                    <button
-                      key={tag.id}
-                      type="button"
-                      className="menu-chip"
-                      aria-pressed={filters.tagSlugs.includes(tag.slug)}
-                      onClick={() => toggleTag(tag.slug)}
-                    >
-                      {icon && <MenuIcon name={icon} size={16} />}
-                      {pickText(tag.nameEn, tag.nameAm, lang)}
-                    </button>
-                  );
-                })}
-              </div>
-            </details>
-          </div>
-
-          <div className="menu-category-bar">
-            <div className="menu-chip-row" role="group" aria-label="Categories">
-              <button
-                type="button"
-                className="menu-chip"
-                aria-pressed={filters.categoryId === null}
-                onClick={() => setFilters((f) => ({ ...f, categoryId: null }))}
-              >
-                <MenuIcon name="grid" size={16} />
-                All
-              </button>
-              {data.categories.map((category) => (
-                <button
-                  key={category.id}
-                  type="button"
-                  className="menu-chip"
-                  aria-pressed={filters.categoryId === category.id}
+                  aria-pressed={filters.categoryId === null}
                   onClick={() =>
-                    setFilters((f) => ({ ...f, categoryId: category.id }))
+                    setFilters((f) => ({ ...f, categoryId: null }))
                   }
                 >
-                  <MenuIcon name={iconForCategory(category.nameEn)} size={16} />
-                  {pickText(category.nameEn, category.nameAm, lang)}
+                  <MenuIcon name="grid" size={16} />
+                  All
                 </button>
-              ))}
+                {data.categories.map((category) => (
+                  <button
+                    key={category.id}
+                    type="button"
+                    className="menu-chip"
+                    aria-pressed={filters.categoryId === category.id}
+                    onClick={() =>
+                      setFilters((f) => ({ ...f, categoryId: category.id }))
+                    }
+                  >
+                    <MenuIcon
+                      name={iconForCategory(category.nameEn)}
+                      size={16}
+                    />
+                    {pickText(category.nameEn, category.nameAm, lang)}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
-
           <div className="menu-summary">
             <p role="status">
               {visible.length} {visible.length === 1 ? "item" : "items"}
