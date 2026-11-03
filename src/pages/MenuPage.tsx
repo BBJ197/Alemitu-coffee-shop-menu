@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import type { Menu, MenuItem } from "../api/menu";
 import { useMenu } from "../api/useMenu";
 import MenuIcon from "../components/MenuIcon";
+import MenuBackdrop from "../components/MenuBackdrop";
 import MobileTabBar from "../components/MobileTabBar";
 import {
   emptyFilters,
@@ -119,6 +120,7 @@ export default function MenuPage() {
 
   return (
     <main id="main" className="menu-page">
+      <MenuBackdrop />
       <section className="menu-banner" aria-labelledby="menu-title">
         <div className="menu-banner-bar">
           <Link to="/" className="menu-back">
