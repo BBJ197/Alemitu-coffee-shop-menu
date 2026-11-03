@@ -591,3 +591,13 @@
     linear-gradient(45deg, var(--secondary-color) 25%, transparent 25%);
   background-size: 16px 16px;
 }
+
+/* M7.0d: no pattern on the menu header, plain gold edge instead */
+.menu-page .menu-banner::after {
+  content: none;
+}
+
+.menu-page .menu-banner {
+  padding-bottom: 2rem;
+  border-bottom: 3px solid var(--menu-gold);
+}
