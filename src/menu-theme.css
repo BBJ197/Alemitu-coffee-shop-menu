@@ -455,3 +455,66 @@
     transform: none;
   }
 }
+
+/* M7.0 banner fix: no pattern strips, readable language toggle, calmer photo */
+.menu-page .menu-banner::before,
+.menu-page .menu-banner::after {
+  content: none;
+}
+
+.menu-page .menu-banner {
+  min-height: 12rem;
+  padding: 1.25rem var(--menu-gutter) 2rem;
+  border-bottom: 3px solid var(--menu-gold);
+  isolation: isolate;
+}
+
+.menu-page .menu-banner .menu-banner-img {
+  z-index: 0;
+  width: 60%;
+  opacity: 0.22;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 60%);
+  mask-image: linear-gradient(to right, transparent, #000 60%);
+}
+
+.menu-page .menu-banner .menu-banner-bar {
+  z-index: 2;
+}
+
+.menu-page .menu-banner .menu-lang {
+  gap: 0;
+  padding: 4px;
+  background: var(--menu-paper);
+  border: 2px solid var(--menu-gold);
+  border-radius: 999px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+}
+
+.menu-page .menu-banner .menu-lang .menu-chip {
+  min-width: 48px;
+  font-weight: 600;
+  color: var(--primary-color);
+  background: transparent;
+  border: 0;
+  border-radius: 999px;
+}
+
+.menu-page .menu-banner .menu-lang .menu-chip:hover:not([aria-pressed="true"]) {
+  background: #fff3e0;
+}
+
+.menu-page .menu-banner .menu-lang .menu-chip[aria-pressed="true"] {
+  color: #fff;
+  background: var(--primary-color);
+}
+
+.menu-page .menu-banner .menu-lang .menu-chip:focus-visible,
+.menu-page .menu-banner .menu-back:focus-visible {
+  outline: 3px solid var(--menu-gold);
+  outline-offset: 2px;
+}
+
+.menu-page .menu-banner .menu-back {
+  background: rgba(0, 0, 0, 0.35);
+  border-color: var(--menu-gold);
+}
