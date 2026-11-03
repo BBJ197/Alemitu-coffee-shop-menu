@@ -1,18 +1,32 @@
 import { useState, type ChangeEvent, type FormEvent } from "react";
+import { ContactError, sendContact } from "../api/contact";
 import { contactInfo } from "../data";
 import Icon from "./Icon";
 
+type Status = "idle" | "sending" | "sent" | "error" | "limited";
+
+const empty = { name: "", email: "", message: "", website: "" };
+
 export default function Contact() {
-  const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [form, setForm] = useState(empty);
+  const [status, setStatus] = useState<Status>("idle");
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => setForm({ ...form, [e.target.name]: e.target.value });
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Form submitted:", form); // connect to a backend/email service later
-    setForm({ name: "", email: "", message: "" });
+    setStatus("sending");
+    try {
+      await sendContact(form);
+      setForm(empty);
+      setStatus("sent");
+    } catch (err) {
+      setStatus(
+        err instanceof ContactError && err.status === 429 ? "limited" : "error",
+      );
+    }
   };
 
   return (
@@ -38,6 +52,7 @@ export default function Contact() {
             className="form-input"
             value={form.name}
             onChange={handleChange}
+            maxLength={100}
             required
           />
           <input
@@ -49,6 +64,7 @@ export default function Contact() {
             className="form-input"
             value={form.email}
             onChange={handleChange}
+            maxLength={254}
             required
           />
           <textarea
@@ -58,11 +74,38 @@ export default function Contact() {
             className="form-input"
             value={form.message}
             onChange={handleChange}
+            maxLength={2000}
             required
           />
-          <button className="submit-button" type="submit">
-            Submit
+          <div className="contact-hp" aria-hidden="true">
+            <input
+              type="text"
+              name="website"
+              tabIndex={-1}
+              autoComplete="off"
+              value={form.website}
+              onChange={handleChange}
+            />
+          </div>
+          <button
+            className="submit-button"
+            type="submit"
+            disabled={status === "sending"}
+          >
+            {status === "sending" ? "Sending…" : "Submit"}
           </button>
+          {status === "sent" && (
+            <p role="status" className="contact-status">
+              Thank you! Your message was sent. We'll get back to you soon.
+            </p>
+          )}
+          {(status === "error" || status === "limited") && (
+            <p role="alert" className="contact-status contact-status--error">
+              {status === "limited"
+                ? "You've sent a lot of messages. Please try again later."
+                : "Sorry, we couldn't send your message. Please try again."}
+            </p>
+          )}
         </form>
       </div>
     </section>
