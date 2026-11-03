@@ -86,7 +86,11 @@ function ItemCard({
             })}
           </ul>
         )}
-        {!item.isAvailable && <p className="menu-unavailable">Unavailable</p>}
+        {!item.isAvailable && (
+          <p className="menu-unavailable">
+            {pickText("Unavailable", "አይገኝም", lang)}
+          </p>
+        )}
         {!photo && price}
       </div>
     </li>
@@ -159,11 +163,19 @@ export default function MenuPage() {
         </div>
         <div className="menu-banner-text">
           <p className="menu-eyebrow">
-            Traditional taste &bull; Freshly brewed
+            {pickText(
+              "Traditional taste • Freshly brewed",
+              "ባህላዊ ጣዕም • አዲስ የተፈላ",
+              lang,
+            )}
           </p>
-          <h1 id="menu-title">Our Menu</h1>
+          <h1 id="menu-title">{pickText("Our Menu", "የእኛ ምናሌ", lang)}</h1>
           <p className="menu-banner-sub">
-            Authentic Ethiopian flavors, crafted with love.
+            {pickText(
+              "Authentic Ethiopian flavors, crafted with love.",
+              "እውነተኛ የኢትዮጵያ ጣዕም፣ በፍቅር የተዘጋጀ።",
+              lang,
+            )}
           </p>
         </div>
         {banner && (
@@ -183,8 +195,11 @@ export default function MenuPage() {
       {isError && (
         <div role="alert" className="menu-error">
           <p>
-            We could not load the menu. Please check your connection and try
-            again.
+            {pickText(
+              "We could not load the menu. Please check your connection and try again.",
+              "ምናሌውን መጫን አልተቻለም። እባክዎ ግንኙነትዎን ይፈትሹ እና እንደገና ይሞክሩ።",
+              lang,
+            )}
           </p>
           <button
             type="button"
@@ -192,13 +207,19 @@ export default function MenuPage() {
             onClick={() => void refetch()}
             disabled={isFetching}
           >
-            Try again
+            {pickText("Try again", "እንደገና ሞክር", lang)}
           </button>
         </div>
       )}
 
       {data && data.items.length === 0 && (
-        <p>The menu is empty right now. Please check back soon.</p>
+        <p>
+          {pickText(
+            "The menu is empty right now. Please check back soon.",
+            "ምናሌው አሁን ባዶ ነው። እባክዎ በቅርቡ ይመለሱ።",
+            lang,
+          )}
+        </p>
       )}
 
       {data && data.items.length > 0 && (
@@ -209,13 +230,17 @@ export default function MenuPage() {
                 <MenuIcon name="search" size={20} />
               </span>
               <label htmlFor="menu-search" className="menu-search-label">
-                Search the menu
+                {pickText("Search the menu", "ምናሌውን ፈልግ", lang)}
               </label>
               <input
                 id="menu-search"
                 type="search"
                 className="menu-search"
-                placeholder="Search by name, description or category"
+                placeholder={pickText(
+                  "Search by name, description or category",
+                  "በስም፣ በመግለጫ ወይም በምድብ ፈልግ",
+                  lang,
+                )}
                 value={filters.query}
                 onChange={(e) =>
                   setFilters((f) => ({ ...f, query: e.target.value }))
@@ -240,12 +265,12 @@ export default function MenuPage() {
                 <button
                   type="button"
                   className="menu-chip"
-                  aria-label="Any diet"
+                  aria-label={pickText("Any diet", "ሁሉም አይነት", lang)}
                   aria-pressed={filters.tagSlugs.length === 0}
                   onClick={() => setFilters((f) => ({ ...f, tagSlugs: [] }))}
                 >
                   <MenuIcon name="grid" size={16} />
-                  Any diet
+                  {pickText("Any diet", "ሁሉም አይነት", lang)}
                 </button>
                 {data.tags.map((tag) => {
                   const icon = iconForTag(tag.slug);
@@ -275,7 +300,7 @@ export default function MenuPage() {
                 onClick={() => setFilters((f) => ({ ...f, categoryId: null }))}
               >
                 <MenuIcon name="grid" size={16} />
-                All
+                {pickText("All", "ሁሉም", lang)}
               </button>
               {data.categories.map((category) => (
                 <button
@@ -296,7 +321,9 @@ export default function MenuPage() {
 
           <div className="menu-summary">
             <p role="status">
-              {visible.length} {visible.length === 1 ? "item" : "items"}
+              {lang === "am"
+                ? `${visible.length} ንጥል`
+                : `${visible.length} ${visible.length === 1 ? "item" : "items"}`}
             </p>
             {active && (
               <button
@@ -304,14 +331,18 @@ export default function MenuPage() {
                 className="menu-button"
                 onClick={() => setFilters(emptyFilters)}
               >
-                Clear filters
+                {pickText("Clear filters", "ማጣሪያ አጽዳ", lang)}
               </button>
             )}
           </div>
 
           {visible.length === 0 && (
             <p className="menu-empty">
-              No items match. Try different words or clear the filters.
+              {pickText(
+                "No items match. Try different words or clear the filters.",
+                "ምንም አልተገኘም። ሌሎች ቃላትን ይሞክሩ ወይም ማጣሪያዎቹን ያጽዱ።",
+                lang,
+              )}
             </p>
           )}
 
@@ -320,8 +351,16 @@ export default function MenuPage() {
               <div className="menu-section-head">
                 <MenuIcon name="star" size={28} />
                 <div>
-                  <h2 id="popular-heading">Popular</h2>
-                  <p className="menu-section-sub">Our most loved items</p>
+                  <h2 id="popular-heading">
+                    {pickText("Popular", "ተወዳጅ", lang)}
+                  </h2>
+                  <p className="menu-section-sub">
+                    {pickText(
+                      "Our most loved items",
+                      "በጣም የተወደዱ ምርጫዎቻችን",
+                      lang,
+                    )}
+                  </p>
                 </div>
               </div>
               <ul className="menu-list">
