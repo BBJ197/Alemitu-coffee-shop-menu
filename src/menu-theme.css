@@ -576,3 +576,18 @@
   background: var(--menu-gold);
   border-color: var(--menu-gold);
 }
+
+/* M7.0c: same zigzag edge as the home hero, on the menu header bottom */
+.menu-page .menu-banner {
+  padding-bottom: calc(16px + 1.5rem);
+}
+
+.menu-page .menu-banner::after {
+  height: 16px;
+  background:
+    linear-gradient(135deg, var(--secondary-color) 25%, transparent 25%) -8px 0,
+    linear-gradient(225deg, var(--secondary-color) 25%, transparent 25%) -8px 0,
+    linear-gradient(315deg, var(--secondary-color) 25%, transparent 25%),
+    linear-gradient(45deg, var(--secondary-color) 25%, transparent 25%);
+  background-size: 16px 16px;
+}
