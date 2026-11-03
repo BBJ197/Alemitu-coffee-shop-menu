@@ -165,11 +165,13 @@ export default function MenuPage() {
           <p className="menu-eyebrow">
             {pickText(
               "Traditional taste • Freshly brewed",
-              "ባህላዊ ጣዕም • አዲስ የተፈላ",
+              "ባህላዊ ጣዕም • ትኩስ ቡናቡና",
               lang,
             )}
           </p>
-          <h1 id="menu-title">{pickText("Our Menu", "የእኛ ምናሌ", lang)}</h1>
+          <h1 id="menu-title">
+            {pickText("Our Menu", "የእኛ የምግብ ዝርዝሮች", lang)}
+          </h1>
           <p className="menu-banner-sub">
             {pickText(
               "Authentic Ethiopian flavors, crafted with love.",
