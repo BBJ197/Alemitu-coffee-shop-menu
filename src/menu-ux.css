@@ -1,0 +1,161 @@
+/* Menu UX pass: calm cream page, one sticky toolbar, list-style cards on phones. Loaded after menu-theme.css. */
+.menu-page {
+  --menu-ink: #3b141c;
+  --menu-muted: #6b5a52;
+  --menu-line: rgba(59, 20, 28, 0.14);
+  padding-bottom: 5.5rem;
+  background-color: #faf6ef;
+  background-image: none;
+}
+@media (min-width: 900px) {
+  .menu-page {
+    padding-bottom: 3rem;
+  }
+}
+.menu-page .menu-banner {
+  min-height: 0;
+  padding-top: 1rem;
+  padding-bottom: 1.5rem;
+}
+.menu-page .menu-banner-bar {
+  margin-bottom: 1rem;
+}
+.menu-page .menu-banner h1 {
+  font-size: clamp(1.9rem, 5vw, 2.6rem);
+}
+.menu-page .menu-sticky {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: rgba(250, 246, 239, 0.97);
+  backdrop-filter: blur(8px);
+  border-bottom: 2px solid var(--menu-gold);
+  box-shadow: 0 8px 16px -12px rgba(59, 20, 28, 0.45);
+}
+.menu-page .menu-sticky .menu-controls {
+  margin: 0 var(--menu-gutter);
+  padding-top: 0.75rem;
+}
+.menu-page .menu-sticky .menu-category-bar {
+  position: static;
+  margin: 0;
+  padding: 0.6rem var(--menu-gutter) 0.75rem;
+  background: transparent;
+  backdrop-filter: none;
+  border: 0;
+  box-shadow: none;
+}
+.menu-page .menu-search {
+  box-shadow: none;
+  border-color: var(--menu-line);
+}
+.menu-page .menu-search:focus-visible {
+  outline: 3px solid var(--menu-gold);
+  outline-offset: 2px;
+}
+.menu-page .menu-section-head h2 {
+  color: var(--menu-ink);
+}
+.menu-page .menu-section-head {
+  color: var(--menu-gold);
+}
+.menu-page .menu-section-sub,
+.menu-page .menu-summary p,
+.menu-page .menu-empty,
+.menu-page > p {
+  color: var(--menu-muted);
+}
+.menu-page .menu-summary {
+  border-bottom-color: var(--menu-line);
+}
+.menu-page .menu-summary .menu-button {
+  color: var(--menu-ink);
+}
+.menu-page .menu-empty {
+  padding: 2rem 0;
+  text-align: center;
+}
+.menu-page .menu-error {
+  margin: 1.5rem var(--menu-gutter);
+  padding: 1rem 1.25rem;
+  color: var(--menu-ink);
+  background: #fff;
+  border: 1px solid var(--menu-line);
+  border-left: 4px solid #b3261e;
+  border-radius: 10px;
+}
+.menu-page .menu-card,
+.menu-page .menu-card.no-photo {
+  border-color: var(--menu-line);
+  border-radius: 14px;
+  box-shadow: 0 1px 3px rgba(59, 20, 28, 0.08);
+}
+.menu-page .menu-card-media {
+  border-bottom: 0;
+}
+.menu-page .menu-card-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-content: start;
+  gap: 0.3rem 0.5rem;
+}
+.menu-page .menu-card-body > * {
+  grid-column: 1 / -1;
+  margin: 0;
+}
+.menu-page .menu-card-body h3 {
+  grid-column: 1;
+  grid-row: 1;
+  font-size: 1.02rem;
+  line-height: 1.25;
+}
+.menu-page .menu-card-body .menu-price {
+  grid-column: 2;
+  grid-row: 1;
+  align-self: start;
+  margin: 0;
+  padding: 0;
+  font-weight: 700;
+  color: #8a4f00;
+  background: none;
+  border: 0;
+  box-shadow: none;
+}
+.menu-page .menu-card.is-unavailable .menu-price {
+  color: #555;
+  background: none;
+  border: 0;
+}
+.menu-page .menu-card.is-unavailable .menu-card-photo {
+  filter: grayscale(1);
+}
+@media (max-width: 639px) {
+  .menu-page .menu-list,
+  .menu-page .menu-popular .menu-list {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  .menu-page .menu-card {
+    display: grid;
+    grid-template-columns: 6.5rem minmax(0, 1fr);
+    align-items: stretch;
+  }
+  .menu-page .menu-card.no-photo {
+    grid-template-columns: 1fr;
+  }
+  .menu-page .menu-card-media,
+  .menu-page .menu-popular .menu-card-media {
+    min-height: 6.5rem;
+    aspect-ratio: auto;
+  }
+  .menu-page .menu-card-media .menu-card-photo {
+    position: absolute;
+    inset: 0;
+  }
+  .menu-page .menu-skeleton {
+    grid-template-columns: 1fr;
+  }
+  .menu-page .menu-skeleton-card {
+    min-height: 6.5rem;
+  }
+}
