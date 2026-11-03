@@ -1,6 +1,5 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import "./admin.css";
-import "./admin-ux.css";
 import AdminCategoriesPage from "./AdminCategoriesPage";
 import AdminHome from "./AdminHome";
 import AdminLayout from "./AdminLayout";
