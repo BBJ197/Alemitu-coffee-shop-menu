@@ -1498,3 +1498,21 @@ header .nav-bar {
     max-width: min(32rem, 50%);
   }
 }
+
+/* Contact form: honeypot (hidden from people) and status message */
+.contact-hp {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.contact-status {
+  margin: 0.5rem 0 0;
+  font-size: 0.95rem;
+}
+
+.contact-status--error {
+  color: #b3261e;
+}
