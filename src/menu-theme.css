@@ -518,3 +518,61 @@
   background: rgba(0, 0, 0, 0.35);
   border-color: var(--menu-gold);
 }
+
+/* M7.0b: gold hover on Back, original language toggle, pattern on header bottom */
+.menu-page .menu-banner {
+  padding-bottom: calc(20px + 1.5rem);
+  border-bottom: 0;
+}
+
+.menu-page .menu-banner::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 3;
+  height: 20px;
+  background: url("./assets/patterns/tilet.svg") repeat-x left center / auto
+    20px;
+}
+
+.menu-page .menu-banner .menu-back {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(243, 150, 28, 0.65);
+}
+
+.menu-page .menu-banner .menu-back:hover {
+  color: var(--primary-color);
+  background: var(--menu-gold);
+  border-color: var(--menu-gold);
+}
+
+.menu-page .menu-banner .menu-lang {
+  gap: 0.375rem;
+  padding: 0;
+  background: none;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.menu-page .menu-banner .menu-lang .menu-chip {
+  min-width: 44px;
+  font-weight: 500;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(243, 150, 28, 0.65);
+}
+
+.menu-page .menu-banner .menu-lang .menu-chip:hover:not([aria-pressed="true"]) {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.menu-page .menu-banner .menu-lang .menu-chip[aria-pressed="true"] {
+  font-weight: 600;
+  color: var(--primary-color);
+  background: var(--menu-gold);
+  border-color: var(--menu-gold);
+}
