@@ -601,3 +601,69 @@
   padding-bottom: 2rem;
   border-bottom: 3px solid var(--menu-gold);
 }
+
+/* M7.0e: drifting Ethiopian coffee and food icons behind the menu */
+.menu-page {
+  isolation: isolate;
+}
+
+.menu-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.menu-bg-item {
+  position: absolute;
+  top: 0;
+  left: var(--x);
+  width: var(--size);
+  height: var(--size);
+  color: var(--primary-color);
+  opacity: 0;
+  will-change: transform, opacity;
+  animation: menu-bg-float var(--dur) linear var(--delay) infinite;
+}
+
+.menu-bg-item.is-gold {
+  color: #b07d2f;
+}
+
+.menu-bg-item svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+@keyframes menu-bg-float {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 105vh, 0) rotate(0deg);
+  }
+
+  10%,
+  85% {
+    opacity: 0.16;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(var(--drift), -20vh, 0) rotate(200deg);
+  }
+}
+
+@media (max-width: 639px) {
+  .menu-bg-item:nth-child(n + 7) {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .menu-bg-item {
+    top: var(--y);
+    opacity: 0.1;
+    animation: none;
+  }
+}
