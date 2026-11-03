@@ -644,3 +644,140 @@ body:has(.admin-auth) {
     transition: none;
   }
 }
+
+/* M7.0f: organized layout (sidebar on desktop, grouped toolbars and rows) */
+.admin-shell {
+  min-height: 100vh;
+}
+
+.admin-content {
+  min-width: 0;
+}
+
+@media (min-width: 64rem) {
+  .admin-shell {
+    display: grid;
+    grid-template-columns: 15rem minmax(0, 1fr);
+  }
+
+  .admin-header {
+    position: sticky;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1.5rem;
+    height: 100vh;
+    height: 100dvh;
+    padding: 1.5rem 1rem;
+    overflow-y: auto;
+  }
+
+  .admin-brand {
+    padding: 0 0.75rem;
+    font-size: 1.15rem;
+  }
+
+  .admin-nav {
+    flex-direction: column;
+    gap: 2px;
+    justify-content: flex-start;
+    overflow: visible;
+  }
+
+  .admin-nav a {
+    min-height: 40px;
+    padding: 0 0.75rem;
+    border-bottom: 0;
+    border-radius: 6px;
+  }
+
+  .admin-nav a:hover {
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  .admin-nav a[aria-current="page"] {
+    background: rgba(255, 255, 255, 0.16);
+  }
+
+  .admin-user {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+    margin-top: auto;
+    padding: 0 0.75rem;
+  }
+
+  .admin-main {
+    max-width: 60rem;
+    margin: 0;
+    padding: 2rem 2.5rem 3rem;
+  }
+
+  .admin-error--bar {
+    max-width: none;
+    margin: 0.75rem 2.5rem 0;
+  }
+}
+
+.admin-page-head {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--adm-line);
+}
+
+.admin-filters {
+  padding: 1rem;
+  background: var(--adm-panel);
+  border: 1px solid var(--adm-line);
+  border-radius: var(--adm-radius);
+}
+
+.admin-section-title {
+  margin: 1.75rem 0 0.5rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--adm-muted);
+}
+
+.admin-item {
+  padding: 0.75rem 1rem;
+}
+
+.admin-item__name {
+  display: block;
+  font-size: 0.95rem;
+}
+
+.admin-item__actions .admin-button {
+  min-height: 34px;
+  padding: 0 0.75rem;
+  font-size: 0.85rem;
+}
+
+.admin-item__actions .admin-button[aria-label^="Delete"] {
+  color: var(--adm-danger);
+  border-color: #f1c7c4;
+}
+
+.admin-item__actions .admin-button[aria-label^="Delete"]:hover:not(:disabled) {
+  background: var(--adm-danger-bg);
+}
+
+@media (min-width: 48rem) {
+  .admin-main .admin-inline-form {
+    grid-template-columns: 1fr 1fr auto;
+    align-items: start;
+    max-width: none;
+  }
+
+  .admin-main .admin-inline-form > .admin-error,
+  .admin-main .admin-inline-form > p {
+    grid-column: 1 / -1;
+  }
+
+  .admin-main .admin-inline-form .admin-form__actions {
+    padding-top: 1.45rem;
+  }
+}
