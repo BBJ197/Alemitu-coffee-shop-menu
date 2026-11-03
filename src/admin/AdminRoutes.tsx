@@ -6,6 +6,7 @@ import AdminLayout from "./AdminLayout";
 import AdminItemFormPage from "./AdminItemFormPage";
 import AdminItemsPage from "./AdminItemsPage";
 import AdminLoginPage from "./AdminLoginPage";
+import AdminMessagesPage from "./AdminMessagesPage";
 import AdminQrPage from "./AdminQrPage";
 import AdminSettingsPage from "./AdminSettingsPage";
 import AdminTagsPage from "./AdminTagsPage";
@@ -24,6 +25,7 @@ export default function AdminRoutes() {
           <Route path="items/:id/edit" element={<AdminItemFormPage />} />
           <Route path="categories" element={<AdminCategoriesPage />} />
           <Route path="tags" element={<AdminTagsPage />} />
+          <Route path="messages" element={<AdminMessagesPage />} />
           <Route path="qr" element={<AdminQrPage />} />
           <Route path="settings" element={<AdminSettingsPage />} />
         </Route>
