@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import type { Menu, MenuItem } from "../api/menu";
 import { useMenu } from "../api/useMenu";
 import MenuIcon from "../components/MenuIcon";
-import MenuBackdrop from "../components/MenuBackdrop";
 import MobileTabBar from "../components/MobileTabBar";
 import {
   emptyFilters,
@@ -120,7 +119,6 @@ export default function MenuPage() {
 
   return (
     <main id="main" className="menu-page">
-      <MenuBackdrop />
       <section className="menu-banner" aria-labelledby="menu-title">
         <div className="menu-banner-bar">
           <Link to="/" className="menu-back">
@@ -167,11 +165,13 @@ export default function MenuPage() {
           <p className="menu-eyebrow">
             {pickText(
               "Traditional taste • Freshly brewed",
-              "ባህላዊ ጣዕም • አዲስ የተፈላ",
+              "ባህላዊ ጣዕም • ትኩስ ቡናቡና",
               lang,
             )}
           </p>
-          <h1 id="menu-title">{pickText("Our Menu", "የእኛ ምናሌ", lang)}</h1>
+          <h1 id="menu-title">
+            {pickText("Our Menu", "የእኛ የምግብ ዝርዝሮች", lang)}
+          </h1>
           <p className="menu-banner-sub">
             {pickText(
               "Authentic Ethiopian flavors, crafted with love.",
