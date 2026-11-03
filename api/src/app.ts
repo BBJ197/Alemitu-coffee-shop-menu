@@ -15,6 +15,8 @@ import { adminCategories } from "./adminCategories";
 import { adminItems } from "./adminItems";
 import { adminTags } from "./adminTags";
 import { changePassword } from "./changePassword";
+import { ContactLimiter, adminMessages, publicContact } from "./contact";
+import type { Notify } from "./mailer";
 import { adminImages, publicImages } from "./images";
 import { hashPassword, verifyPassword } from "./password";
 
@@ -24,6 +26,9 @@ export interface AppOptions {
   corsOrigin: string;
   secureCookies?: boolean;
   limiter?: LoginLimiter;
+  /** Sends the owner an email for each contact message. Optional. */
+  notify?: Notify;
+  contactLimiter?: ContactLimiter;
 }
 
 export function createApp(db: Db, opts: AppOptions) {
@@ -44,6 +49,15 @@ export function createApp(db: Db, opts: AppOptions) {
   app.get("/api/health", (c) => c.json({ ok: true }));
 
   app.route("/api/images", publicImages(db));
+
+  app.route(
+    "/api/contact",
+    publicContact(db, {
+      corsOrigin: opts.corsOrigin,
+      notify: opts.notify,
+      limiter: opts.contactLimiter,
+    }),
+  );
 
   app.get("/api/menu", async (c) => {
     const [cats, items, tags, links] = await Promise.all([
@@ -170,6 +184,7 @@ export function createApp(db: Db, opts: AppOptions) {
   app.route("/api/admin/items", adminItems(db, opts.corsOrigin));
   app.route("/api/admin/images", adminImages(db, opts.corsOrigin));
   app.route("/api/admin/tags", adminTags(db, opts.corsOrigin));
+  app.route("/api/admin/messages", adminMessages(db, opts.corsOrigin));
 
   app.notFound((c) => c.json({ error: "not_found" }, 404));
   app.onError((err, c) => {
