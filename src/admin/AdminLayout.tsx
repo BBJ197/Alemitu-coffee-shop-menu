@@ -6,7 +6,7 @@ export default function AdminLayout() {
   const logout = useLogout();
 
   return (
-    <>
+    <div className="admin-shell">
       <header className="admin-header">
         <Link to="/admin" className="admin-brand">
           Alemitu admin
@@ -33,14 +33,16 @@ export default function AdminLayout() {
           </button>
         </div>
       </header>
-      {logout.isError && (
-        <p role="alert" className="admin-error admin-error--bar">
-          Couldn't sign out. Check your connection and try again.
-        </p>
-      )}
-      <main id="main" className="admin-main">
-        <Outlet />
-      </main>
-    </>
+      <div className="admin-content">
+        {logout.isError && (
+          <p role="alert" className="admin-error admin-error--bar">
+            Couldn't sign out. Check your connection and try again.
+          </p>
+        )}
+        <main id="main" className="admin-main">
+          <Outlet />
+        </main>
+      </div>
+    </div>
   );
 }
