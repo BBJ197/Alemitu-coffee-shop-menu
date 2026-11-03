@@ -781,3 +781,36 @@ body:has(.admin-auth) {
     padding-top: 1.45rem;
   }
 }
+
+/* Messages inbox */
+.admin-messages {
+  list-style: none;
+  margin: 1rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.admin-message {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+}
+
+.admin-message--unread {
+  border-left: 4px solid #8b5a2b;
+  background: #fff8f0;
+}
+
+.admin-message-head {
+  margin: 0 0 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.75rem;
+}
+
+.admin-message-body {
+  margin: 0 0 0.75rem;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
