@@ -17,6 +17,7 @@ import "./index.css";
 import "./ui-polish.css";
 import "./home.css";
 import "./menu-theme.css";
+import "./menu-ux.css";
 import App from "./App";
 
 const queryClient = new QueryClient();
