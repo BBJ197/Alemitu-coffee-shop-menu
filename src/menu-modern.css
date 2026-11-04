@@ -1,0 +1,284 @@
+/* Menu page: modern dark look that matches the home page. Loaded last. */
+.menu-page {
+  --menu-glass: rgba(255, 255, 255, 0.06);
+  --menu-glass-border: rgba(255, 255, 255, 0.12);
+  --menu-muted: rgba(255, 255, 255, 0.7);
+  color: var(--white-color);
+  background-color: var(--primary-color);
+  background-image:
+    radial-gradient(
+      circle at 85% 0%,
+      rgba(243, 150, 28, 0.16),
+      transparent 45%
+    ),
+    linear-gradient(
+      180deg,
+      var(--primary-color) 0%,
+      #2b0f15 60%,
+      var(--dark-color)
+    );
+  background-repeat: no-repeat;
+  background-size: auto;
+}
+
+/* Banner blends into the page, thin gold edge */
+.menu-page .menu-banner {
+  background: radial-gradient(
+    circle at 78% 55%,
+    rgba(243, 150, 28, 0.22),
+    transparent 55%
+  );
+  border-bottom: 1px solid rgba(243, 150, 28, 0.4);
+}
+
+/* Search and filter button */
+.menu-page .menu-search {
+  color: var(--white-color);
+  background: var(--menu-glass);
+  border: 1px solid var(--menu-glass-border);
+  box-shadow: none;
+  backdrop-filter: blur(8px);
+}
+
+.menu-page .menu-search::placeholder {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.menu-page .menu-search:focus-visible {
+  border-color: var(--secondary-color);
+  outline: 2px solid var(--secondary-color);
+  outline-offset: 2px;
+}
+
+.menu-page .menu-search-icon {
+  color: var(--secondary-color);
+}
+
+.menu-page .menu-filter-toggle {
+  color: var(--secondary-color);
+  background: rgba(243, 150, 28, 0.12);
+  border: 1px solid rgba(243, 150, 28, 0.6);
+  box-shadow: none;
+}
+
+.menu-page .menu-filter-panel[open] > .menu-filter-toggle {
+  box-shadow: 0 0 0 2px var(--secondary-color);
+}
+
+.menu-page .menu-filter-count {
+  color: var(--primary-color);
+  background: var(--secondary-color);
+}
+
+.menu-page .menu-filter-panel > .menu-chip-row {
+  background: #4a1a24;
+  border: 1px solid rgba(243, 150, 28, 0.4);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+}
+
+/* Chips */
+.menu-page .menu-filter-panel .menu-chip,
+.menu-page .menu-category-bar .menu-chip {
+  color: var(--white-color);
+  background: var(--menu-glass);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.menu-page .menu-filter-panel .menu-chip:hover:not([aria-pressed="true"]),
+.menu-page .menu-category-bar .menu-chip:hover:not([aria-pressed="true"]) {
+  background: rgba(243, 150, 28, 0.16);
+  border-color: var(--secondary-color);
+}
+
+.menu-page .menu-filter-panel .menu-chip[aria-pressed="true"],
+.menu-page .menu-category-bar .menu-chip[aria-pressed="true"] {
+  color: var(--primary-color);
+  background: var(--secondary-color);
+  border-color: var(--secondary-color);
+}
+
+.menu-page .menu-chip:focus-visible,
+.menu-page .menu-button:focus-visible {
+  outline-color: var(--secondary-color);
+}
+
+/* Sticky category bar */
+.menu-page .menu-category-bar {
+  background: rgba(43, 15, 21, 0.85);
+  backdrop-filter: blur(12px);
+  border-top: 0;
+  border-bottom: 1px solid rgba(243, 150, 28, 0.35);
+  box-shadow: 0 10px 20px -12px rgba(0, 0, 0, 0.6);
+}
+
+/* Summary, headings, messages */
+.menu-page .menu-summary {
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.18);
+}
+
+.menu-page .menu-summary p,
+.menu-page .menu-section-sub,
+.menu-page .menu-empty,
+.menu-page > p {
+  color: var(--menu-muted);
+}
+
+.menu-page .menu-button {
+  color: var(--secondary-color);
+  background: transparent;
+  border: 1px solid var(--secondary-color);
+}
+
+.menu-page .menu-button:hover:not(:disabled) {
+  color: var(--primary-color);
+  background: var(--secondary-color);
+}
+
+.menu-page .menu-section-head h2 {
+  color: var(--white-color);
+}
+
+.menu-page .menu-error {
+  color: var(--white-color);
+  background: var(--menu-glass);
+  border-color: var(--menu-glass-border);
+}
+
+.menu-page .menu-skeleton-card {
+  background: var(--menu-glass);
+}
+
+/* Cards: glass on dark, orange on hover */
+.menu-page .menu-card,
+.menu-page .menu-card.no-photo {
+  color: var(--white-color);
+  background: var(--menu-glass);
+  border: 1px solid var(--menu-glass-border);
+  border-radius: 18px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.menu-page .menu-card:hover {
+  border-color: rgba(243, 150, 28, 0.65);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4);
+}
+
+.menu-page .menu-card.is-unavailable:hover {
+  border-color: var(--menu-glass-border);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+.menu-page .menu-popular .menu-card {
+  border-color: rgba(243, 150, 28, 0.55);
+  box-shadow:
+    0 0 0 1px rgba(243, 150, 28, 0.25),
+    0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.menu-page .menu-card-media,
+.menu-page .menu-popular .menu-card-media {
+  background: rgba(0, 0, 0, 0.3);
+  border-bottom: 0;
+}
+
+.menu-page .menu-card-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(43, 15, 21, 0.75), transparent 55%);
+  pointer-events: none;
+}
+
+.menu-page .menu-card-media .menu-price {
+  z-index: 1;
+}
+
+.menu-page .menu-card h3 {
+  color: var(--white-color);
+}
+
+.menu-page .menu-card-desc {
+  color: var(--menu-muted);
+}
+
+.menu-page .menu-card-media .menu-price,
+.menu-page .menu-card-body .menu-price {
+  color: var(--primary-color);
+  background: var(--secondary-color);
+  border: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+}
+
+.menu-page .menu-card.is-unavailable .menu-price {
+  color: var(--white-color);
+  background: #5a5a5a;
+}
+
+.menu-page .menu-badge {
+  color: #ffd9a0;
+  background: rgba(243, 150, 28, 0.14);
+  border-color: rgba(243, 150, 28, 0.35);
+}
+
+.menu-page .menu-unavailable {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Phone tab bar */
+.menu-tabbar {
+  border-top: 1px solid rgba(243, 150, 28, 0.35);
+}
+
+/* Darker page, like the home page */
+.menu-page {
+  background-image:
+    radial-gradient(circle at 85% 0%, rgba(243, 150, 28, 0.1), transparent 40%),
+    linear-gradient(180deg, #2b0f15 0%, #1c0a0e 45%, #141414 100%);
+}
+
+/* Category chips match the search bar and filter button, calmer bar */
+.menu-page .menu-category-bar {
+  background: rgba(28, 10, 14, 0.9);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: none;
+}
+
+.menu-page .menu-category-bar .menu-chip {
+  min-height: 52px;
+  padding: 0 1.2rem;
+  font-size: 1rem;
+}
+
+/* Lighter flat maroon like the home hero, no glow */
+.menu-page {
+  background-image: none;
+  background-color: var(--primary-color);
+}
+
+.menu-page .menu-banner {
+  background: none;
+}
+
+/* Category bar blends into the page */
+.menu-page .menu-category-bar {
+  background: var(--primary-color);
+  backdrop-filter: none;
+  border-bottom: 0;
+}
+
+/* Cards without borders */
+.menu-page .menu-card,
+.menu-page .menu-card.no-photo,
+.menu-page .menu-popular .menu-card {
+  border: 0;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+.menu-page .menu-card:hover,
+.menu-page .menu-card.is-unavailable:hover {
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4);
+}

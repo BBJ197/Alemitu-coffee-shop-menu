@@ -107,7 +107,6 @@ export default function MenuPage() {
   const popular = active
     ? []
     : visible.filter((item) => item.isFeatured && item.isAvailable);
-  const banner = pickPhoto(0);
 
   const toggleTag = (slug: string) =>
     setFilters((f) => ({
@@ -180,16 +179,6 @@ export default function MenuPage() {
             )}
           </p>
         </div>
-        {banner && (
-          <img
-            className="menu-banner-img"
-            src={banner}
-            alt=""
-            width="800"
-            height="300"
-            decoding="async"
-          />
-        )}
       </section>
 
       {isPending && <Skeleton />}
