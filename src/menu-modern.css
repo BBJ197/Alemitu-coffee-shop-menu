@@ -232,3 +232,23 @@
 .menu-tabbar {
   border-top: 1px solid rgba(243, 150, 28, 0.35);
 }
+
+/* Darker page, like the home page */
+.menu-page {
+  background-image:
+    radial-gradient(circle at 85% 0%, rgba(243, 150, 28, 0.1), transparent 40%),
+    linear-gradient(180deg, #2b0f15 0%, #1c0a0e 45%, #141414 100%);
+}
+
+/* Category chips match the search bar and filter button, calmer bar */
+.menu-page .menu-category-bar {
+  background: rgba(28, 10, 14, 0.9);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: none;
+}
+
+.menu-page .menu-category-bar .menu-chip {
+  min-height: 52px;
+  padding: 0 1.2rem;
+  font-size: 1rem;
+}
