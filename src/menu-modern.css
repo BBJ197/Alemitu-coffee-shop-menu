@@ -252,3 +252,33 @@
   padding: 0 1.2rem;
   font-size: 1rem;
 }
+
+/* Lighter flat maroon like the home hero, no glow */
+.menu-page {
+  background-image: none;
+  background-color: var(--primary-color);
+}
+
+.menu-page .menu-banner {
+  background: none;
+}
+
+/* Category bar blends into the page */
+.menu-page .menu-category-bar {
+  background: var(--primary-color);
+  backdrop-filter: none;
+  border-bottom: 0;
+}
+
+/* Cards without borders */
+.menu-page .menu-card,
+.menu-page .menu-card.no-photo,
+.menu-page .menu-popular .menu-card {
+  border: 0;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+.menu-page .menu-card:hover,
+.menu-page .menu-card.is-unavailable:hover {
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4);
+}
