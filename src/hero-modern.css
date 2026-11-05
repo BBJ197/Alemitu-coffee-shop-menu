@@ -1,0 +1,257 @@
+/* Home hero: full width, bigger text, no glow, extra decoration. Loaded after home.css */
+.hero-section {
+  background: var(--primary-color);
+}
+
+/* Soft dotted pattern, fades toward the right */
+.hero-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(
+      circle,
+      rgba(243, 150, 28, 0.35) 1.5px,
+      transparent 1.6px
+    )
+    0 0 / 30px 30px;
+  -webkit-mask-image: linear-gradient(to right, #000, transparent 65%);
+  mask-image: linear-gradient(to right, #000, transparent 65%);
+}
+
+/* Giant outlined Ethiopian word for coffee behind the image */
+.hero-watermark {
+  position: absolute;
+  top: 50%;
+  right: 3vw;
+  z-index: 0;
+  font-family: "Noto Sans Ethiopic", Georgia, serif;
+  font-size: clamp(14rem, 34vw, 36rem);
+  font-weight: 800;
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 2px rgba(243, 150, 28, 0.18);
+  transform: translateY(-50%);
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Use the full width */
+.hero-section .section-content {
+  width: 100%;
+  max-width: none;
+  gap: 3rem;
+  padding: 120px 5vw 90px;
+}
+
+.hero-section .hero-details {
+  flex: 1 1 54%;
+}
+
+.hero-section .hero-image-wrapper {
+  flex: 0 1 44%;
+  max-width: 760px;
+  margin-right: 0;
+}
+
+/* Bigger text on the left */
+.hero-eyebrow {
+  width: fit-content;
+  padding: 6px 16px;
+  font-size: 0.95rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--secondary-color);
+  background: rgba(243, 150, 28, 0.1);
+  border: 1px solid rgba(243, 150, 28, 0.5);
+  border-radius: 999px;
+}
+
+.hero-section .hero-details .title {
+  margin-top: 1.2rem;
+  font-size: clamp(3.5rem, 8vw, 7.5rem);
+  line-height: 1;
+}
+
+.hero-section .hero-details .subtitle {
+  max-width: none;
+  margin-top: 1rem;
+  font-size: clamp(1.5rem, 2.6vw, 2.6rem);
+  line-height: 1.25;
+}
+
+.hero-section .hero-details .description {
+  max-width: 36em;
+  margin: 1.5rem 0 2.5rem;
+  font-size: clamp(1.1rem, 1.5vw, 1.45rem);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.hero-section .hero-details .button {
+  padding: 16px 36px;
+  font-size: 1.15rem;
+}
+
+.hero-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 2.5rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hero-tags li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  font-size: 0.95rem;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
+}
+
+.hero-tags li::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  background: var(--secondary-color);
+  border-radius: 50%;
+}
+
+.hero-details > :nth-child(5) {
+  animation-delay: 0.6s;
+}
+
+.hero-details > :nth-child(6) {
+  animation-delay: 0.75s;
+}
+
+/* Slowly turning rings behind the image */
+.hero-rings {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 0;
+  width: 98%;
+  aspect-ratio: 1;
+  border: 1.5px dashed rgba(243, 150, 28, 0.45);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: hero-spin 50s linear infinite;
+}
+
+.hero-rings::before {
+  content: "";
+  position: absolute;
+  inset: 9%;
+  border: 1.5px solid rgba(255, 255, 255, 0.14);
+  border-radius: 50%;
+}
+
+.hero-rings::after {
+  content: "";
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  width: 12px;
+  height: 12px;
+  background: var(--secondary-color);
+  border-radius: 50%;
+}
+
+.hero-float {
+  z-index: 1;
+}
+
+@keyframes hero-spin {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+/* Scroll cue */
+.hero-scroll {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  z-index: 1;
+  width: 26px;
+  height: 44px;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 14px;
+  transform: translateX(-50%);
+}
+
+.hero-scroll::after {
+  content: "";
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  width: 4px;
+  height: 8px;
+  background: var(--secondary-color);
+  border-radius: 2px;
+  transform: translateX(-50%);
+  animation: hero-scroll 1.8s ease-in-out infinite;
+}
+
+@keyframes hero-scroll {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 0);
+  }
+  40% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, 16px);
+  }
+}
+
+@media (max-width: 900px) {
+  .hero-section .section-content {
+    padding: 110px 5vw 70px;
+  }
+
+  .hero-section .hero-details {
+    flex: none;
+    width: 100%;
+  }
+
+  .hero-section .hero-image-wrapper {
+    flex: none;
+    width: min(100%, 460px);
+  }
+
+  .hero-section .hero-details .description {
+    margin-inline: auto;
+  }
+
+  .hero-tags {
+    justify-content: center;
+  }
+
+  .hero-watermark {
+    right: 50%;
+    transform: translate(50%, -50%);
+  }
+
+  .hero-scroll {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-rings,
+  .hero-scroll::after {
+    animation: none;
+  }
+}
