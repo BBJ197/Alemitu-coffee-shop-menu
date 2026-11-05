@@ -1973,3 +1973,90 @@ section[aria-labelledby^="tag-group-"] > p {
   border-top: 0;
   border-radius: 0 0 var(--adm-radius) var(--adm-radius);
 }
+
+/* QR page */
+.admin-qr-layout {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+@media (min-width: 56rem) {
+  .admin-qr-layout {
+    grid-template-columns: minmax(0, 1fr) 20rem;
+    align-items: start;
+  }
+}
+
+.admin-qr-card {
+  display: grid;
+  gap: 1rem;
+  margin-top: 0;
+  padding: 1.25rem;
+  border-radius: 12px;
+  box-shadow: 0 1px 2px rgba(31, 27, 28, 0.05);
+}
+
+.admin-qr-card .admin-qr-address {
+  max-width: none;
+}
+
+.admin-qr-card--preview {
+  justify-items: center;
+  text-align: center;
+}
+
+.admin-qr-card--preview .admin-form__heading {
+  justify-self: stretch;
+  text-align: left;
+}
+
+.admin-qr {
+  margin: 0;
+  padding: 1rem;
+  background: #fff;
+  border: 1px solid var(--adm-line);
+  border-radius: 14px;
+  box-shadow: 0 4px 16px rgba(31, 27, 28, 0.1);
+}
+
+.admin-qr img {
+  width: 100%;
+  max-width: 240px;
+  height: auto;
+  margin: 0 auto;
+  border: 0;
+}
+
+.admin-qr figcaption {
+  margin-top: 0.75rem;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+.admin-qr-empty {
+  display: grid;
+  width: 100%;
+  max-width: 240px;
+  aspect-ratio: 1;
+  background: #faf8f7;
+  border: 1.5px dashed var(--adm-line-strong);
+  border-radius: 14px;
+  place-items: center;
+}
+
+.admin-qr-empty::after {
+  padding: 1rem;
+  font-size: 0.85rem;
+  color: var(--adm-muted);
+  text-align: center;
+  content: "Your QR code will appear here";
+}
+
+.admin-qr-card--preview .admin-form__actions {
+  width: 100%;
+}
+
+.admin-qr-card--preview .admin-form__actions .admin-button {
+  flex: 1;
+}
