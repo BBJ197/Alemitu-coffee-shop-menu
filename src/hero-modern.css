@@ -255,3 +255,29 @@
     animation: none;
   }
 }
+
+/* Slimmer header */
+header .nav-bar {
+  padding: 8px 5vw;
+}
+
+.nav-bar .nv-logo .nav-text {
+  gap: 8px;
+  font-size: 1.4rem;
+}
+
+.nav-bar .nv-logo img {
+  width: 32px;
+  margin-bottom: 0;
+}
+
+@media (min-width: 901px) {
+  .nav-bar .nav-menu .nav-link {
+    padding: 6px 14px;
+    font-size: 1rem;
+  }
+
+  .hero-section .section-content {
+    padding-top: 90px;
+  }
+}
