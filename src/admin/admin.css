@@ -1935,3 +1935,41 @@ section[aria-labelledby^="cat-"] > p {
   margin: 0.75rem 0 0;
   box-shadow: none;
 }
+
+/* Tags page */
+@media (min-width: 48rem) {
+  .admin-main .admin-inline-form.admin-inline-form--3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) auto;
+  }
+}
+
+section[aria-labelledby^="tag-group-"] > .admin-section-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 1.5rem 0 0;
+  padding: 0.7rem 1rem;
+  font-size: 0.95rem;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--adm-text);
+  background: #faf8f7;
+  border: 1px solid var(--adm-line);
+  border-radius: var(--adm-radius) var(--adm-radius) 0 0;
+}
+
+section[aria-labelledby^="tag-group-"] > .admin-items {
+  margin-top: 0;
+  border-top: 0;
+  border-radius: 0 0 var(--adm-radius) var(--adm-radius);
+}
+
+section[aria-labelledby^="tag-group-"] > p {
+  margin: 0;
+  padding: 0.9rem 1rem;
+  background: var(--adm-panel);
+  border: 1px solid var(--adm-line);
+  border-top: 0;
+  border-radius: 0 0 var(--adm-radius) var(--adm-radius);
+}
