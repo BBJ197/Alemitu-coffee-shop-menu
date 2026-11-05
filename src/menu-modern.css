@@ -442,3 +442,17 @@
 .menu-page .menu-popular .menu-card {
   backdrop-filter: none;
 }
+
+/* Fixes 2: chips must never be clipped inside the category bar */
+.menu-page .menu-category-bar .menu-chip-row {
+  padding: 3px 0;
+  margin: -3px 0;
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
+.menu-page .menu-category-bar .menu-chip,
+.menu-page .menu-category-bar .menu-chip[aria-pressed="true"] {
+  flex-shrink: 0;
+  font-weight: 500;
+}
