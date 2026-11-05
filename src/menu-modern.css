@@ -489,36 +489,61 @@
 .menu-pan-top::after {
   content: "";
   position: absolute;
-  left: 10%;
-  right: 10%;
+  left: 0;
+  right: 0;
   bottom: 48%;
-  height: 75%;
+  height: 80%;
   background-image:
-    radial-gradient(
-      ellipse 30% 14% at 40% 88%,
-      rgba(255, 255, 255, 0.5),
-      transparent
-    ),
-    radial-gradient(
-      ellipse 32% 14% at 60% 68%,
-      rgba(255, 255, 255, 0.42),
-      transparent
-    ),
-    radial-gradient(
-      ellipse 34% 15% at 42% 48%,
-      rgba(255, 255, 255, 0.36),
-      transparent
-    ),
-    radial-gradient(
-      ellipse 36% 16% at 60% 28%,
-      rgba(255, 255, 255, 0.3),
-      transparent
-    ),
-    radial-gradient(
-      ellipse 40% 16% at 46% 10%,
-      rgba(255, 255, 255, 0.22),
-      transparent
-    );
-  background-repeat: no-repeat;
-  filter: blur(9px);
+    radial-gradient(circle, rgba(255, 255, 255, 0.5) 0, transparent 60%),
+    radial-gradient(circle, rgba(255, 255, 255, 0.4) 0, transparent 60%),
+    radial-gradient(circle, rgba(255, 255, 255, 0.35) 0, transparent 60%),
+    radial-gradient(circle, rgba(255, 255, 255, 0.4) 0, transparent 60%);
+  background-repeat: repeat-y;
+  background-size:
+    60px 150px,
+    85px 210px,
+    50px 120px,
+    70px 170px;
+  background-position:
+    30% 0,
+    45% 0,
+    58% 0,
+    70% 0;
+  filter: blur(8px);
+  -webkit-mask-image: linear-gradient(
+    to top,
+    transparent 0,
+    #000 18%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to top,
+    transparent 0,
+    #000 18%,
+    transparent 100%
+  );
+  animation: menu-smoke-rise-top 2.2s linear infinite;
+}
+
+@keyframes menu-smoke-rise-top {
+  from {
+    background-position:
+      30% 0,
+      45% 0,
+      58% 0,
+      70% 0;
+  }
+  to {
+    background-position:
+      30% -150px,
+      45% -210px,
+      58% -120px,
+      70% -170px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .menu-pan-top::after {
+    animation: none;
+  }
 }
