@@ -1,39 +1,28 @@
-import {
-  faEnvelope,
-  faGaugeHigh,
-  faLayerGroup,
-  faMugHot,
-  faQrcode,
-  faRightFromBracket,
-  faTags,
-  faUserGear,
-} from "@fortawesome/free-solid-svg-icons";
 import { Link, NavLink, Outlet } from "react-router-dom";
-import AdminIcon from "./AdminIcon";
 import { useAdminSession, useLogout } from "./hooks";
 
 const groups = [
   {
     label: "Overview",
-    links: [{ to: "/admin", label: "Dashboard", icon: faGaugeHigh, end: true }],
+    links: [{ to: "/admin", label: "Dashboard", end: true }],
   },
   {
     label: "Menu",
     links: [
-      { to: "/admin/items", label: "Items", icon: faMugHot },
-      { to: "/admin/categories", label: "Categories", icon: faLayerGroup },
-      { to: "/admin/tags", label: "Tags", icon: faTags },
+      { to: "/admin/items", label: "Items" },
+      { to: "/admin/categories", label: "Categories" },
+      { to: "/admin/tags", label: "Tags" },
     ],
   },
   {
     label: "Customers",
-    links: [{ to: "/admin/messages", label: "Messages", icon: faEnvelope }],
+    links: [{ to: "/admin/messages", label: "Messages" }],
   },
   {
     label: "Tools",
     links: [
-      { to: "/admin/qr", label: "QR code", icon: faQrcode },
-      { to: "/admin/settings", label: "Account", icon: faUserGear },
+      { to: "/admin/qr", label: "QR code" },
+      { to: "/admin/settings", label: "Account" },
     ],
   },
 ];
@@ -56,7 +45,6 @@ export default function AdminLayout() {
               <span className="admin-nav__label">{g.label}</span>
               {g.links.map((l) => (
                 <NavLink key={l.to} to={l.to} end={"end" in l && l.end}>
-                  <AdminIcon icon={l.icon} />
                   <span>{l.label}</span>
                 </NavLink>
               ))}
@@ -74,7 +62,6 @@ export default function AdminLayout() {
             onClick={() => logout.mutate()}
             disabled={logout.isPending}
           >
-            <AdminIcon icon={faRightFromBracket} />
             Sign out
           </button>
         </div>
