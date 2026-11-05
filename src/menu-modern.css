@@ -301,7 +301,7 @@
 .menu-page::before {
   top: 50%;
   aspect-ratio: 3 / 4;
-  background: url("./assets/images/menubacground.png") center / contain
+  background: url("./assets/images/menu-bacground.png") center / contain
     no-repeat;
   opacity: 0.6;
   animation: menu-pan-sway 3.5s ease-in-out infinite alternate;
