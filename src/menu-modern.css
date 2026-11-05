@@ -283,7 +283,7 @@
   box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4);
 }
 
-/* Big pan in the middle with smoke, darkened so the menu stays readable */
+/* Big pan, lots of smoke, light overlay. Tweak: overlay darkness is in .menu-pans::after */
 .menu-pans {
   position: fixed;
   inset: 0;
@@ -296,7 +296,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.35);
+  background: rgba(0, 0, 0, 0.15);
 }
 
 .menu-pan-main {
@@ -315,43 +315,57 @@
   inset: 0;
   background: url("./assets/images/menu-background.png") center / contain
     no-repeat;
-  opacity: 0.6;
+  opacity: 0.7;
 }
 
 .menu-pan-main::after {
   content: "";
   position: absolute;
-  left: 0;
-  right: 0;
+  left: -10%;
+  right: -10%;
   bottom: 48%;
-  height: 110%;
+  height: 130%;
   background-image:
     radial-gradient(circle, rgba(255, 255, 255, 0.5) 0, transparent 60%),
     radial-gradient(circle, rgba(255, 255, 255, 0.4) 0, transparent 60%),
     radial-gradient(circle, rgba(255, 255, 255, 0.35) 0, transparent 60%),
-    radial-gradient(circle, rgba(255, 255, 255, 0.4) 0, transparent 60%);
+    radial-gradient(circle, rgba(255, 255, 255, 0.4) 0, transparent 60%),
+    radial-gradient(circle, rgba(255, 255, 255, 0.45) 0, transparent 60%),
+    radial-gradient(circle, rgba(255, 255, 255, 0.35) 0, transparent 60%),
+    radial-gradient(circle, rgba(255, 255, 255, 0.4) 0, transparent 60%),
+    radial-gradient(circle, rgba(255, 255, 255, 0.35) 0, transparent 60%);
   background-repeat: repeat-y;
   background-size:
     90px 220px,
     130px 300px,
     80px 180px,
-    110px 260px;
+    110px 260px,
+    120px 340px,
+    70px 160px,
+    100px 240px,
+    150px 380px;
   background-position:
-    30% 0,
-    45% 0,
-    58% 0,
-    70% 0;
-  filter: blur(10px);
+    12% 0,
+    22% 0,
+    32% 0,
+    42% 0,
+    52% 0,
+    62% 0,
+    72% 0,
+    84% 0;
+  filter: blur(12px);
   -webkit-mask-image: linear-gradient(
     to top,
     transparent 0,
-    #000 18%,
+    #000 15%,
+    #000 60%,
     transparent 100%
   );
   mask-image: linear-gradient(
     to top,
     transparent 0,
-    #000 18%,
+    #000 15%,
+    #000 60%,
     transparent 100%
   );
   animation: menu-smoke-rise 2.2s linear infinite;
@@ -369,17 +383,25 @@
 @keyframes menu-smoke-rise {
   from {
     background-position:
-      30% 0,
-      45% 0,
-      58% 0,
-      70% 0;
+      12% 0,
+      22% 0,
+      32% 0,
+      42% 0,
+      52% 0,
+      62% 0,
+      72% 0,
+      84% 0;
   }
   to {
     background-position:
-      30% -220px,
-      45% -300px,
-      58% -180px,
-      70% -260px;
+      12% -220px,
+      22% -300px,
+      32% -180px,
+      42% -260px,
+      52% -340px,
+      62% -160px,
+      72% -240px,
+      84% -380px;
   }
 }
 
@@ -388,4 +410,29 @@
   .menu-pan-main::after {
     animation: none;
   }
+}
+
+/* Category bar: no background, chips a bit darker so they stay readable */
+.menu-page .menu-category-bar {
+  background: transparent;
+  backdrop-filter: none;
+  border: 0;
+  box-shadow: none;
+}
+
+.menu-page .menu-category-bar .menu-chip,
+.menu-page .menu-filter-panel .menu-chip {
+  background: rgba(20, 6, 10, 0.55);
+}
+
+/* Cards: darker so text is easy to read over the lighter page */
+.menu-page .menu-card,
+.menu-page .menu-card.no-photo,
+.menu-page .menu-popular .menu-card {
+  background: rgba(20, 6, 10, 0.78);
+  backdrop-filter: blur(6px);
+}
+
+.menu-page .menu-card-desc {
+  color: rgba(255, 255, 255, 0.82);
 }
