@@ -414,3 +414,31 @@
 .menu-page .menu-card-desc {
   color: rgba(255, 255, 255, 0.82);
 }
+
+/* Fixes: unavailable tag, clear filters button, steady category bar */
+.menu-page .menu-unavailable {
+  color: var(--primary-color);
+  background: #f3e9dc;
+}
+
+.menu-page .menu-summary .menu-button {
+  color: var(--secondary-color);
+  background: transparent;
+  border: 1px solid var(--secondary-color);
+}
+
+.menu-page .menu-summary .menu-button:hover:not(:disabled) {
+  color: var(--primary-color);
+  background: var(--secondary-color);
+}
+
+.menu-page .menu-category-bar {
+  top: 0.5rem;
+  transform: translateZ(0);
+}
+
+.menu-page .menu-card,
+.menu-page .menu-card.no-photo,
+.menu-page .menu-popular .menu-card {
+  backdrop-filter: none;
+}
