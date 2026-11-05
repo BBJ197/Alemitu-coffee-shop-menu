@@ -36,6 +36,7 @@ function CategoryRow({
   const reorder = useReorderCategories();
   const remove = useDeleteCategory();
   const [mode, setMode] = useState<Mode>("view");
+  const [open, setOpen] = useState(false);
   const [nameEn, setNameEn] = useState(category.nameEn);
   const [nameAm, setNameAm] = useState(category.nameAm ?? "");
   const [nameError, setNameError] = useState<string | null>(null);
@@ -126,8 +127,16 @@ function CategoryRow({
   ].filter((text): text is string => text !== null);
 
   return (
-    <li className="admin-item">
-      <div>
+    <li
+      className={
+        "admin-item admin-item--rich" +
+        (category.isVisible ? "" : " admin-item--off")
+      }
+    >
+      <span className="admin-thumb admin-thumb--empty" aria-hidden="true">
+        {index + 1}
+      </span>
+      <div className="admin-item__info">
         <span className="admin-item__name">{category.nameEn}</span>
         {category.nameAm && (
           <span lang="am" className="admin-item__am">
@@ -215,6 +224,31 @@ function CategoryRow({
         )}
       </div>
 
+      {mode === "view" && (
+        <button
+          type="button"
+          className="admin-iconbtn"
+          aria-expanded={open}
+          aria-label={`Options: ${category.nameEn}`}
+          onClick={() => setOpen((o) => !o)}
+        >
+          <svg
+            viewBox="0 0 20 20"
+            width="18"
+            height="18"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <path
+              d="M3 17v-3.5L13.5 3a1.4 1.4 0 0 1 2 0L17 4.5a1.4 1.4 0 0 1 0 2L6.5 17H3z"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </button>
+      )}
       {mode === "delete" ? (
         <div
           role="group"
@@ -274,7 +308,7 @@ function CategoryRow({
           )}
         </div>
       ) : mode === "view" ? (
-        <div className="admin-item__actions">
+        <div className={"admin-item__actions" + (open ? " is-open" : "")}>
           <button
             type="button"
             className="admin-button admin-button--quiet"
@@ -390,13 +424,14 @@ export default function AdminCategoriesPage() {
     <>
       <div className="admin-page-head">
         <h1>Categories</h1>
+        <p>
+          Customers see categories in this order. Hidden categories, and the
+          items in them, don't appear on the menu.
+        </p>
       </div>
-      <p>
-        Customers see categories in this order. Hidden categories, and the items
-        in them, don't appear on the menu.
-      </p>
 
       <form className="admin-inline-form" onSubmit={add} noValidate>
+        <h2 className="admin-form__heading">New category</h2>
         <div className="admin-field">
           <label htmlFor="new-cat-en">New category name (English)</label>
           <input

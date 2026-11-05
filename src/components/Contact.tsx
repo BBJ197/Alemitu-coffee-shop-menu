@@ -3,7 +3,7 @@ import { ContactError, sendContact } from "../api/contact";
 import { contactInfo } from "../data";
 import Icon from "./Icon";
 
-type Status = "idle" | "sending" | "sent" | "error" | "limited";
+type Status = "idle" | "sending" | "sent" | "error" | "limited" | "invalid";
 
 const empty = { name: "", email: "", message: "", website: "" };
 
@@ -23,9 +23,8 @@ export default function Contact() {
       setForm(empty);
       setStatus("sent");
     } catch (err) {
-      setStatus(
-        err instanceof ContactError && err.status === 429 ? "limited" : "error",
-      );
+      const code = err instanceof ContactError ? err.status : 0;
+      setStatus(code === 429 ? "limited" : code === 400 ? "invalid" : "error");
     }
   };
 
@@ -65,6 +64,8 @@ export default function Contact() {
             value={form.email}
             onChange={handleChange}
             maxLength={254}
+            pattern="[^@\s]+@[^@\s]+\.[A-Za-z]{2,}"
+            title="Enter a full email address, like name@gmail.com"
             required
           />
           <textarea
@@ -99,11 +100,15 @@ export default function Contact() {
               Thank you! Your message was sent. We'll get back to you soon.
             </p>
           )}
-          {(status === "error" || status === "limited") && (
+          {(status === "error" ||
+            status === "limited" ||
+            status === "invalid") && (
             <p role="alert" className="contact-status contact-status--error">
               {status === "limited"
                 ? "You've sent a lot of messages. Please try again later."
-                : "Sorry, we couldn't send your message. Please try again."}
+                : status === "invalid"
+                  ? "Please check your details. Use a full email address like name@gmail.com."
+                  : "Sorry, we couldn't send your message. Please try again."}
             </p>
           )}
         </form>

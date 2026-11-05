@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { formatEtb } from "../lib/format";
+import { photoUrl } from "../lib/photoUrl";
 import { useExpireOnUnauthorized } from "./hooks";
 import {
   emptyItemFilters,
@@ -21,6 +22,7 @@ function ItemRow({ item }: { item: AdminItem }) {
   const toggle = useToggleAvailability();
   const remove = useDeleteItem();
   const [confirming, setConfirming] = useState(false);
+  const [open, setOpen] = useState(false);
   const cancelRef = useRef<HTMLButtonElement>(null);
   const deleteRef = useRef<HTMLButtonElement>(null);
   const wasConfirming = useRef(false);
@@ -33,10 +35,23 @@ function ItemRow({ item }: { item: AdminItem }) {
   }, [confirming]);
 
   const toggleText = item.isAvailable ? "Mark unavailable" : "Mark available";
+  const photo = photoUrl(item.imagePath);
 
   return (
-    <li className="admin-item">
-      <div>
+    <li
+      className={
+        "admin-item admin-item--rich" +
+        (item.isAvailable ? "" : " admin-item--off")
+      }
+    >
+      {photo ? (
+        <img className="admin-thumb" src={photo} alt="" loading="lazy" />
+      ) : (
+        <span className="admin-thumb admin-thumb--empty" aria-hidden="true">
+          {item.nameEn.charAt(0).toUpperCase()}
+        </span>
+      )}
+      <div className="admin-item__info">
         <span className="admin-item__name">{item.nameEn}</span>
         {item.nameAm && (
           <span lang="am" className="admin-item__am">
@@ -64,6 +79,29 @@ function ItemRow({ item }: { item: AdminItem }) {
         )}
       </div>
 
+      <button
+        type="button"
+        className="admin-iconbtn"
+        aria-expanded={open}
+        aria-label={`Options: ${item.nameEn}`}
+        onClick={() => setOpen((o) => !o)}
+      >
+        <svg
+          viewBox="0 0 20 20"
+          width="18"
+          height="18"
+          aria-hidden="true"
+          focusable="false"
+        >
+          <path
+            d="M3 17v-3.5L13.5 3a1.4 1.4 0 0 1 2 0L17 4.5a1.4 1.4 0 0 1 0 2L6.5 17H3z"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinejoin="round"
+          />
+        </svg>
+      </button>
       {confirming ? (
         <div
           role="group"
@@ -92,7 +130,7 @@ function ItemRow({ item }: { item: AdminItem }) {
           </button>
         </div>
       ) : (
-        <div className="admin-item__actions">
+        <div className={"admin-item__actions" + (open ? " is-open" : "")}>
           <Link
             className="admin-button admin-button--quiet admin-button--link"
             to={`/admin/items/${item.id}/edit`}
@@ -262,6 +300,7 @@ export default function AdminItemsPage() {
             <section key={category.id} aria-labelledby={`cat-${category.id}`}>
               <h2 id={`cat-${category.id}`} className="admin-section-title">
                 {category.nameEn}
+                <span className="admin-count">{list.length}</span>
                 {!category.isVisible && (
                   <span className="admin-chip">Hidden from customers</span>
                 )}

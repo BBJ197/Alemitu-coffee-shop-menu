@@ -12,8 +12,16 @@ export default function Hero() {
         <span className="hero-bean" />
         <span className="hero-bean" />
       </div>
+      <span className="hero-watermark" aria-hidden="true">
+        {"\u1261\u1293"}
+      </span>
       <div className="section-content">
         <div className="hero-details">
+          <p className="hero-eyebrow">
+            <span className="hero-eyebrow-line" aria-hidden="true" />
+            Alemitu Coffee
+            <span lang="am">{"\u1261\u1293"}</span>
+          </p>
           <h1 className="title">Best Coffee</h1>
           <p className="subtitle">
             Make your day great with our special coffee!
@@ -30,9 +38,20 @@ export default function Hero() {
               Contact Us
             </a>
           </div>
+          <ol className="hero-steps">
+            <li>
+              <span>01</span>Roasted fresh
+            </li>
+            <li>
+              <span>02</span>Brewed in a jebena
+            </li>
+            <li>
+              <span>03</span>Served with love
+            </li>
+          </ol>
         </div>
         <div className="hero-image-wrapper">
-          <span className="hero-glow" aria-hidden="true" />
+          <span className="hero-rings" aria-hidden="true" />
           <div className="hero-float">
             <img
               src={heroImg}
@@ -50,6 +69,7 @@ export default function Hero() {
           </div>
         </div>
       </div>
+      <span className="hero-scroll" aria-hidden="true" />
     </section>
   );
 }

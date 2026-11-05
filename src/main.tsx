@@ -15,9 +15,11 @@ import "@fontsource/noto-sans-ethiopic";
 import "./index.css";
 import "./ui-polish.css";
 import "./home.css";
+import "./hero-modern.css";
 import "./menu-theme.css";
 import "./menu-modern.css";
 import "./menu-modern.css";
+import "./menu-enter.css";
 import App from "./App";
 
 const queryClient = new QueryClient();
