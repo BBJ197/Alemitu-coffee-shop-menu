@@ -119,7 +119,6 @@ export default function MenuPage() {
   return (
     <main id="main" className="menu-page">
       <div className="menu-pans" aria-hidden="true">
-        <div className="menu-pan menu-pan-corner" />
         <div className="menu-pan menu-pan-main" />
       </div>
       <section className="menu-banner" aria-labelledby="menu-title">
