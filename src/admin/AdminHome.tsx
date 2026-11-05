@@ -1,19 +1,4 @@
-import {
-  faCircleCheck,
-  faCircleXmark,
-  faEyeSlash,
-  faImage,
-  faLayerGroup,
-  faList,
-  faMugHot,
-  faPlus,
-  faPrint,
-  faStar,
-  faTriangleExclamation,
-  type IconDefinition,
-} from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
-import AdminIcon from "./AdminIcon";
 import { summarize } from "./dashboardSummary";
 import { useExpireOnUnauthorized } from "./hooks";
 import { useAdminCategories, useAdminItems } from "./itemsHooks";
@@ -49,14 +34,14 @@ function Summary() {
   }
 
   const s = summarize(items.data, categories.data);
-  const stats: [string, number, IconDefinition, string][] = [
-    ["Items", s.items, faMugHot, "brand"],
-    ["Available", s.available, faCircleCheck, "ok"],
-    ["Unavailable", s.unavailable, faCircleXmark, "bad"],
-    ["Popular", s.popular, faStar, "gold"],
-    ["Without a photo", s.withoutPhoto, faImage, "muted"],
-    ["Categories", s.categories, faLayerGroup, "brand"],
-    ["Hidden categories", s.hiddenCategories, faEyeSlash, "muted"],
+  const stats: [string, number, string][] = [
+    ["Items", s.items, "brand"],
+    ["Available", s.available, "ok"],
+    ["Unavailable", s.unavailable, "bad"],
+    ["Popular", s.popular, "gold"],
+    ["Without a photo", s.withoutPhoto, "muted"],
+    ["Categories", s.categories, "brand"],
+    ["Hidden categories", s.hiddenCategories, "muted"],
   ];
   const nothingToFix = s.unavailable === 0 && s.itemsInHiddenCategories === 0;
   const pct = s.items ? Math.round((s.available / s.items) * 100) : 0;
@@ -64,11 +49,8 @@ function Summary() {
   return (
     <>
       <dl className="admin-stats">
-        {stats.map(([label, value, icon, tone]) => (
+        {stats.map(([label, value, tone]) => (
           <div key={label} className={`admin-stat admin-stat--${tone}`}>
-            <span className="admin-stat__icon">
-              <AdminIcon icon={icon} />
-            </span>
             <dt>{label}</dt>
             <dd>{value}</dd>
           </div>
@@ -92,13 +74,11 @@ function Summary() {
       <h3 className="admin-section-title">Needs attention</h3>
       {nothingToFix && (
         <div className="admin-alert admin-alert--ok">
-          <AdminIcon icon={faCircleCheck} />
           <p>Nothing needs attention right now.</p>
         </div>
       )}
       {s.itemsInHiddenCategories > 0 && (
         <div className="admin-alert admin-alert--warn">
-          <AdminIcon icon={faTriangleExclamation} />
           <p>
             {`${plural(s.itemsInHiddenCategories, "item is", "items are")} in a hidden category, so customers can't see ${s.itemsInHiddenCategories === 1 ? "it" : "them"}. `}
             <Link className="admin-link" to="/admin/categories">
@@ -109,7 +89,6 @@ function Summary() {
       )}
       {s.unavailable > 0 && (
         <div className="admin-alert admin-alert--warn">
-          <AdminIcon icon={faTriangleExclamation} />
           <div>
             <p>
               {`${plural(s.unavailable, "item is", "items are")} marked unavailable. Customers see ${s.unavailable === 1 ? "it" : "them"} dimmed.`}
@@ -150,15 +129,12 @@ export default function AdminHome() {
             className="admin-action admin-action--primary"
             to="/admin/items/new"
           >
-            <AdminIcon icon={faPlus} />
             Add an item
           </Link>
           <Link className="admin-action" to="/admin/items">
-            <AdminIcon icon={faList} />
             Manage menu items
           </Link>
           <Link className="admin-action" to="/admin/qr">
-            <AdminIcon icon={faPrint} />
             Print the QR code
           </Link>
         </div>
