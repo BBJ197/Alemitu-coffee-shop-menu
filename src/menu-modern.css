@@ -461,3 +461,64 @@
 .menu-page {
   --menu-gutter: max(1rem, calc((100% - min(94%, 100rem)) / 2));
 }
+
+/* Centered category bar */
+.menu-page .menu-category-bar {
+  margin-inline: auto;
+}
+
+/* Second pan, top right, still. Smoke is static, drawn on top of the pan */
+.menu-pan-top {
+  --pan-w: min(30vw, 300px, 36vh);
+  position: absolute;
+  top: 14vh;
+  right: 3vw;
+  width: var(--pan-w);
+  height: calc(var(--pan-w) * 1.33);
+}
+
+.menu-pan-top::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("./assets/images/menu-background2.png") center / contain
+    no-repeat;
+  opacity: 0.6;
+}
+
+.menu-pan-top::after {
+  content: "";
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  bottom: 48%;
+  height: 75%;
+  background-image:
+    radial-gradient(
+      ellipse 30% 14% at 40% 88%,
+      rgba(255, 255, 255, 0.5),
+      transparent
+    ),
+    radial-gradient(
+      ellipse 32% 14% at 60% 68%,
+      rgba(255, 255, 255, 0.42),
+      transparent
+    ),
+    radial-gradient(
+      ellipse 34% 15% at 42% 48%,
+      rgba(255, 255, 255, 0.36),
+      transparent
+    ),
+    radial-gradient(
+      ellipse 36% 16% at 60% 28%,
+      rgba(255, 255, 255, 0.3),
+      transparent
+    ),
+    radial-gradient(
+      ellipse 40% 16% at 46% 10%,
+      rgba(255, 255, 255, 0.22),
+      transparent
+    );
+  background-repeat: no-repeat;
+  filter: blur(9px);
+}
