@@ -283,172 +283,99 @@
   box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4);
 }
 
-/* Roasting pan swaying side to side with rising smoke, behind everything */
+/* Roasting pan in the middle, swaying fast, smoke rising from the beans */
 .menu-page {
-  --pan-w: clamp(260px, 62vw, 460px);
+  --pan-w: min(88vw, 700px, 68vh);
 }
 
 .menu-page::before,
 .menu-page::after {
   content: "";
   position: fixed;
-  right: -6vw;
-  bottom: -3vh;
+  left: 50%;
   width: var(--pan-w);
   z-index: -1;
   pointer-events: none;
-  animation: menu-pan-sway 9s ease-in-out infinite alternate;
 }
 
 .menu-page::before {
+  top: 50%;
   aspect-ratio: 3 / 4;
-  background: url("./assets/images/menu-bacground.png") center / contain
+  background: url("./assets/images/menubacground.png") center / contain
     no-repeat;
-  opacity: 0.5;
+  opacity: 0.6;
+  animation: menu-pan-sway 3.5s ease-in-out infinite alternate;
 }
 
 .menu-page::after {
-  height: calc(var(--pan-w) * 1.9);
+  bottom: 48%;
+  height: calc(var(--pan-w) * 1.1);
   background-image:
-    radial-gradient(circle, rgba(255, 255, 255, 0.45) 0, transparent 60%),
+    radial-gradient(circle, rgba(255, 255, 255, 0.5) 0, transparent 60%),
+    radial-gradient(circle, rgba(255, 255, 255, 0.4) 0, transparent 60%),
     radial-gradient(circle, rgba(255, 255, 255, 0.35) 0, transparent 60%),
-    radial-gradient(circle, rgba(255, 255, 255, 0.3) 0, transparent 60%);
+    radial-gradient(circle, rgba(255, 255, 255, 0.4) 0, transparent 60%);
   background-repeat: repeat-y;
   background-size:
-    70px 190px,
-    100px 260px,
-    55px 150px;
+    90px 220px,
+    130px 300px,
+    80px 180px,
+    110px 260px;
   background-position:
-    24% 0,
-    32% 0,
-    18% 0;
-  filter: blur(9px);
+    30% 0,
+    45% 0,
+    58% 0,
+    70% 0;
+  filter: blur(10px);
   -webkit-mask-image: linear-gradient(
     to top,
-    transparent 52%,
-    #000 60%,
+    transparent 0,
+    #000 18%,
     transparent 100%
   );
   mask-image: linear-gradient(
     to top,
-    transparent 52%,
-    #000 60%,
+    transparent 0,
+    #000 18%,
     transparent 100%
   );
   animation:
-    menu-pan-sway 9s ease-in-out infinite alternate,
-    menu-smoke-rise 6s linear infinite;
+    menu-smoke-sway 3.5s ease-in-out infinite alternate,
+    menu-smoke-rise 2.2s linear infinite;
 }
 
 @keyframes menu-pan-sway {
   from {
-    transform: translateX(-10vw);
+    transform: translate(calc(-50% - 9vw), -50%);
   }
   to {
-    transform: translateX(5vw);
+    transform: translate(calc(-50% + 9vw), -50%);
+  }
+}
+
+@keyframes menu-smoke-sway {
+  from {
+    transform: translateX(calc(-50% - 9vw));
+  }
+  to {
+    transform: translateX(calc(-50% + 9vw));
   }
 }
 
 @keyframes menu-smoke-rise {
   from {
     background-position:
-      24% 0,
-      32% 0,
-      18% 0;
+      30% 0,
+      45% 0,
+      58% 0,
+      70% 0;
   }
   to {
     background-position:
-      24% -190px,
-      32% -260px,
-      18% -150px;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .menu-page::before,
-  .menu-page::after {
-    animation: none;
-  }
-}
-
-/* Roasting pan swaying side to side with rising smoke, behind everything */
-.menu-page {
-  --pan-w: clamp(260px, 62vw, 460px);
-}
-
-.menu-page::before,
-.menu-page::after {
-  content: "";
-  position: fixed;
-  right: -6vw;
-  bottom: -3vh;
-  width: var(--pan-w);
-  z-index: -1;
-  pointer-events: none;
-  animation: menu-pan-sway 9s ease-in-out infinite alternate;
-}
-
-.menu-page::before {
-  aspect-ratio: 3 / 4;
-  background: url("./assets/images/menu-bacground.png") center / contain
-    no-repeat;
-  opacity: 0.5;
-}
-
-.menu-page::after {
-  height: calc(var(--pan-w) * 1.9);
-  background-image:
-    radial-gradient(circle, rgba(255, 255, 255, 0.45) 0, transparent 60%),
-    radial-gradient(circle, rgba(255, 255, 255, 0.35) 0, transparent 60%),
-    radial-gradient(circle, rgba(255, 255, 255, 0.3) 0, transparent 60%);
-  background-repeat: repeat-y;
-  background-size:
-    70px 190px,
-    100px 260px,
-    55px 150px;
-  background-position:
-    24% 0,
-    32% 0,
-    18% 0;
-  filter: blur(9px);
-  -webkit-mask-image: linear-gradient(
-    to top,
-    transparent 52%,
-    #000 60%,
-    transparent 100%
-  );
-  mask-image: linear-gradient(
-    to top,
-    transparent 52%,
-    #000 60%,
-    transparent 100%
-  );
-  animation:
-    menu-pan-sway 9s ease-in-out infinite alternate,
-    menu-smoke-rise 6s linear infinite;
-}
-
-@keyframes menu-pan-sway {
-  from {
-    transform: translateX(-10vw);
-  }
-  to {
-    transform: translateX(5vw);
-  }
-}
-
-@keyframes menu-smoke-rise {
-  from {
-    background-position:
-      24% 0,
-      32% 0,
-      18% 0;
-  }
-  to {
-    background-position:
-      24% -190px,
-      32% -260px,
-      18% -150px;
+      30% -220px,
+      45% -300px,
+      58% -180px,
+      70% -260px;
   }
 }
 
