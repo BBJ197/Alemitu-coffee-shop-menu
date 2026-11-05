@@ -90,106 +90,114 @@ function ItemForm(props: {
 
   return (
     <form className="admin-form admin-form--wide" onSubmit={handleSubmit}>
-      <Field id="item-category" label="Category" error={errors.categoryId}>
-        <select
-          id="item-category"
-          value={values.categoryId}
-          onChange={(e) => set("categoryId", e.target.value)}
-          {...aria("item-category", errors.categoryId)}
-        >
-          <option value="">Choose a category</option>
-          {props.categories.map((c) => (
-            <option key={c.id} value={c.id}>
-              {c.nameEn}
-            </option>
-          ))}
-        </select>
-      </Field>
-
-      <div className="admin-row">
-        <Field id="item-name-en" label="Name (English)" error={errors.nameEn}>
-          <input
-            id="item-name-en"
-            type="text"
-            value={values.nameEn}
-            onChange={(e) => set("nameEn", e.target.value)}
-            {...aria("item-name-en", errors.nameEn)}
-          />
+      <section className="admin-form__section">
+        <h2 className="admin-form__heading">Basics</h2>
+        <Field id="item-category" label="Category" error={errors.categoryId}>
+          <select
+            id="item-category"
+            value={values.categoryId}
+            onChange={(e) => set("categoryId", e.target.value)}
+            {...aria("item-category", errors.categoryId)}
+          >
+            <option value="">Choose a category</option>
+            {props.categories.map((c) => (
+              <option key={c.id} value={c.id}>
+                {c.nameEn}
+              </option>
+            ))}
+          </select>
         </Field>
-        <Field id="item-name-am" label="Name (Amharic)" error={errors.nameAm}>
-          <input
-            id="item-name-am"
-            type="text"
-            lang="am"
-            value={values.nameAm}
-            onChange={(e) => set("nameAm", e.target.value)}
-            {...aria("item-name-am", errors.nameAm)}
-          />
-        </Field>
-      </div>
 
-      <Field
-        id="item-desc-en"
-        label="Description (English)"
-        error={errors.descriptionEn}
-      >
-        <textarea
+        <div className="admin-row">
+          <Field id="item-name-en" label="Name (English)" error={errors.nameEn}>
+            <input
+              id="item-name-en"
+              type="text"
+              value={values.nameEn}
+              onChange={(e) => set("nameEn", e.target.value)}
+              {...aria("item-name-en", errors.nameEn)}
+            />
+          </Field>
+          <Field id="item-name-am" label="Name (Amharic)" error={errors.nameAm}>
+            <input
+              id="item-name-am"
+              type="text"
+              lang="am"
+              value={values.nameAm}
+              onChange={(e) => set("nameAm", e.target.value)}
+              {...aria("item-name-am", errors.nameAm)}
+            />
+          </Field>
+        </div>
+      </section>
+      <section className="admin-form__section">
+        <h2 className="admin-form__heading">Description</h2>
+        <Field
           id="item-desc-en"
-          rows={3}
-          value={values.descriptionEn}
-          onChange={(e) => set("descriptionEn", e.target.value)}
-          {...aria("item-desc-en", errors.descriptionEn)}
-        />
-      </Field>
-      <Field
-        id="item-desc-am"
-        label="Description (Amharic)"
-        error={errors.descriptionAm}
-      >
-        <textarea
+          label="Description (English)"
+          error={errors.descriptionEn}
+        >
+          <textarea
+            id="item-desc-en"
+            rows={3}
+            value={values.descriptionEn}
+            onChange={(e) => set("descriptionEn", e.target.value)}
+            {...aria("item-desc-en", errors.descriptionEn)}
+          />
+        </Field>
+        <Field
           id="item-desc-am"
-          rows={3}
-          lang="am"
-          value={values.descriptionAm}
-          onChange={(e) => set("descriptionAm", e.target.value)}
-          {...aria("item-desc-am", errors.descriptionAm)}
-        />
-      </Field>
+          label="Description (Amharic)"
+          error={errors.descriptionAm}
+        >
+          <textarea
+            id="item-desc-am"
+            rows={3}
+            lang="am"
+            value={values.descriptionAm}
+            onChange={(e) => set("descriptionAm", e.target.value)}
+            {...aria("item-desc-am", errors.descriptionAm)}
+          />
+        </Field>
+      </section>
+      <section className="admin-form__section">
+        <h2 className="admin-form__heading">Price and photo</h2>
+        <Field id="item-price" label="Price (ETB)" error={errors.price}>
+          <input
+            id="item-price"
+            type="text"
+            inputMode="decimal"
+            value={values.price}
+            onChange={(e) => set("price", e.target.value)}
+            {...aria("item-price", errors.price)}
+          />
+        </Field>
 
-      <Field id="item-price" label="Price (ETB)" error={errors.price}>
-        <input
-          id="item-price"
-          type="text"
-          inputMode="decimal"
-          value={values.price}
-          onChange={(e) => set("price", e.target.value)}
-          {...aria("item-price", errors.price)}
+        <PhotoField
+          path={values.imagePath}
+          itemName={values.nameEn}
+          onChange={(path) => set("imagePath", path)}
         />
-      </Field>
-
-      <PhotoField
-        path={values.imagePath}
-        itemName={values.nameEn}
-        onChange={(path) => set("imagePath", path)}
-      />
-
-      <label className="admin-check">
-        <input
-          type="checkbox"
-          checked={values.isAvailable}
-          onChange={(e) => set("isAvailable", e.target.checked)}
-        />
-        Available to order
-      </label>
-      <label className="admin-check">
-        <input
-          type="checkbox"
-          checked={values.isFeatured}
-          onChange={(e) => set("isFeatured", e.target.checked)}
-        />
-        Show in Popular
-      </label>
-
+      </section>
+      <section className="admin-form__section">
+        <h2 className="admin-form__heading">Availability</h2>
+        <label className="admin-check">
+          <input
+            type="checkbox"
+            checked={values.isAvailable}
+            onChange={(e) => set("isAvailable", e.target.checked)}
+          />
+          Available to order
+        </label>
+        <label className="admin-check">
+          <input
+            type="checkbox"
+            checked={values.isFeatured}
+            onChange={(e) => set("isFeatured", e.target.checked)}
+          />
+          Show in Popular
+        </label>
+      </section>
       <fieldset className="admin-fieldset">
         <legend>Tags</legend>
         {props.tags ? (
@@ -307,7 +315,16 @@ export default function AdminItemFormPage() {
 
   return (
     <>
-      <h1>{id ? "Edit item" : "Add item"}</h1>
+      <div className="admin-page-head">
+        <h1>{id ? "Edit item" : "Add item"}</h1>
+        <Link
+          className="admin-button admin-button--quiet admin-button--link"
+          to="/admin/items"
+        >
+          Back to items
+        </Link>
+        <p>The details customers will see on the menu.</p>
+      </div>
       <ItemForm
         key={id ?? "new"}
         itemId={id}
