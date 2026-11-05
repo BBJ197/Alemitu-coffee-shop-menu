@@ -1448,3 +1448,9 @@ body:has(.admin-auth) {
   border: 1px solid #efd9a6;
   border-radius: 99px;
 }
+
+.admin-stat {
+  grid-template-columns: 1fr;
+  grid-template-areas: "label" "value";
+  border-left: 4px solid var(--tone, var(--adm-brand));
+}
