@@ -296,13 +296,13 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.35);
 }
 
 .menu-pan-main {
   --pan-w: min(88vw, 700px, 68vh);
   position: absolute;
-  top: 50%;
+  bottom: calc(var(--pan-w) * -0.5);
   left: 50%;
   width: var(--pan-w);
   height: calc(var(--pan-w) * 1.33);
@@ -359,10 +359,10 @@
 
 @keyframes menu-pan-sway {
   from {
-    transform: translate(calc(-50% - 9vw), -50%);
+    transform: translateX(calc(-50% - 9vw));
   }
   to {
-    transform: translate(calc(-50% + 9vw), -50%);
+    transform: translateX(calc(-50% + 9vw));
   }
 }
 
