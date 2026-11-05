@@ -56,17 +56,6 @@
 }
 
 /* Bigger text on the left */
-.hero-eyebrow {
-  width: fit-content;
-  padding: 6px 16px;
-  font-size: 0.95rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--secondary-color);
-  background: rgba(243, 150, 28, 0.1);
-  border: 1px solid rgba(243, 150, 28, 0.5);
-  border-radius: 999px;
-}
 
 .hero-section .hero-details .title {
   margin-top: 1.2rem;
@@ -92,34 +81,6 @@
 .hero-section .hero-details .button {
   padding: 14px 30px;
   font-size: 1.05rem;
-}
-
-.hero-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin: 2.5rem 0 0;
-  padding: 0;
-  list-style: none;
-}
-
-.hero-tags li {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 16px;
-  font-size: 0.95rem;
-  background: rgba(255, 255, 255, 0.07);
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  border-radius: 999px;
-}
-
-.hero-tags li::before {
-  content: "";
-  width: 8px;
-  height: 8px;
-  background: var(--secondary-color);
-  border-radius: 50%;
 }
 
 .hero-details > :nth-child(5) {
@@ -235,10 +196,6 @@
     margin-inline: auto;
   }
 
-  .hero-tags {
-    justify-content: center;
-  }
-
   .hero-watermark {
     right: 50%;
     transform: translate(50%, -50%);
@@ -258,26 +215,89 @@
 
 /* Slimmer header */
 header .nav-bar {
-  padding: 8px 5vw;
+  padding: 14px 5vw;
 }
 
 .nav-bar .nv-logo .nav-text {
   gap: 8px;
-  font-size: 1.4rem;
+  font-size: 1.65rem;
 }
 
 .nav-bar .nv-logo img {
-  width: 32px;
+  width: 38px;
   margin-bottom: 0;
 }
 
 @media (min-width: 901px) {
   .nav-bar .nav-menu .nav-link {
-    padding: 6px 14px;
+    padding: 8px 16px;
     font-size: 1rem;
   }
 
   .hero-section .section-content {
     padding-top: 90px;
+  }
+}
+
+/* Eyebrow: a gold rule and plain letterspaced text, no pill */
+.hero-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 0.85rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--secondary-color);
+}
+
+.hero-eyebrow-line {
+  width: 56px;
+  height: 2px;
+  background: var(--secondary-color);
+}
+
+.hero-eyebrow [lang="am"] {
+  font-family: "Noto Sans Ethiopic", Georgia, serif;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Three numbered steps under a thin rule */
+.hero-steps {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  gap: 2rem;
+  width: fit-content;
+  max-width: 100%;
+  margin: 2.5rem 0 0;
+  padding: 1.2rem 0 0;
+  list-style: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.hero-steps li {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.hero-steps li span {
+  font-family: "Miniver", Georgia, serif;
+  font-size: 1.5rem;
+  line-height: 1;
+  color: var(--secondary-color);
+}
+
+@media (max-width: 900px) {
+  .hero-eyebrow {
+    justify-content: center;
+  }
+
+  .hero-steps {
+    margin-inline: auto;
+    gap: 1.5rem;
+    text-align: center;
   }
 }
