@@ -1,0 +1,65 @@
+/* Menu page entrance: each part fades and rises in, one after another. */
+@keyframes menu-enter {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .menu-banner-bar,
+  .menu-eyebrow,
+  .menu-page h1,
+  .menu-banner-sub,
+  .menu-controls,
+  .menu-category-bar,
+  .menu-summary,
+  .menu-section-head,
+  .menu-card {
+    animation: menu-enter 0.55s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  }
+
+  .menu-eyebrow {
+    animation-delay: 0.05s;
+  }
+  .menu-page h1 {
+    animation-delay: 0.12s;
+  }
+  .menu-banner-sub {
+    animation-delay: 0.2s;
+  }
+  .menu-controls {
+    animation-delay: 0.28s;
+  }
+  .menu-category-bar {
+    animation-delay: 0.34s;
+  }
+  .menu-summary {
+    animation-delay: 0.4s;
+  }
+  .menu-section-head {
+    animation-delay: 0.45s;
+  }
+
+  .menu-card {
+    animation-delay: 0.5s;
+  }
+  .menu-card:nth-child(1) {
+    animation-delay: 0.45s;
+  }
+  .menu-card:nth-child(2) {
+    animation-delay: 0.5s;
+  }
+  .menu-card:nth-child(3) {
+    animation-delay: 0.55s;
+  }
+  .menu-card:nth-child(4) {
+    animation-delay: 0.6s;
+  }
+  .menu-card:nth-child(5) {
+    animation-delay: 0.65s;
+  }
+  .menu-card:nth-child(6) {
+    animation-delay: 0.7s;
+  }
+}
