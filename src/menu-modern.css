@@ -283,7 +283,7 @@
   box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4);
 }
 
-/* Big pan in the middle, small pan in the bottom-left corner, smoke on both */
+/* Big pan in the middle with smoke, darkened so the menu stays readable */
 .menu-pans {
   position: fixed;
   inset: 0;
@@ -292,30 +292,56 @@
   pointer-events: none;
 }
 
-.menu-pan {
-  position: absolute;
-  width: var(--pan-w);
-  height: calc(var(--pan-w) * 1.33);
-}
-
-.menu-pan::before {
+.menu-pans::after {
   content: "";
   position: absolute;
   inset: 0;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: contain;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.menu-pan-main {
+  --pan-w: min(88vw, 700px, 68vh);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--pan-w);
+  height: calc(var(--pan-w) * 1.33);
+  animation: menu-pan-sway 3.5s ease-in-out infinite alternate;
+}
+
+.menu-pan-main::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("./assets/images/menu-background.png") center / contain
+    no-repeat;
   opacity: 0.6;
 }
 
-.menu-pan::after {
+.menu-pan-main::after {
   content: "";
   position: absolute;
   left: 0;
   right: 0;
   bottom: 48%;
   height: 110%;
+  background-image:
+    radial-gradient(circle, rgba(255, 255, 255, 0.5) 0, transparent 60%),
+    radial-gradient(circle, rgba(255, 255, 255, 0.4) 0, transparent 60%),
+    radial-gradient(circle, rgba(255, 255, 255, 0.35) 0, transparent 60%),
+    radial-gradient(circle, rgba(255, 255, 255, 0.4) 0, transparent 60%);
   background-repeat: repeat-y;
+  background-size:
+    90px 220px,
+    130px 300px,
+    80px 180px,
+    110px 260px;
+  background-position:
+    30% 0,
+    45% 0,
+    58% 0,
+    70% 0;
+  filter: blur(10px);
   -webkit-mask-image: linear-gradient(
     to top,
     transparent 0,
@@ -328,70 +354,7 @@
     #000 18%,
     transparent 100%
   );
-}
-
-/* Main pan: big and centered */
-.menu-pan-main {
-  --pan-w: min(88vw, 700px, 68vh);
-  top: 50%;
-  left: 50%;
-  animation: menu-pan-sway 3.5s ease-in-out infinite alternate;
-}
-
-.menu-pan-main::before {
-  background-image: url("./assets/images/menu-background.png");
-}
-
-.menu-pan-main::after {
-  background-image:
-    radial-gradient(circle, rgba(255, 255, 255, 0.5) 0, transparent 60%),
-    radial-gradient(circle, rgba(255, 255, 255, 0.4) 0, transparent 60%),
-    radial-gradient(circle, rgba(255, 255, 255, 0.35) 0, transparent 60%),
-    radial-gradient(circle, rgba(255, 255, 255, 0.4) 0, transparent 60%);
-  background-size:
-    90px 220px,
-    130px 300px,
-    80px 180px,
-    110px 260px;
-  background-position:
-    30% 0,
-    45% 0,
-    58% 0,
-    70% 0;
-  filter: blur(10px);
-  animation: menu-smoke-rise-main 2.2s linear infinite;
-}
-
-/* Corner pan: small, bottom-left */
-.menu-pan-corner {
-  --pan-w: min(30vw, 260px, 34vh);
-  left: 2vw;
-  bottom: 2vh;
-  animation: menu-corner-sway 3.5s ease-in-out infinite alternate;
-}
-
-.menu-pan-corner::before {
-  background-image: url("./assets/images/menu-background2.png");
-}
-
-.menu-pan-corner::after {
-  background-image:
-    radial-gradient(circle, rgba(255, 255, 255, 0.5) 0, transparent 60%),
-    radial-gradient(circle, rgba(255, 255, 255, 0.4) 0, transparent 60%),
-    radial-gradient(circle, rgba(255, 255, 255, 0.35) 0, transparent 60%),
-    radial-gradient(circle, rgba(255, 255, 255, 0.4) 0, transparent 60%);
-  background-size:
-    60px 200px,
-    90px 280px,
-    55px 170px,
-    75px 240px;
-  background-position:
-    30% 0,
-    45% 0,
-    58% 0,
-    70% 0;
-  filter: blur(8px);
-  animation: menu-smoke-rise-corner 2.2s linear infinite;
+  animation: menu-smoke-rise 2.2s linear infinite;
 }
 
 @keyframes menu-pan-sway {
@@ -403,16 +366,7 @@
   }
 }
 
-@keyframes menu-corner-sway {
-  from {
-    transform: translateX(-1.5vw);
-  }
-  to {
-    transform: translateX(1.5vw);
-  }
-}
-
-@keyframes menu-smoke-rise-main {
+@keyframes menu-smoke-rise {
   from {
     background-position:
       30% 0,
@@ -429,26 +383,9 @@
   }
 }
 
-@keyframes menu-smoke-rise-corner {
-  from {
-    background-position:
-      30% 0,
-      45% 0,
-      58% 0,
-      70% 0;
-  }
-  to {
-    background-position:
-      30% -200px,
-      45% -280px,
-      58% -170px,
-      70% -240px;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .menu-pan,
-  .menu-pan::after {
+  .menu-pan-main,
+  .menu-pan-main::after {
     animation: none;
   }
 }
