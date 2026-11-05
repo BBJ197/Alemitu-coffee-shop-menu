@@ -41,6 +41,7 @@ function TagRow({
   const reorder = useReorderTags();
   const remove = useDeleteTag();
   const [mode, setMode] = useState<Mode>("view");
+  const [open, setOpen] = useState(false);
   const [nameEn, setNameEn] = useState(tag.nameEn);
   const [nameAm, setNameAm] = useState(tag.nameAm ?? "");
   const [nameError, setNameError] = useState<string | null>(null);
@@ -95,8 +96,11 @@ function TagRow({
   ].filter((text): text is string => text !== null);
 
   return (
-    <li className="admin-item">
-      <div>
+    <li className="admin-item admin-item--rich">
+      <span className="admin-thumb admin-thumb--empty" aria-hidden="true">
+        {index + 1}
+      </span>
+      <div className="admin-item__info">
         <span className="admin-item__name">{tag.nameEn}</span>
         {tag.nameAm && (
           <span lang="am" className="admin-item__am">
@@ -171,6 +175,31 @@ function TagRow({
         )}
       </div>
 
+      {mode === "view" && (
+        <button
+          type="button"
+          className="admin-iconbtn"
+          aria-expanded={open}
+          aria-label={`Options: ${tag.nameEn}`}
+          onClick={() => setOpen((o) => !o)}
+        >
+          <svg
+            viewBox="0 0 20 20"
+            width="18"
+            height="18"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <path
+              d="M3 17v-3.5L13.5 3a1.4 1.4 0 0 1 2 0L17 4.5a1.4 1.4 0 0 1 0 2L6.5 17H3z"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </button>
+      )}
       {mode === "delete" ? (
         <div
           role="group"
@@ -212,7 +241,7 @@ function TagRow({
           </button>
         </div>
       ) : mode === "view" ? (
-        <div className="admin-item__actions">
+        <div className={"admin-item__actions" + (open ? " is-open" : "")}>
           <button
             type="button"
             className="admin-button admin-button--quiet"
@@ -318,13 +347,19 @@ export default function AdminTagsPage() {
     <>
       <div className="admin-page-head">
         <h1>Tags</h1>
+        <p>
+          Tags label items, for example Fasting or Hot, and customers can filter
+          the menu by them. Deleting a tag removes it from every item that has
+          it.
+        </p>
       </div>
-      <p>
-        Tags label items, for example Fasting or Hot, and customers can filter
-        the menu by them. Deleting a tag removes it from every item that has it.
-      </p>
 
-      <form className="admin-inline-form" onSubmit={add} noValidate>
+      <form
+        className="admin-inline-form admin-inline-form--3"
+        onSubmit={add}
+        noValidate
+      >
+        <h2 className="admin-form__heading">New tag</h2>
         <div className="admin-field">
           <label htmlFor="new-tag-group">Group</label>
           <select
