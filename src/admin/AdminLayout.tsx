@@ -1,28 +1,72 @@
+import {
+  faEnvelope,
+  faGaugeHigh,
+  faLayerGroup,
+  faMugHot,
+  faQrcode,
+  faRightFromBracket,
+  faTags,
+  faUserGear,
+} from "@fortawesome/free-solid-svg-icons";
 import { Link, NavLink, Outlet } from "react-router-dom";
+import AdminIcon from "./AdminIcon";
 import { useAdminSession, useLogout } from "./hooks";
+
+const groups = [
+  {
+    label: "Overview",
+    links: [{ to: "/admin", label: "Dashboard", icon: faGaugeHigh, end: true }],
+  },
+  {
+    label: "Menu",
+    links: [
+      { to: "/admin/items", label: "Items", icon: faMugHot },
+      { to: "/admin/categories", label: "Categories", icon: faLayerGroup },
+      { to: "/admin/tags", label: "Tags", icon: faTags },
+    ],
+  },
+  {
+    label: "Customers",
+    links: [{ to: "/admin/messages", label: "Messages", icon: faEnvelope }],
+  },
+  {
+    label: "Tools",
+    links: [
+      { to: "/admin/qr", label: "QR code", icon: faQrcode },
+      { to: "/admin/settings", label: "Account", icon: faUserGear },
+    ],
+  },
+];
 
 export default function AdminLayout() {
   const session = useAdminSession();
   const logout = useLogout();
+  const initial = session.data?.email?.[0]?.toUpperCase() ?? "A";
 
   return (
     <div className="admin-shell">
       <header className="admin-header">
         <Link to="/admin" className="admin-brand">
-          Alemitu admin
+          <span className="admin-brand__mark" aria-hidden="true" />
+          <span>Alemitu admin</span>
         </Link>
         <nav className="admin-nav" aria-label="Admin">
-          <NavLink to="/admin" end>
-            Dashboard
-          </NavLink>
-          <NavLink to="/admin/items">Items</NavLink>
-          <NavLink to="/admin/categories">Categories</NavLink>
-          <NavLink to="/admin/tags">Tags</NavLink>
-          <NavLink to="/admin/messages">Messages</NavLink>
-          <NavLink to="/admin/qr">QR code</NavLink>
-          <NavLink to="/admin/settings">Account</NavLink>
+          {groups.map((g) => (
+            <div key={g.label} className="admin-nav__group">
+              <span className="admin-nav__label">{g.label}</span>
+              {g.links.map((l) => (
+                <NavLink key={l.to} to={l.to} end={"end" in l && l.end}>
+                  <AdminIcon icon={l.icon} />
+                  <span>{l.label}</span>
+                </NavLink>
+              ))}
+            </div>
+          ))}
         </nav>
         <div className="admin-user">
+          <span className="admin-avatar" aria-hidden="true">
+            {initial}
+          </span>
           <span className="admin-email">{session.data?.email}</span>
           <button
             type="button"
@@ -30,6 +74,7 @@ export default function AdminLayout() {
             onClick={() => logout.mutate()}
             disabled={logout.isPending}
           >
+            <AdminIcon icon={faRightFromBracket} />
             Sign out
           </button>
         </div>
