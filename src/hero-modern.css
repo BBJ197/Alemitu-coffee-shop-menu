@@ -70,28 +70,28 @@
 
 .hero-section .hero-details .title {
   margin-top: 1.2rem;
-  font-size: clamp(3.5rem, 8vw, 7.5rem);
+  font-size: clamp(3rem, 6vw, 5.5rem);
   line-height: 1;
 }
 
 .hero-section .hero-details .subtitle {
   max-width: none;
   margin-top: 1rem;
-  font-size: clamp(1.5rem, 2.6vw, 2.6rem);
+  font-size: clamp(1.25rem, 2vw, 2rem);
   line-height: 1.25;
 }
 
 .hero-section .hero-details .description {
   max-width: 36em;
   margin: 1.5rem 0 2.5rem;
-  font-size: clamp(1.1rem, 1.5vw, 1.45rem);
+  font-size: clamp(1rem, 1.2vw, 1.2rem);
   line-height: 1.6;
   color: rgba(255, 255, 255, 0.85);
 }
 
 .hero-section .hero-details .button {
-  padding: 16px 36px;
-  font-size: 1.15rem;
+  padding: 14px 30px;
+  font-size: 1.05rem;
 }
 
 .hero-tags {
