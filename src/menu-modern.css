@@ -456,3 +456,8 @@
   flex-shrink: 0;
   font-weight: 500;
 }
+
+/* Wider page: content uses 94% of the screen, up to 100rem. Tweak the two numbers */
+.menu-page {
+  --menu-gutter: max(1rem, calc((100% - min(94%, 100rem)) / 2));
+}
