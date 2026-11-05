@@ -283,7 +283,7 @@
   box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4);
 }
 
-/* Two roasting pans, swaying, with smoke rising from the beans */
+/* Big pan in the middle, small pan in the bottom-left corner, smoke on both */
 .menu-pans {
   position: fixed;
   inset: 0;
@@ -293,34 +293,19 @@
 }
 
 .menu-pan {
-  --pan-w: min(38vw, 360px, 46vh);
   position: absolute;
-  top: 50%;
   width: var(--pan-w);
   height: calc(var(--pan-w) * 1.33);
-  animation: menu-pan-sway 3.5s ease-in-out infinite alternate;
-}
-
-.menu-pan-right {
-  left: 78%;
-}
-
-.menu-pan-left {
-  left: 22%;
-  animation-direction: alternate-reverse;
 }
 
 .menu-pan::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: url("./assets/images/menu-background.png") center / contain
-    no-repeat;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
   opacity: 0.6;
-}
-
-.menu-pan-left::before {
-  background-image: url("./assets/images/menu-background2.png");
 }
 
 .menu-pan::after {
@@ -330,23 +315,7 @@
   right: 0;
   bottom: 48%;
   height: 110%;
-  background-image:
-    radial-gradient(circle, rgba(255, 255, 255, 0.5) 0, transparent 60%),
-    radial-gradient(circle, rgba(255, 255, 255, 0.4) 0, transparent 60%),
-    radial-gradient(circle, rgba(255, 255, 255, 0.35) 0, transparent 60%),
-    radial-gradient(circle, rgba(255, 255, 255, 0.4) 0, transparent 60%);
   background-repeat: repeat-y;
-  background-size:
-    60px 200px,
-    90px 280px,
-    55px 170px,
-    75px 240px;
-  background-position:
-    30% 0,
-    45% 0,
-    58% 0,
-    70% 0;
-  filter: blur(8px);
   -webkit-mask-image: linear-gradient(
     to top,
     transparent 0,
@@ -359,19 +328,108 @@
     #000 18%,
     transparent 100%
   );
-  animation: menu-smoke-rise 2.2s linear infinite;
+}
+
+/* Main pan: big and centered */
+.menu-pan-main {
+  --pan-w: min(88vw, 700px, 68vh);
+  top: 50%;
+  left: 50%;
+  animation: menu-pan-sway 3.5s ease-in-out infinite alternate;
+}
+
+.menu-pan-main::before {
+  background-image: url("./assets/images/menu-background.png");
+}
+
+.menu-pan-main::after {
+  background-image:
+    radial-gradient(circle, rgba(255, 255, 255, 0.5) 0, transparent 60%),
+    radial-gradient(circle, rgba(255, 255, 255, 0.4) 0, transparent 60%),
+    radial-gradient(circle, rgba(255, 255, 255, 0.35) 0, transparent 60%),
+    radial-gradient(circle, rgba(255, 255, 255, 0.4) 0, transparent 60%);
+  background-size:
+    90px 220px,
+    130px 300px,
+    80px 180px,
+    110px 260px;
+  background-position:
+    30% 0,
+    45% 0,
+    58% 0,
+    70% 0;
+  filter: blur(10px);
+  animation: menu-smoke-rise-main 2.2s linear infinite;
+}
+
+/* Corner pan: small, bottom-left */
+.menu-pan-corner {
+  --pan-w: min(30vw, 260px, 34vh);
+  left: 2vw;
+  bottom: 2vh;
+  animation: menu-corner-sway 3.5s ease-in-out infinite alternate;
+}
+
+.menu-pan-corner::before {
+  background-image: url("./assets/images/menu-background2.png");
+}
+
+.menu-pan-corner::after {
+  background-image:
+    radial-gradient(circle, rgba(255, 255, 255, 0.5) 0, transparent 60%),
+    radial-gradient(circle, rgba(255, 255, 255, 0.4) 0, transparent 60%),
+    radial-gradient(circle, rgba(255, 255, 255, 0.35) 0, transparent 60%),
+    radial-gradient(circle, rgba(255, 255, 255, 0.4) 0, transparent 60%);
+  background-size:
+    60px 200px,
+    90px 280px,
+    55px 170px,
+    75px 240px;
+  background-position:
+    30% 0,
+    45% 0,
+    58% 0,
+    70% 0;
+  filter: blur(8px);
+  animation: menu-smoke-rise-corner 2.2s linear infinite;
 }
 
 @keyframes menu-pan-sway {
   from {
-    transform: translate(calc(-50% - 4vw), -50%);
+    transform: translate(calc(-50% - 9vw), -50%);
   }
   to {
-    transform: translate(calc(-50% + 4vw), -50%);
+    transform: translate(calc(-50% + 9vw), -50%);
   }
 }
 
-@keyframes menu-smoke-rise {
+@keyframes menu-corner-sway {
+  from {
+    transform: translateX(-1.5vw);
+  }
+  to {
+    transform: translateX(1.5vw);
+  }
+}
+
+@keyframes menu-smoke-rise-main {
+  from {
+    background-position:
+      30% 0,
+      45% 0,
+      58% 0,
+      70% 0;
+  }
+  to {
+    background-position:
+      30% -220px,
+      45% -300px,
+      58% -180px,
+      70% -260px;
+  }
+}
+
+@keyframes menu-smoke-rise-corner {
   from {
     background-position:
       30% 0,
