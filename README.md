@@ -73,7 +73,7 @@ Deploy `/api` to any Node host that offers PostgreSQL (for example Render, Railw
 1. Create a PostgreSQL database and copy its connection string.
 2. Set the environment variables: `DATABASE_URL`, `CORS_ORIGIN` (your site URL), `NODE_ENV=production`.
 3. Run `npm run migrate` once, then `npm run create-admin` once.
-4. Start command: `npm run dev` inside `api/` runs the server; use the same entry (`src/server.ts`) with `NODE_ENV=production`.
+4. Start command: `npm start` inside `api/`. The API refuses to start if `NODE_ENV` and `CORS_ORIGIN` do not match (production needs a real site URL, a real site URL needs `NODE_ENV=production`).
 
 ### 2. Frontend (pick one)
 
@@ -81,7 +81,7 @@ Set `VITE_API_URL` to your API address in the host's environment settings. Build
 
 - **Vercel:** import the repo. `vercel.json` already adds the SPA fallback and security headers.
 - **Netlify:** import the repo. `netlify.toml` already sets build, publish folder and fallback.
-- **Cloudflare Pages:** framework preset "Vite" (or build `npm run build`, output `dist`). Headers and fallback come from the files in `public/` if present; otherwise add a `_redirects` rule `/* /index.html 200`.
+- **Cloudflare Pages:** build command `npm run build`, output `dist`. Security headers come from `public/_headers`; without a 404.html file, Pages serves `index.html` for unknown routes automatically.
 
 After deploying, open `/admin/qr`, confirm the address is your real `/menu` URL, and download the QR code.
 
