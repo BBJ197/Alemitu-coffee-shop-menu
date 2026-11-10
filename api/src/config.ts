@@ -13,5 +13,17 @@ const schema = z.object({
 });
 
 export function loadConfig(env: NodeJS.ProcessEnv = process.env) {
-  return schema.parse(env);
+  const config = schema.parse(env);
+  const isLocal = /localhost|127\.0\.0\.1/.test(config.CORS_ORIGIN);
+  if (env.NODE_ENV === "production" && isLocal) {
+    throw new Error(
+      "CORS_ORIGIN must be set to your real site URL when NODE_ENV=production.",
+    );
+  }
+  if (env.NODE_ENV !== "production" && !isLocal) {
+    throw new Error(
+      "CORS_ORIGIN is a real site, so set NODE_ENV=production (otherwise session cookies are not secure).",
+    );
+  }
+  return config;
 }
