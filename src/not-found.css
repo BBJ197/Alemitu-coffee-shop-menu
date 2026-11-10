@@ -16,7 +16,9 @@
 }
 
 .not-found-logo {
-  border-radius: 50%;
+  width: 96px;
+  height: auto;
+  max-width: 100%;
 }
 
 .not-found-actions {
