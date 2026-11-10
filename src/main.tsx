@@ -18,8 +18,8 @@ import "./home.css";
 import "./hero-modern.css";
 import "./menu-theme.css";
 import "./menu-modern.css";
-import "./menu-modern.css";
 import "./menu-enter.css";
+import "./not-found.css";
 import App from "./App";
 
 const queryClient = new QueryClient();

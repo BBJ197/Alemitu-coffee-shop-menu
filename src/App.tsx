@@ -2,6 +2,7 @@ import { lazy, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
 import MenuPage from "./pages/MenuPage";
+import NotFoundPage from "./pages/NotFoundPage";
 
 // Admin code is a separate chunk, so customers never download it.
 const AdminRoutes = lazy(() => import("./admin/AdminRoutes"));
@@ -23,7 +24,7 @@ export default function App() {
             </Suspense>
           }
         />
-        <Route path="*" element={<LandingPage />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </>
   );

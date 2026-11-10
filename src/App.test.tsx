@@ -24,4 +24,18 @@ describe("App routes", () => {
       screen.getByRole("heading", { level: 1, name: "Our Menu" }),
     ).toBeTruthy();
   });
+
+  it("shows a not-found page for unknown addresses", () => {
+    render(
+      <MemoryRouter initialEntries={["/no-such-page"]}>
+        <App />
+      </MemoryRouter>,
+    );
+    expect(
+      screen.getByRole("heading", { level: 1, name: "Page not found" }),
+    ).toBeTruthy();
+    expect(
+      screen.getByRole("link", { name: "View the menu" }).getAttribute("href"),
+    ).toBe("/menu");
+  });
 });
