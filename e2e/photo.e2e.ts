@@ -11,6 +11,7 @@ test.setTimeout(60_000);
 
 test("admin can upload a photo and customers see it on the menu", async ({
   page,
+  browser,
 }) => {
   const stamp = Date.now();
   const category = `E2E photo cat ${stamp}`;
@@ -67,15 +68,25 @@ test("admin can upload a photo and customers see it on the menu", async ({
   await page.getByRole("button", { name: "Add item" }).click();
   await expect(page.getByText(`Saved "${name}".`)).toBeVisible();
 
-  await page.goto("/menu");
-  await page.getByPlaceholder(/Search by name/).fill(name);
-  const card = page.locator("li.menu-card", { hasText: name });
+  // A separate browser, like a customer's phone. The admin form already loaded the
+  // menu in this one, and the API lets browsers keep the menu for 30 seconds.
+  const customerContext = await browser.newContext({
+    baseURL: "http://localhost:5173",
+    viewport: { width: 412, height: 915 },
+  });
+  const customer = await customerContext.newPage();
+  await customer.goto("/menu");
+  await customer.getByPlaceholder(/Search by name/).fill(name);
+  const card = customer.locator("li.menu-card", { hasText: name });
   await expect(card).toHaveCount(1);
   const src = (await card.locator("img").getAttribute("src")) ?? "";
   expect(src).toContain("/api/images/");
-  const response = await page.request.get(new URL(src, page.url()).toString());
+  const response = await customer.request.get(
+    new URL(src, customer.url()).toString(),
+  );
   expect(response.ok()).toBe(true);
   expect(response.headers()["content-type"]).toMatch(/^image\//);
+  await customerContext.close();
 
   await deleteItem(page, name);
   await deleteCategory(page, category);
