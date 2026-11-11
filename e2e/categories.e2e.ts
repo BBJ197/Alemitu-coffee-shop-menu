@@ -1,28 +1,13 @@
 import { expect, test } from "@playwright/test";
-import { loginAsAdmin } from "./helpers";
+import {
+  addCategory,
+  deleteCategory,
+  deleteItem,
+  loginAsAdmin,
+  openOptions,
+} from "./helpers";
 
 test.setTimeout(60_000);
-
-async function addCategory(
-  page: import("@playwright/test").Page,
-  name: string,
-) {
-  await page.goto("/admin/categories");
-  await page.getByLabel("New category name (English)").fill(name);
-  await page.getByRole("button", { name: "Add category" }).click();
-  await expect(page.getByText(`Added "${name}".`)).toBeVisible();
-}
-
-async function deleteCategory(
-  page: import("@playwright/test").Page,
-  name: string,
-) {
-  await page.goto("/admin/categories");
-  await page.getByLabel(`Options: ${name}`).click();
-  await page.getByLabel(`Delete: ${name}`).click();
-  await page.getByRole("button", { name: "Delete category" }).click();
-  await expect(page.getByText(`Deleted "${name}".`)).toBeVisible();
-}
 
 test("admin can add, rename and delete a category", async ({ page }) => {
   const name = `E2E cat ${Date.now()}`;
@@ -30,7 +15,7 @@ test("admin can add, rename and delete a category", async ({ page }) => {
   await loginAsAdmin(page);
   await addCategory(page, name);
 
-  await page.getByLabel(`Options: ${name}`).click();
+  await openOptions(page, name);
   await page.getByLabel(`Rename: ${name}`).click();
   await page.getByLabel("Name (English)", { exact: true }).fill(renamed);
   await page.getByRole("button", { name: "Save", exact: true }).click();
@@ -57,18 +42,13 @@ test("a category that still has items cannot be deleted", async ({ page }) => {
   await expect(page.getByText(`Saved "${item}".`)).toBeVisible();
 
   await page.goto("/admin/categories");
-  await page.getByLabel(`Options: ${category}`).click();
+  await openOptions(page, category);
   await page.getByLabel(`Delete: ${category}`).click();
   await expect(
     page.getByRole("alert").filter({ hasText: "can't be deleted yet" }),
   ).toBeVisible();
   await page.getByRole("button", { name: "Close" }).click();
 
-  await page.goto("/admin/items");
-  await page.getByLabel(`Options: ${item}`).click();
-  await page.getByLabel(`Delete: ${item}`).click();
-  await page.getByRole("button", { name: "Delete item" }).click();
-  await expect(page.getByLabel(`Edit: ${item}`)).toHaveCount(0);
-
+  await deleteItem(page, item);
   await deleteCategory(page, category);
 });
