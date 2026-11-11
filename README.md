@@ -128,7 +128,7 @@ Add two HTTP monitors with a 5-minute interval: the Render address plus `/api/he
 
 - All `/api/admin/*` routes require an admin session (httpOnly, SameSite=Lax cookie, 7 days).
 - Login and contact form are rate limited.
-- Security headers and a Content-Security-Policy are set in `vercel.json` and `netlify.toml`.
+- Security headers and a Content-Security-Policy are set in `public/_headers`.
 
 ## Admin guide
 
@@ -143,3 +143,12 @@ To run them locally, use a separate throwaway database (never your real one):
 1. Set `DATABASE_URL` to that database, then in `api/` run `npm run migrate` and `npm run seed`.
 2. Set `E2E_ADMIN_EMAIL` and `E2E_ADMIN_PASSWORD` (12+ characters), then in `api/` run `node --import tsx scripts/e2e-admin.ts`.
 3. Once: `npx playwright install chromium`. Then: `npm run e2e`.
+
+## Project structure
+
+ok
+git add vercel.json netlify.toml && git commit -m "chore: remove unused Vercel and Netlify config"
+git add src && git commit -m "refactor: group admin files by feature and move global CSS to src/styles"
+git add README.md && git commit -m "docs: add project structure and point headers note at public/_headers"
+git push -u origin chore/clean-file-structure
+echo "$(git remote get-url origin | sed -e 's/\.git$//' -e 's|git@github.com:|https://github.com/|')/pull/new/chore/clean-file-structure"
