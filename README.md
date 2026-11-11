@@ -152,3 +152,7 @@ git add src && git commit -m "refactor: group admin files by feature and move gl
 git add README.md && git commit -m "docs: add project structure and point headers note at public/_headers"
 git push -u origin chore/clean-file-structure
 echo "$(git remote get-url origin | sed -e 's/\.git$//' -e 's|git@github.com:|https://github.com/|')/pull/new/chore/clean-file-structure"
+
+## Backups
+
+The database is backed up weekly by GitHub Actions. See [docs/BACKUP.md](docs/BACKUP.md).
