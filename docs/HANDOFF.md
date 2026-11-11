@@ -16,7 +16,6 @@
 
 ## Known follow-ups (not blockers)
 
-- Lighthouse performance on `/menu` is about 0.74 (warning threshold 0.8). Candidates: image sizing and font loading.
 - The deploy steps in the README have not been tested on a real host yet.
 
 ## Docs
