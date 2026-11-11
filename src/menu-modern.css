@@ -313,7 +313,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: url("./assets/images/menu-background.png") center / contain
+  background: url("./assets/images/menu-background.webp") center / contain
     no-repeat;
   opacity: 0.6;
 }
