@@ -1,0 +1,468 @@
+/* Menu page: modern dark look that matches the home page. Loaded last. */
+.menu-page {
+  --menu-glass: rgba(255, 255, 255, 0.06);
+  --menu-glass-border: rgba(255, 255, 255, 0.12);
+  --menu-muted: rgba(255, 255, 255, 0.7);
+  color: var(--white-color);
+  background-color: var(--primary-color);
+  background-image:
+    radial-gradient(
+      circle at 85% 0%,
+      rgba(243, 150, 28, 0.16),
+      transparent 45%
+    ),
+    linear-gradient(
+      180deg,
+      var(--primary-color) 0%,
+      #2b0f15 60%,
+      var(--dark-color)
+    );
+  background-repeat: no-repeat;
+  background-size: auto;
+}
+
+/* Banner blends into the page, thin gold edge */
+.menu-page .menu-banner {
+  background: radial-gradient(
+    circle at 78% 55%,
+    rgba(243, 150, 28, 0.22),
+    transparent 55%
+  );
+  border-bottom: 1px solid rgba(243, 150, 28, 0.4);
+}
+
+/* Search and filter button */
+.menu-page .menu-search {
+  color: var(--white-color);
+  background: var(--menu-glass);
+  border: 1px solid var(--menu-glass-border);
+  box-shadow: none;
+  backdrop-filter: blur(8px);
+}
+
+.menu-page .menu-search::placeholder {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.menu-page .menu-search:focus-visible {
+  border-color: var(--secondary-color);
+  outline: 2px solid var(--secondary-color);
+  outline-offset: 2px;
+}
+
+.menu-page .menu-search-icon {
+  color: var(--secondary-color);
+}
+
+.menu-page .menu-filter-toggle {
+  color: var(--secondary-color);
+  background: rgba(243, 150, 28, 0.12);
+  border: 1px solid rgba(243, 150, 28, 0.6);
+  box-shadow: none;
+}
+
+.menu-page .menu-filter-panel[open] > .menu-filter-toggle {
+  box-shadow: 0 0 0 2px var(--secondary-color);
+}
+
+.menu-page .menu-filter-count {
+  color: var(--primary-color);
+  background: var(--secondary-color);
+}
+
+.menu-page .menu-filter-panel > .menu-chip-row {
+  background: #4a1a24;
+  border: 1px solid rgba(243, 150, 28, 0.4);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+}
+
+/* Chips */
+.menu-page .menu-filter-panel .menu-chip,
+.menu-page .menu-category-bar .menu-chip {
+  color: var(--white-color);
+  background: var(--menu-glass);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.menu-page .menu-filter-panel .menu-chip:hover:not([aria-pressed="true"]),
+.menu-page .menu-category-bar .menu-chip:hover:not([aria-pressed="true"]) {
+  background: rgba(243, 150, 28, 0.16);
+  border-color: var(--secondary-color);
+}
+
+.menu-page .menu-filter-panel .menu-chip[aria-pressed="true"],
+.menu-page .menu-category-bar .menu-chip[aria-pressed="true"] {
+  color: var(--primary-color);
+  background: var(--secondary-color);
+  border-color: var(--secondary-color);
+}
+
+.menu-page .menu-chip:focus-visible,
+.menu-page .menu-button:focus-visible {
+  outline-color: var(--secondary-color);
+}
+
+/* Sticky category bar */
+.menu-page .menu-category-bar {
+  background: rgba(43, 15, 21, 0.85);
+  backdrop-filter: blur(12px);
+  border-top: 0;
+  border-bottom: 1px solid rgba(243, 150, 28, 0.35);
+  box-shadow: 0 10px 20px -12px rgba(0, 0, 0, 0.6);
+}
+
+/* Summary, headings, messages */
+.menu-page .menu-summary {
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.18);
+}
+
+.menu-page .menu-summary p,
+.menu-page .menu-section-sub,
+.menu-page .menu-empty,
+.menu-page > p {
+  color: var(--menu-muted);
+}
+
+.menu-page .menu-button {
+  color: var(--secondary-color);
+  background: transparent;
+  border: 1px solid var(--secondary-color);
+}
+
+.menu-page .menu-button:hover:not(:disabled) {
+  color: var(--primary-color);
+  background: var(--secondary-color);
+}
+
+.menu-page .menu-section-head h2 {
+  color: var(--white-color);
+}
+
+.menu-page .menu-error {
+  color: var(--white-color);
+  background: var(--menu-glass);
+  border-color: var(--menu-glass-border);
+}
+
+.menu-page .menu-skeleton-card {
+  background: var(--menu-glass);
+}
+
+/* Cards: glass on dark, orange on hover */
+.menu-page .menu-card,
+.menu-page .menu-card.no-photo {
+  color: var(--white-color);
+  background: var(--menu-glass);
+  border: 1px solid var(--menu-glass-border);
+  border-radius: 18px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.menu-page .menu-card:hover {
+  border-color: rgba(243, 150, 28, 0.65);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4);
+}
+
+.menu-page .menu-card.is-unavailable:hover {
+  border-color: var(--menu-glass-border);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+.menu-page .menu-popular .menu-card {
+  border-color: rgba(243, 150, 28, 0.55);
+  box-shadow:
+    0 0 0 1px rgba(243, 150, 28, 0.25),
+    0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.menu-page .menu-card-media,
+.menu-page .menu-popular .menu-card-media {
+  background: rgba(0, 0, 0, 0.3);
+  border-bottom: 0;
+}
+
+.menu-page .menu-card-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(43, 15, 21, 0.75), transparent 55%);
+  pointer-events: none;
+}
+
+.menu-page .menu-card-media .menu-price {
+  z-index: 1;
+}
+
+.menu-page .menu-card h3 {
+  color: var(--white-color);
+}
+
+.menu-page .menu-card-desc {
+  color: var(--menu-muted);
+}
+
+.menu-page .menu-card-media .menu-price,
+.menu-page .menu-card-body .menu-price {
+  color: var(--primary-color);
+  background: var(--secondary-color);
+  border: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+}
+
+.menu-page .menu-card.is-unavailable .menu-price {
+  color: var(--white-color);
+  background: #5a5a5a;
+}
+
+.menu-page .menu-badge {
+  color: #ffd9a0;
+  background: rgba(243, 150, 28, 0.14);
+  border-color: rgba(243, 150, 28, 0.35);
+}
+
+.menu-page .menu-unavailable {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Phone tab bar */
+.menu-tabbar {
+  border-top: 1px solid rgba(243, 150, 28, 0.35);
+}
+
+/* Darker page, like the home page */
+.menu-page {
+  background-image:
+    radial-gradient(circle at 85% 0%, rgba(243, 150, 28, 0.1), transparent 40%),
+    linear-gradient(180deg, #2b0f15 0%, #1c0a0e 45%, #141414 100%);
+}
+
+/* Category chips match the search bar and filter button, calmer bar */
+.menu-page .menu-category-bar {
+  background: rgba(28, 10, 14, 0.9);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: none;
+}
+
+.menu-page .menu-category-bar .menu-chip {
+  min-height: 52px;
+  padding: 0 1.2rem;
+  font-size: 1rem;
+}
+
+/* Lighter flat maroon like the home hero, no glow */
+.menu-page {
+  background-image: none;
+  background-color: var(--primary-color);
+}
+
+.menu-page .menu-banner {
+  background: none;
+}
+
+/* Category bar blends into the page */
+.menu-page .menu-category-bar {
+  background: var(--primary-color);
+  backdrop-filter: none;
+  border-bottom: 0;
+}
+
+/* Cards without borders */
+.menu-page .menu-card,
+.menu-page .menu-card.no-photo,
+.menu-page .menu-popular .menu-card {
+  border: 0;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+.menu-page .menu-card:hover,
+.menu-page .menu-card.is-unavailable:hover {
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4);
+}
+
+/* Big pan with smoke. Overlay darkness is in .menu-pans::after */
+.menu-pans {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.menu-pans::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.menu-pan-main {
+  --pan-w: min(88vw, 700px, 68vh);
+  position: absolute;
+  bottom: calc(var(--pan-w) * -0.5);
+  left: 50%;
+  width: var(--pan-w);
+  height: calc(var(--pan-w) * 1.33);
+  animation: menu-pan-sway 3.5s ease-in-out infinite alternate;
+}
+
+.menu-pan-main::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("../assets/images/menu-background.webp") center / contain
+    no-repeat;
+  opacity: 0.6;
+}
+
+.menu-pan-main::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 48%;
+  height: 110%;
+  background-image:
+    radial-gradient(circle, rgba(255, 255, 255, 0.5) 0, transparent 60%),
+    radial-gradient(circle, rgba(255, 255, 255, 0.4) 0, transparent 60%),
+    radial-gradient(circle, rgba(255, 255, 255, 0.35) 0, transparent 60%),
+    radial-gradient(circle, rgba(255, 255, 255, 0.4) 0, transparent 60%);
+  background-repeat: repeat-y;
+  background-size:
+    90px 220px,
+    130px 300px,
+    80px 180px,
+    110px 260px;
+  background-position:
+    30% 0,
+    45% 0,
+    58% 0,
+    70% 0;
+  filter: blur(10px);
+  -webkit-mask-image: linear-gradient(
+    to top,
+    transparent 0,
+    #000 18%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to top,
+    transparent 0,
+    #000 18%,
+    transparent 100%
+  );
+  animation: menu-smoke-rise 2.2s linear infinite;
+}
+
+@keyframes menu-pan-sway {
+  from {
+    transform: translateX(calc(-50% - 9vw));
+  }
+  to {
+    transform: translateX(calc(-50% + 9vw));
+  }
+}
+
+@keyframes menu-smoke-rise {
+  from {
+    background-position:
+      30% 0,
+      45% 0,
+      58% 0,
+      70% 0;
+  }
+  to {
+    background-position:
+      30% -220px,
+      45% -300px,
+      58% -180px,
+      70% -260px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .menu-pan-main,
+  .menu-pan-main::after {
+    animation: none;
+  }
+}
+
+/* Category bar: page-colored background, just big enough for the chips */
+.menu-page .menu-category-bar {
+  width: fit-content;
+  max-width: calc(100% - 2 * var(--menu-gutter));
+  margin-inline: var(--menu-gutter);
+  padding: 0.4rem 0.75rem;
+  background: #260d12;
+  backdrop-filter: none;
+  border: 0;
+  border-radius: 999px;
+  box-shadow: none;
+}
+
+/* Cards: a little lighter than before, still dark enough to read */
+.menu-page .menu-card,
+.menu-page .menu-card.no-photo,
+.menu-page .menu-popular .menu-card {
+  background: rgba(70, 28, 38, 0.72);
+  backdrop-filter: blur(6px);
+}
+
+.menu-page .menu-card-desc {
+  color: rgba(255, 255, 255, 0.82);
+}
+
+/* Fixes: unavailable tag, clear filters button, steady category bar */
+.menu-page .menu-unavailable {
+  color: var(--primary-color);
+  background: #f3e9dc;
+}
+
+.menu-page .menu-summary .menu-button {
+  color: var(--secondary-color);
+  background: transparent;
+  border: 1px solid var(--secondary-color);
+}
+
+.menu-page .menu-summary .menu-button:hover:not(:disabled) {
+  color: var(--primary-color);
+  background: var(--secondary-color);
+}
+
+.menu-page .menu-category-bar {
+  top: 0.5rem;
+  transform: translateZ(0);
+}
+
+.menu-page .menu-card,
+.menu-page .menu-card.no-photo,
+.menu-page .menu-popular .menu-card {
+  backdrop-filter: none;
+}
+
+/* Fixes 2: chips must never be clipped inside the category bar */
+.menu-page .menu-category-bar .menu-chip-row {
+  padding: 3px 0;
+  margin: -3px 0;
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
+.menu-page .menu-category-bar .menu-chip,
+.menu-page .menu-category-bar .menu-chip[aria-pressed="true"] {
+  flex-shrink: 0;
+  font-weight: 500;
+}
+
+/* Wider page: content uses 94% of the screen, up to 100rem. Tweak the two numbers */
+.menu-page {
+  --menu-gutter: max(1rem, calc((100% - min(94%, 100rem)) / 2));
+}
+
+/* Centered category bar */
+.menu-page .menu-category-bar {
+  margin-inline: auto;
+}

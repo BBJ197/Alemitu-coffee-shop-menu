@@ -1,16 +1,16 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import "./admin.css";
-import AdminCategoriesPage from "./AdminCategoriesPage";
-import AdminHome from "./AdminHome";
+import AdminCategoriesPage from "./categories/AdminCategoriesPage";
+import AdminHome from "./dashboard/AdminHome";
 import AdminLayout from "./AdminLayout";
-import AdminItemFormPage from "./AdminItemFormPage";
-import AdminItemsPage from "./AdminItemsPage";
-import AdminLoginPage from "./AdminLoginPage";
-import AdminMessagesPage from "./AdminMessagesPage";
-import AdminQrPage from "./AdminQrPage";
-import AdminSettingsPage from "./AdminSettingsPage";
-import AdminTagsPage from "./AdminTagsPage";
-import RequireAdmin from "./RequireAdmin";
+import AdminItemFormPage from "./items/AdminItemFormPage";
+import AdminItemsPage from "./items/AdminItemsPage";
+import AdminLoginPage from "./auth/AdminLoginPage";
+import AdminMessagesPage from "./messages/AdminMessagesPage";
+import AdminQrPage from "./qr/AdminQrPage";
+import AdminSettingsPage from "./settings/AdminSettingsPage";
+import AdminTagsPage from "./tags/AdminTagsPage";
+import RequireAdmin from "./auth/RequireAdmin";
 
 /** Mounted at /admin/* and loaded lazily, so none of this ships to customers. */
 export default function AdminRoutes() {

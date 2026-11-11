@@ -5,9 +5,9 @@ import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import AdminRoutes from "./AdminRoutes";
 import * as api from "./api";
-import * as itemsApi from "./itemsApi";
+import * as itemsApi from "./items/itemsApi";
 
-vi.mock("./itemsApi");
+vi.mock("./items/itemsApi");
 vi.mock("./api", async (importOriginal) => ({
   ...(await importOriginal<typeof import("./api")>()),
   fetchSession: vi.fn(),
