@@ -1,0 +1,41 @@
+name: Database backup
+
+on:
+  schedule:
+    - cron: "0 3 * * 0"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+    steps:
+      - name: Check secret
+        run: |
+          if [ -z "$DATABASE_URL" ]; then
+            echo "Add the NEON_DATABASE_URL secret in Settings, Secrets and variables, Actions."
+            exit 1
+          fi
+      - name: Install a matching pg_dump
+        run: |
+          ver=$(psql "$DATABASE_URL" -tAc "show server_version_num")
+          major=$((ver / 10000))
+          sudo apt-get update -y
+          sudo apt-get install -y postgresql-common
+          sudo /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh -y
+          sudo apt-get install -y "postgresql-client-$major"
+          echo "PG_MAJOR=$major" >> "$GITHUB_ENV"
+      - name: Dump the database
+        run: |
+          /usr/lib/postgresql/$PG_MAJOR/bin/pg_dump "$DATABASE_URL" \
+            --no-owner --no-privileges --format=custom --file=alemitu-backup.dump
+          ls -lh alemitu-backup.dump
+      - uses: actions/upload-artifact@v4
+        with:
+          name: alemitu-backup-${{ github.run_id }}
+          path: alemitu-backup.dump
+          retention-days: 90
