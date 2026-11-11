@@ -26,12 +26,14 @@ test("admin can log in, create, edit and delete an item", async ({ page }) => {
   await expect(page).toHaveURL(/\/admin\/items$/);
   await expect(page.getByText(`Saved "${name}".`)).toBeVisible();
 
+  await page.getByLabel(`Options: ${name}`).click();
   await page.getByLabel(`Edit: ${name}`).click();
   await page.getByLabel("Price (ETB)").fill("120");
   await page.getByRole("button", { name: "Save changes" }).click();
   await expect(page).toHaveURL(/\/admin\/items$/);
-  await expect(page.getByLabel(`Edit: ${name}`)).toBeVisible();
+  await expect(page.getByLabel(`Edit: ${name}`)).toBeAttached();
 
+  await page.getByLabel(`Options: ${name}`).click();
   await page.getByLabel(`Delete: ${name}`).click();
   await page.getByRole("button", { name: "Delete item" }).click();
   await expect(page.getByLabel(`Edit: ${name}`)).toHaveCount(0);
