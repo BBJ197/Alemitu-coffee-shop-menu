@@ -28,3 +28,6 @@ dist-ssr
 *.env.local
 api/.env
 .lighthouseci
+
+test-results
+playwright-report

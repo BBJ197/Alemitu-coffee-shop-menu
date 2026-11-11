@@ -56,6 +56,7 @@ Never commit `.env` files. They are git-ignored; only the `.env.example` files a
 | `npm test`                    | Frontend tests                                               |
 | `npm run build`               | Production build into `dist/`                                |
 | `npm run lhci`                | Lighthouse CI (build first; budgets in `lighthouserc.json`)  |
+| `npm run e2e`                 | Playwright mobile end-to-end tests (run in CI; see below)    |
 | `npm run format`              | Format all files with Prettier                               |
 | `cd api && npm test`          | API tests (needs `DATABASE_URL` pointing at a test database) |
 | `cd api && npm run typecheck` | Type-check the API                                           |
@@ -94,3 +95,13 @@ After deploying, open `/admin/qr`, confirm the address is your real `/menu` URL,
 ## Admin guide
 
 See [docs/ADMIN-GUIDE.md](docs/ADMIN-GUIDE.md).
+
+## End-to-end tests
+
+Playwright tests (`e2e/`) run on a mobile viewport against the real API and a Postgres database. They cover the customer menu (search, filter, language) and the admin flow (log in, create, edit, delete an item). They run automatically in GitHub Actions (`.github/workflows/e2e.yml`).
+
+To run them locally, use a separate throwaway database (never your real one):
+
+1. Set `DATABASE_URL` to that database, then in `api/` run `npm run migrate` and `npm run seed`.
+2. Set `E2E_ADMIN_EMAIL` and `E2E_ADMIN_PASSWORD` (12+ characters), then in `api/` run `node --import tsx scripts/e2e-admin.ts`.
+3. Once: `npx playwright install chromium`. Then: `npm run e2e`.
