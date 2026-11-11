@@ -23,3 +23,34 @@ export async function makePng(page: Page): Promise<Buffer> {
   });
   return Buffer.from(dataUrl.split(",")[1], "base64");
 }
+
+/** Opens a row's Options menu, unless it is already open. */
+export async function openOptions(page: Page, name: string) {
+  const toggle = page.getByLabel(`Options: ${name}`);
+  if ((await toggle.getAttribute("aria-expanded")) !== "true") {
+    await toggle.click();
+  }
+}
+
+export async function addCategory(page: Page, name: string) {
+  await page.goto("/admin/categories");
+  await page.getByLabel("New category name (English)").fill(name);
+  await page.getByRole("button", { name: "Add category" }).click();
+  await expect(page.getByText(`Added "${name}".`)).toBeVisible();
+}
+
+export async function deleteCategory(page: Page, name: string) {
+  await page.goto("/admin/categories");
+  await openOptions(page, name);
+  await page.getByLabel(`Delete: ${name}`).click();
+  await page.getByRole("button", { name: "Delete category" }).click();
+  await expect(page.getByText(`Deleted "${name}".`)).toBeVisible();
+}
+
+export async function deleteItem(page: Page, name: string) {
+  await page.goto("/admin/items");
+  await openOptions(page, name);
+  await page.getByLabel(`Delete: ${name}`).click();
+  await page.getByRole("button", { name: "Delete item" }).click();
+  await expect(page.getByLabel(`Edit: ${name}`)).toHaveCount(0);
+}
