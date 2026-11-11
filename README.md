@@ -2,6 +2,8 @@
 
 A QR-code digital menu with an admin dashboard for Alemitu Coffee.
 
+**Live site:** https://alemitu-coffee.pages.dev (menu: [/menu](https://alemitu-coffee.pages.dev/menu), admin: [/admin](https://alemitu-coffee.pages.dev/admin))
+
 - **Frontend:** React + TypeScript + Vite (`/`)
 - **API:** Hono + PostgreSQL (`/api`)
 - **Public pages:** `/` (landing) and `/menu` (the QR target, English / አማርኛ)
@@ -34,16 +36,17 @@ npm run dev               # site on http://localhost:5173
 
 ## Environment variables
 
-| Variable             | Where    | Purpose                                                                            |
-| -------------------- | -------- | ---------------------------------------------------------------------------------- |
-| `VITE_API_URL`       | frontend | API base URL. Unset in development; in production, the deployed API address.       |
-| `DATABASE_URL`       | api      | PostgreSQL connection string. Required.                                            |
-| `PORT`               | api      | API port. Default `3001`.                                                          |
-| `CORS_ORIGIN`        | api      | The exact URL of the deployed website. **Set this in production.**                 |
-| `NODE_ENV`           | api      | Set to `production` so the session cookie is marked secure. **Set in production.** |
-| `RESEND_API_KEY`     | api      | Optional. Emails contact-form messages to the owner.                               |
-| `CONTACT_TO_EMAIL`   | api      | Optional. Who receives those emails.                                               |
-| `CONTACT_FROM_EMAIL` | api      | Optional. Sender address.                                                          |
+| Variable             | Where            | Purpose                                                                            |
+| -------------------- | ---------------- | ---------------------------------------------------------------------------------- |
+| `VITE_API_URL`       | frontend         | Leave unset in production (the site calls `/api` on its own address).              |
+| `API_ORIGIN`         | Cloudflare Pages | The Render API address that `/api/*` is forwarded to.                              |
+| `DATABASE_URL`       | api              | PostgreSQL connection string. Required.                                            |
+| `PORT`               | api              | API port. Default `3001`.                                                          |
+| `CORS_ORIGIN`        | api              | The exact URL of the deployed website. **Set this in production.**                 |
+| `NODE_ENV`           | api              | Set to `production` so the session cookie is marked secure. **Set in production.** |
+| `RESEND_API_KEY`     | api              | Optional. Emails contact-form messages to the owner.                               |
+| `CONTACT_TO_EMAIL`   | api              | Optional. Who receives those emails.                                               |
+| `CONTACT_FROM_EMAIL` | api              | Optional. Sender address.                                                          |
 
 Never commit `.env` files. They are git-ignored; only the `.env.example` files are tracked.
 
@@ -65,26 +68,61 @@ CI (GitHub Actions) runs format, lint, typecheck, tests and build for the fronte
 
 ## Deploy
 
-The site has two parts and both must be deployed.
+The live site runs entirely on free tiers (no card needed):
 
-### 1. API and database
+| Part     | Service                                          | What it does                                                                                                  |
+| -------- | ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------- |
+| Website  | [Cloudflare Pages](https://pages.cloudflare.com) | Serves the React site worldwide. A Pages Function (`functions/api/[[path]].js`) forwards `/api/*` to the API. |
+| API      | [Render](https://render.com) (free web service)  | Runs the `api/` folder.                                                                                       |
+| Database | [Neon](https://neon.com) (free Postgres)         | Stores the menu, admin account and photos. Region: Frankfurt.                                                 |
+| Uptime   | [UptimeRobot](https://uptimerobot.com) (free)    | Pings the API every 5 minutes so Render does not fall asleep, and emails if the site goes down.               |
 
-Deploy `/api` to any Node host that offers PostgreSQL (for example Render, Railway or Fly.io).
+Why the forwarding file exists: the website and the API live on different free domains, and browsers refuse to send the admin login cookie between unrelated domains. Forwarding `/api` through the website keeps everything on one address.
 
-1. Create a PostgreSQL database and copy its connection string.
-2. Set the environment variables: `DATABASE_URL`, `CORS_ORIGIN` (your site URL), `NODE_ENV=production`.
-3. Run `npm run migrate` once, then `npm run create-admin` once.
-4. Start command: `npm start` inside `api/`. The API refuses to start if `NODE_ENV` and `CORS_ORIGIN` do not match (production needs a real site URL, a real site URL needs `NODE_ENV=production`).
+### 1. Database (Neon)
 
-### 2. Frontend (pick one)
+1. Create a project in Frankfurt and copy the **non-pooled** connection string. Use `sslmode=verify-full`.
+2. From your computer, inside `api/`:
 
-Set `VITE_API_URL` to your API address in the host's environment settings. Build command `npm run build`, output folder `dist`.
+```bash
+export DATABASE_URL='your-neon-string'
+node scripts/migrate.mjs
+node --import tsx scripts/create-admin.ts
+unset DATABASE_URL
+```
 
-- **Vercel:** import the repo. `vercel.json` already adds the SPA fallback and security headers.
-- **Netlify:** import the repo. `netlify.toml` already sets build, publish folder and fallback.
-- **Cloudflare Pages:** build command `npm run build`, output `dist`. Security headers come from `public/_headers`; without a 404.html file, Pages serves `index.html` for unknown routes automatically.
+Do not run `npm run seed` in production (it adds fake demo items).
 
-After deploying, open `/admin/qr`, confirm the address is your real `/menu` URL, and download the QR code.
+### 2. API (Render)
+
+New Web Service from the GitHub repo with these settings:
+
+- Root Directory `api`, Build Command `npm ci`, Start Command `npm start`, Instance Type Free, Region Frankfurt
+- Health Check Path `/api/health`
+- Environment variables: `DATABASE_URL`, `NODE_ENV=production`, `CORS_ORIGIN=https://alemitu-coffee.pages.dev`, `NODE_VERSION=22`
+
+The API refuses to start if `NODE_ENV` and `CORS_ORIGIN` do not match.
+
+### 3. Website (Cloudflare Pages)
+
+Create a Pages project from the GitHub repo (production branch `main`) with these settings:
+
+- Framework preset None, Build command `npm run build`, Build output directory `dist`
+- Environment variables: `NODE_VERSION=22` and `API_ORIGIN` set to the Render address (no trailing slash)
+- Do not set `VITE_API_URL`; the site calls `/api` on its own address.
+
+Both Render and Cloudflare redeploy automatically when `main` changes.
+
+### 4. Keep the API awake (UptimeRobot)
+
+Add two HTTP monitors with a 5-minute interval: the Render address plus `/api/health`, and `https://alemitu-coffee.pages.dev/api/health`.
+
+### Limits of the free setup
+
+- If monitoring stops, Render sleeps after 15 minutes and the first visitor waits about a minute.
+- Neon sleeps when idle, so the first request after a quiet spell takes about a second longer.
+- Neon's free database is 0.5 GB with no automatic backups.
+- Moving to a custom domain later: point the domain at Cloudflare Pages and update `CORS_ORIGIN` in Render to the new address.
 
 ## Security notes
 
